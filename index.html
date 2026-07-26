@@ -32,6 +32,30 @@
             --color-text-main: #ffffff;
         }
         
+        mask-composite: exclude;
+            pointer-events: none;
+            z-index: 5;
+            opacity: var(--spotlight-opacity, 0);
+            transition: opacity 0.3s ease;
+        }
+
+        @keyframes icon-jello {
+            0%, 11.1%, 100% { transform: none; }
+            22.2% { transform: skewX(-12.5deg) skewY(-12.5deg); }
+            33.3% { transform: skewX(6.25deg) skewY(6.25deg); }
+            44.4% { transform: skewX(-3.125deg) skewY(-3.125deg); }
+            55.5% { transform: skewX(1.5625deg) skewY(1.5625deg); }
+            66.6% { transform: skewX(-0.78125deg) skewY(-0.78125deg); }
+            77.7% { transform: skewX(0.390625deg) skewY(0.390625deg); }
+            88.8% { transform: skewX(-0.1953125deg) skewY(-0.1953125deg); }
+        }
+
+        /* Запускаем при наведении на ссылку, кнопку, карточку, заголовок или саму иконку */
+        a:hover i, button:hover i, .glass-card:hover i, h2:hover i, i:hover {
+            animation: icon-jello 0.9s both;
+            transform-origin: center;
+        }
+
         /* --- Анимированный фон (Масляные разводы) --- */
         .mesh-bg {
             position: fixed;
@@ -308,20 +332,23 @@
                     <div class="music-pulse"></div>
                 </button>
 
-                <!-- Аватарка -->
-                <div class="relative w-28 h-28 mx-auto mb-6">
+                <div class="relative w-28 h-28 mx-auto mb-5">
                     <div class="absolute inset-0 bg-[var(--color-accent)] rounded-full blur-[20px] opacity-40 group-hover:opacity-70 transition-opacity duration-500"></div>
                     <img src="https://i.imgur.com/YYl2MS3.jpeg" alt="Profile" class="relative w-full h-full object-cover rounded-full border-2 border-white/10 z-10">
                 </div>
 
-                <h1 class="text-3xl font-bold text-white mb-1 tracking-tight">
-                    Герман<span class="text-white/50 font-medium"> delmyname</span>
+                <!-- Имя -->
+                <h1 class="text-3xl font-bold text-white mb-0 tracking-tight">
+                    Герман
                 </h1>
+                
+                <!-- Никнейм (Новый стиль: капс, мелкий шрифт, широкие пробелы, по центру) -->
+                <h2 class="text-[11px] text-white/30 font-semibold uppercase tracking-[0.35em] mb-2 ml-0">
+                    delmyname
+                </h2>
+
                 <p class="text-[var(--color-accent)] font-semibold text-sm tracking-widest uppercase mb-4">Video editor & creator</p>
                 <p class="text-gray-300 text-sm mb-6 leading-relaxed">
-                    Создаю динамичные видео, Reels, Shorts и рекламные креативы.
-                    <span class="text-white font-semibold">Воплощаю ваши идеи в кадре. 🎬</span>
-                </p>
 
                 <!-- Плашки навыков -->
                 <div class="flex flex-wrap justify-center gap-2 mb-8">
@@ -346,8 +373,8 @@
                     </a>
                     <hr style="border: none; height: 1px; opacity: 60%; background: linear-gradient(to right, transparent, var(--color-accent), transparent); margin: 15px 0;">
                     <a href="https://discord.gg/3TvaaQ2X3W" class="flex items-center w-full px-5 py-4 bg-white/5 border border-white/10 hover:bg-white/10 text-white font-medium rounded-xl transition-all hover:-translate-y-1 spotlight-border group-link">
-                        <i class="fa-brands fa-discord fa-jello text-[var(--color-accent)] text-lg mr-3 w-5 text-center"></i>
-                        Присоединяйся!
+                        <i class="fa-solid fa-cloud fa-jello text-[var(--color-accent)] text-lg mr-3 w-5 text-center"></i>
+                        Диск
                     </a>
                 </div>
             </div>
@@ -362,9 +389,12 @@
             
             <!-- Bento-сетка: flex-гибрид с центрированием и динамичными размерами -->
             <div class="grid grid-cols-1 md:grid-cols-3 md:auto-rows grid-flow-row-dense gap-6 w-full px-4 place-content-center justify-items-center md:justify-items-stretch">
-                
-                <a href="https://www.youtube.com/@bratdvaa" target="_blank" class="glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-300 w-full max-w-md md:max-w-none md:col-span-3 md:row-span-1">
+	
+                <a href="https://www.youtube.com/@bratdvaa" target="_blank" class="glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-300 w-full max-w-md md:max-w-none md:col-span-3 md:row-span-2">
                     <div class="relative flex-1 flex items-center justify-center overflow-hidden min-h-[240px]">
+                        <div class="absolute top-3 left-3 z-20 bg-black/40 backdrop-blur-md w-6 h-6 flex items-center justify-center rounded-md border border-[var(--color-accent)] text-xs text-white/70" title="Закреплено">
+                            <i class="fa-solid fa-thumbtack" style="transform: rotate(45deg);"></i>
+                        </div>
                         <!-- Дата работы -->
                         <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Авг. 2025</div>
                         <img src="https://yt3.googleusercontent.com/y5qWqaRO5SiWLYrBKqHBACwXWbiXLAF7mcBu6sGuj4n7RBDHFxKRqHwCDz0zk_EmyBb4G-xQ=s1080-c-k-c0x00ffffff-no-rj" alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
@@ -377,11 +407,127 @@
                     </div>
                 </a>
 
+                
+                <!-- NEW_CARD_MARKER -->
+                
+                <a href="https://www.youtube.com/shorts/F8kd9Q-64VM" target="_blank" class="glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-300 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2">
+                    <div class="relative flex-1 flex items-center justify-center overflow-hidden min-h-[240px]">
+                        <!-- Дата работы -->
+                        <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Дек. 2024</div>
+                        <img src="https://i.ytimg.com/vi/F8kd9Q-64VM/oar2.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLAYEOIUNvQIbfHXuw0XMInc9n4Gxw&usqp=CCk" alt="YT Shorts для Делика" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/10 group-hover:bg-black/70 transition-colors duration-300"></div>
+                        <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 transition-all duration-300 z-10 absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 drop-shadow-lg"></i>
+                    </div>
+                    <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
+                        <h3 class="font-bold text-white mb-1">YT Shorts для Делика</h3>
+                        <p class="text-xs text-gray-400 line-clamp-1">Динамичный монтаж с добавлением эффектов</p>
+                    </div>
+                </a>
+                                
+
+                <a href="https://disk.yandex.ru/i/1-1H46zRa50SBQ" target="_blank" class="glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-300 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1">
+                    <div class="relative flex-1 flex items-center justify-center overflow-hidden min-h-[240px]">
+                        <!-- Дата работы -->
+                        <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Фев. 2026</div>
+                        <img src="https://s.fotora.ru/e01f54d170b02fb6.jpeg" alt="Работа по биологии" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/10 group-hover:bg-black/70 transition-colors duration-300"></div>
+                        <i class="fa-solid fa-bolt text-4xl text-white/80 group-hover:text-yellow-400 transition-all duration-300 z-10 absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 drop-shadow-lg"></i>
+                    </div>
+                    <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
+                        <h3 class="font-bold text-white mb-1">Работа по биологии</h3>
+                        <p class="text-xs text-gray-400 line-clamp-1">Работа с нейросетями, цветокорреция.</p>
+                    </div>
+                </a>
+                
+                <a href="https://www.youtube.com/watch?v=9mKflJB1Gmo" target="_blank" class="glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-300 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1">
+                    <div class="relative flex-1 flex items-center justify-center overflow-hidden min-h-[240px]">
+                        <!-- Дата работы -->
+                        <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Янв. 2025</div>
+                        <img src="https://i.ytimg.com/vi/9mKflJB1Gmo/maxresdefault.jpg" alt="Rainbow GG Minecraft" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/10 group-hover:bg-black/70 transition-colors duration-300"></div>
+                        <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 transition-all duration-300 z-10 absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 drop-shadow-lg"></i>
+                    </div>
+                    <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
+                        <h3 class="font-bold text-white mb-1">Rainbow GG Minecraft</h3>
+                        <p class="text-xs text-gray-400 line-clamp-1">485к, монтаж англоязычных роликов.</p>
+                    </div>
+                </a>
+                
+                <a href="https://www.youtube.com/watch?v=DiR2Cl5KF-Y" target="_blank" class="glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-300 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1">
+                    <div class="relative flex-1 flex items-center justify-center overflow-hidden min-h-[240px]">
+                        <!-- Дата работы -->
+                        <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Нояб. 2024</div>
+                        <img src="https://i.ytimg.com/vi/DiR2Cl5KF-Y/maxresdefault.jpg" alt="Rainbow GG Minecraft" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/10 group-hover:bg-black/70 transition-colors duration-300"></div>
+                        <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 transition-all duration-300 z-10 absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 drop-shadow-lg"></i>
+                    </div>
+                    <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
+                        <h3 class="font-bold text-white mb-1">Rainbow GG Minecraft</h3>
+                        <p class="text-xs text-gray-400 line-clamp-1">188к, монтаж англоязычных роликов</p>
+                    </div>
+                </a>
+                
+		<a href="https://www.instagram.com/prodajnie" target="_blank" class="glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-300 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2">
+                    <div class="relative flex-1 flex items-center justify-center overflow-hidden min-h-[240px]">
+                        <!-- Дата работы -->
+                        <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Авг. 2025</div>
+                        <img src="https://s.fotora.ru/62e6649f87f8ed75.jpeg" alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/10 group-hover:bg-black/70 transition-colors duration-300"></div>
+                        <i class="fa-brands fa-instagram text-4xl text-white/80 group-hover:text-pink-500 transition-all duration-300 z-10 absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 drop-shadow-lg"></i>
+                    </div>
+                    <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
+                        <h3 class="font-bold text-white mb-1">Продажные блоггеры</h3>
+                        <p class="text-xs text-gray-400 line-clamp-1">Рекламные ролики для разных брендов.</p>
+                    </div>
+                </a>
+
+                <a href="https://www.youtube.com/watch?v=zf-iC5QRgCA&" target="_blank" class="glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-300 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-1">
+                    <div class="relative flex-1 flex items-center justify-center overflow-hidden min-h-[240px]">
+                        <!-- Дата работы -->
+                        <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Окт. 2024</div>
+                        <img src="https://i.ytimg.com/vi/zf-iC5QRgCA/maxresdefault.jpg" alt="Rainbow GG Minecraft" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/10 group-hover:bg-black/70 transition-colors duration-300"></div>
+                        <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 transition-all duration-300 z-10 absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 drop-shadow-lg"></i>
+                    </div>
+                    <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
+                        <h3 class="font-bold text-white mb-1">Rainbow GG Minecraft</h3>
+                        <p class="text-xs text-gray-400 line-clamp-1">Монтаж англоязычных роликов</p>
+                    </div>
+                </a>
+
+		<a href="https://www.youtube.com/@mc_resolver" target="_blank" class="glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-300 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-1">
+                    <div class="relative flex-1 flex items-center justify-center overflow-hidden min-h-[240px]">
+                        <!-- Дата работы -->
+                        <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Июль 2024</div>
+                        <img src="https://yt3.googleusercontent.com/jXudDnrVzU91mcKOam60VYvOLx9QJm8UjxJK12dYU2aXTNkTTDI3qWnywgiPusACrKtmu1v8hQ=s1080-c-k-c0x00ffffff-no-rj" alt="Трейлеры Resolver" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/10 group-hover:bg-black/70 transition-colors duration-300"></div>
+                        <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 transition-all duration-300 z-10 absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 drop-shadow-lg"></i>
+                    </div>
+                    <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
+                        <h3 class="font-bold text-white mb-1">Трейлеры Resolver</h3>
+                        <p class="text-xs text-gray-400 line-clamp-1">Короткометражки к обновлениям сервера</p>
+                    </div>
+                </a>
+
+                <a href="https://www.youtube.com/@ashleymccuen" target="_blank" class="glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-300 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1">
+                    <div class="relative flex-1 flex items-center justify-center overflow-hidden min-h-[240px]">
+                        <!-- Дата работы -->
+                        <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Фев. 2025</div>
+                        <img src="https://i.ytimg.com/vi/tedMCl3rgio/maxresdefault.jpg" alt="Green Agriculture" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/10 group-hover:bg-black/70 transition-colors duration-300"></div>
+                        <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 transition-all duration-300 z-10 absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 drop-shadow-lg"></i>
+                    </div>
+                    <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
+                        <h3 class="font-bold text-white mb-1">Green Agriculture</h3>
+                        <p class="text-xs text-gray-400 line-clamp-1">Создание англоязычных видео с использованием ИИ</p>
+                    </div>
+                </a>
+                
                 <a href="https://www.youtube.com/watch?v=gtErHwRld1o" target="_blank" class="glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-300 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1">
                     <div class="relative flex-1 flex items-center justify-center overflow-hidden min-h-[240px]">
                         <!-- Дата работы -->
                         <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Авг. 2025</div>
-                        <img src="https://i.ytimg.com/vi/gtErHwRld1o/hqdefault.jpg?sqp=-oaymwEnCNACELwBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLBpOIPK_qjuXmeWB53SUg1cHXBWew" alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <img src="https://i.ytimg.com/vi/gtErHwRld1o/hqdefault.jpg" alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                         <div class="absolute inset-0 bg-black/10 group-hover:bg-black/70 transition-colors duration-300"></div>
                         <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 transition-all duration-300 z-10 absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 drop-shadow-lg"></i>
                     </div>
@@ -396,7 +542,7 @@
                     <div class="relative flex-1 flex items-center justify-center overflow-hidden min-h-[240px]">
                         <!-- Дата работы -->
                         <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Март 2025</div>
-                        <img src="https://i.ytimg.com/vi/JyMkIKBMSFY/hqdefault.jpg?sqp=-oaymwEnCNACELwBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLA7T0K1GbWF_kmjUsyjTicgfssKyg" alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <img src="https://i.ytimg.com/vi/JyMkIKBMSFY/hqdefault.jpg" alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                         <div class="absolute inset-0 bg-black/10 group-hover:bg-black/70 transition-colors duration-300"></div>
                         <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 transition-all duration-300 z-10 absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 drop-shadow-lg"></i>
                     </div>
@@ -411,7 +557,7 @@
                     <div class="relative flex-1 flex items-center justify-center overflow-hidden min-h-[240px]">
                         <!-- Дата работы -->
                         <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Нояб. 2024</div>
-                        <img src="https://i.ytimg.com/vi/p-t8exzF_d0/hqdefault.jpg?sqp=-oaymwEnCNACELwBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLDhd6Dq1-iiJE9p_zngtMqeIiI5Ig" alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <img src="https://i.ytimg.com/vi/p-t8exzF_d0/hqdefault.jpg" alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                         <div class="absolute inset-0 bg-black/10 group-hover:bg-black/70 transition-colors duration-300"></div>
                         <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 transition-all duration-300 z-10 absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 drop-shadow-lg"></i>
                     </div>
