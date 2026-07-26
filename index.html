@@ -120,7 +120,7 @@
             transition: opacity 0.3s ease;
         }
 
-        /* Подсветка скиллов при наведении */
+/* Подсветка скиллов при наведении */
         .skill-badge {
             transition: all 0.3s ease;
         }
@@ -132,7 +132,36 @@
             transform: translateY(-2px);
         }
         
-        /* Маска для плавного растворения текста по краям (Fade-out) */
+        /* --- Стили кнопок (Пуленепробиваемые для Vercel) --- */
+        .link-btn {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 1rem 1.25rem;
+            background: rgba(255, 255, 255, 0.04); /* Та самая красивая полупрозрачность */
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 0.75rem;
+            color: #ffffff;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .link-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .btn-primary {
+            background: var(--color-accent);
+            border: none;
+            justify-content: center;
+        }
+
+        .btn-primary:hover {
+            background: var(--color-accent-hover);
+        }
+		
         .mask-gradient {
             -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
             mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
@@ -351,30 +380,30 @@
                 <p class="text-[var(--color-accent)] font-semibold text-sm tracking-widest uppercase mb-4">Video editor & creator</p>
                 <p class="text-gray-300 text-sm mb-6 leading-relaxed">
 
-                <!-- Плашки навыков -->
+				<!-- Плашки навыков -->
                 <div class="flex flex-wrap justify-center gap-2 mb-8">
                     <span class="skill-badge px-3 py-1 text-xs font-medium bg-white/5 border border-white/10 rounded-full text-gray-300 cursor-default">Premiere Pro</span>
                     <span class="skill-badge px-3 py-1 text-xs font-medium bg-white/5 border border-white/10 rounded-full text-gray-300 cursor-default">After Effects</span>
                     <span class="skill-badge px-3 py-1 text-xs font-medium bg-white/5 border border-white/10 rounded-full text-gray-300 cursor-default">Google AI</span>
                 </div>
 
-                <!-- Ссылки (Дизайн перенесен в классы HTML для стабильности на Vercel) -->
+                <!-- Ссылки (Защищены от багов Vercel) -->
                 <div class="flex flex-col gap-3">
-                    <a href="#portfolio" class="flex items-center justify-center w-full px-5 py-4 bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white font-medium rounded-xl transition-all hover:-translate-y-1 shadow-[0_8px_25px_rgba(139,92,246,0.5)] spotlight-border">
+                    <a href="#portfolio" class="link-btn btn-primary spotlight-border shadow-[0_8px_25px_rgba(139,92,246,0.5)]">
                         <i class="fa-solid fa-circle-play mr-3"></i>
                         Портфолио ↓
                     </a>
-                    <a href="https://telegram.me/fulestor" target="_blank" class="flex items-center w-full px-5 py-4 bg-white/5 border border-white/10 hover:bg-white/10 text-white font-medium rounded-xl transition-all hover:-translate-y-1 spotlight-border group-link">
+                    <a href="https://telegram.me/fulestor" target="_blank" class="link-btn spotlight-border">
                         <i class="fa-brands fa-telegram text-[var(--color-accent)] text-lg mr-3 w-5 text-center"></i>
                         Связаться со мной
                     </a>
-                    <a href="https://www.youtube.com/@delik_kryt/videos" target="_blank" class="flex items-center w-full px-5 py-4 bg-white/5 border border-white/10 hover:bg-white/10 text-white font-medium rounded-xl transition-all hover:-translate-y-1 spotlight-border group-link">
+                    <a href="https://www.youtube.com/@delik_kryt/videos" target="_blank" class="link-btn spotlight-border">
                         <i class="fa-brands fa-youtube text-[var(--color-accent)] text-lg mr-3 w-5 text-center"></i>
                         Мой канал
                     </a>
                     <hr style="border: none; height: 1px; opacity: 60%; background: linear-gradient(to right, transparent, var(--color-accent), transparent); margin: 15px 0;">
-                    <a href="https://discord.gg/3TvaaQ2X3W" class="flex items-center w-full px-5 py-4 bg-white/5 border border-white/10 hover:bg-white/10 text-white font-medium rounded-xl transition-all hover:-translate-y-1 spotlight-border group-link">
-                        <i class="fa-solid fa-cloud fa-jello text-[var(--color-accent)] text-lg mr-3 w-5 text-center"></i>
+                    <a href="https://discord.gg/3TvaaQ2X3W" target="_blank" class="link-btn spotlight-border">
+                        <i class="fa-solid fa-cloud text-[var(--color-accent)] text-lg mr-3 w-5 text-center"></i>
                         Диск
                     </a>
                 </div>
