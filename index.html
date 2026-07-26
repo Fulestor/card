@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>delmyname | Визитка</title>
-	<!-- Favicon (Иконка сайта) -->
-    <link rel="icon" href="https://i.imgur.com/YYl2MS3.jpeg" type="image/jpeg">
+	<link rel="icon" href="https://i.imgur.com/YYl2MS3.jpeg" type="image/jpeg">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome -->
@@ -14,7 +13,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-        /* --- STREAMING_CHUNK:Определение глобальных переменных цвета --- */
+        /* --- Определение глобальных переменных цвета --- */
         :root {
             /* Базовые цвета */
             --color-bg: #0a021c; 
@@ -46,13 +45,13 @@
             88.8% { transform: skewX(-0.1953125deg) skewY(-0.1953125deg); }
         }
 
-        /* Запускаем при наведении на ссылку, кнопку, карточку, заголовок или саму иконку */
-        a:hover i, button:hover i, .glass-card:hover i, h2:hover i, i:hover {
+        /* Запускаем при наведении ТОЛЬКО на ссылку, кнопку, заголовок или саму иконку (Убрали ховер со всей карточки) */
+        a:hover i, button:hover i, h2:hover i, i:hover {
             animation: icon-jello 0.9s both;
             transform-origin: center;
         }
 
-        /* --- STREAMING_CHUNK:Анимированный фон (Масляные разводы) --- */
+        /* --- Анимированный фон (Масляные разводы) --- */
         .mesh-bg {
             position: fixed;
             inset: 0;
@@ -79,7 +78,7 @@
             100% { transform: translate(-10%, 5%) scale(0.9); }
         }
 
-        /* --- STREAMING_CHUNK:Стили карточек и эффектов --- */
+        /* --- Стили карточек --- */
         .glass-card {
             background: var(--color-card-bg);
             backdrop-filter: blur(16px);
@@ -148,16 +147,16 @@
         }
 
         .btn-primary {
-            background: var(--color-accent);
-            border: none;
+            background: var(--color-accent) !important; /* ЖЕСТКО задаем цвет, чтобы перебить glass-btn */
+            border: none !important;
             justify-content: center;
         }
 
         .btn-primary:hover {
-            background: var(--color-accent-hover);
+            background: var(--color-accent-hover) !important;
         }
 		
-        /* --- STREAMING_CHUNK:Анимации --- */
+        /* --- Анимации --- */
         .mask-gradient {
             -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
             mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
@@ -188,7 +187,7 @@
             min-height: 100vh;
         }
 
-        /* --- STREAMING_CHUNK:Стили Плеера --- */
+        /* --- Стили Плеера --- */
         .player-panel {
             position: absolute;
             z-index: 5;
@@ -419,14 +418,17 @@
 	
                 <a href="https://www.youtube.com/@bratdvaa" target="_blank" class="glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-300 w-full max-w-md md:max-w-none md:col-span-3 md:row-span-2">
                     <div class="relative flex-1 flex items-center justify-center overflow-hidden min-h-[240px]">
-                        <div class="absolute top-3 left-3 z-20 bg-[var(--color-accent)]/20 backdrop-blur-md w-7 h-7 flex items-center justify-center rounded-full border border-[var(--color-accent)]/50 shadow-[0_0_12px_rgba(139,92,246,0.6)]" title="Закреплено">
-                            <i class="fa-solid fa-thumbtack text-[var(--color-accent)] drop-shadow-[0_0_8px_rgba(139,92,246,0.8)] text-xs" style="animation: none !important; transform: rotate(-45deg);"></i>
+                        <div class="absolute top-3 left-3 z-20 bg-black/40 backdrop-blur-md w-6 h-6 flex items-center justify-center rounded-md border border-[var(--color-accent)] text-xs text-white/70" title="Закреплено">
+                            <i class="fa-solid fa-thumbtack" style="transform: rotate(45deg);"></i>
                         </div>
                         <!-- Дата работы -->
                         <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Авг. 2025</div>
                         <img src="https://yt3.googleusercontent.com/y5qWqaRO5SiWLYrBKqHBACwXWbiXLAF7mcBu6sGuj4n7RBDHFxKRqHwCDz0zk_EmyBb4G-xQ=s1080-c-k-c0x00ffffff-no-rj" alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                         <div class="absolute inset-0 bg-black/10 group-hover:bg-black/70 transition-colors duration-300"></div>
-                        <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 transition-all duration-300 z-10 absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 drop-shadow-lg"></i>
+                        <!-- Центрирующий враппер (Лечит слет позиционирования из-за Jello) -->
+                        <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-500 z-10 flex items-center justify-center">
+                            <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg transition-colors duration-300"></i>
+                        </div>
                     </div>
                     <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
                         <h3 class="font-bold text-white mb-1">Братдваа</h3>
@@ -443,7 +445,9 @@
                         <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Дек. 2024</div>
                         <img src="https://i.ytimg.com/vi/F8kd9Q-64VM/oar2.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLAYEOIUNvQIbfHXuw0XMInc9n4Gxw&usqp=CCk" alt="YT Shorts для Делика" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                         <div class="absolute inset-0 bg-black/10 group-hover:bg-black/70 transition-colors duration-300"></div>
-                        <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 transition-all duration-300 z-10 absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 drop-shadow-lg"></i>
+                        <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-500 z-10 flex items-center justify-center">
+                            <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg transition-colors duration-300"></i>
+                        </div>
                     </div>
                     <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
                         <h3 class="font-bold text-white mb-1">YT Shorts для Делика</h3>
@@ -458,7 +462,9 @@
                         <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Фев. 2026</div>
                         <img src="https://s.fotora.ru/e01f54d170b02fb6.jpeg" alt="Работа по биологии" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                         <div class="absolute inset-0 bg-black/10 group-hover:bg-black/70 transition-colors duration-300"></div>
-                        <i class="fa-solid fa-bolt text-4xl text-white/80 group-hover:text-yellow-400 transition-all duration-300 z-10 absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 drop-shadow-lg"></i>
+                        <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-500 z-10 flex items-center justify-center">
+                            <i class="fa-solid fa-bolt text-4xl text-white/80 group-hover:text-yellow-400 drop-shadow-lg transition-colors duration-300"></i>
+                        </div>
                     </div>
                     <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
                         <h3 class="font-bold text-white mb-1">Работа по биологии</h3>
@@ -472,7 +478,9 @@
                         <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Янв. 2025</div>
                         <img src="https://i.ytimg.com/vi/9mKflJB1Gmo/maxresdefault.jpg" alt="Rainbow GG Minecraft" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                         <div class="absolute inset-0 bg-black/10 group-hover:bg-black/70 transition-colors duration-300"></div>
-                        <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 transition-all duration-300 z-10 absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 drop-shadow-lg"></i>
+                        <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-500 z-10 flex items-center justify-center">
+                            <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg transition-colors duration-300"></i>
+                        </div>
                     </div>
                     <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
                         <h3 class="font-bold text-white mb-1">Rainbow GG Minecraft</h3>
@@ -486,7 +494,9 @@
                         <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Нояб. 2024</div>
                         <img src="https://i.ytimg.com/vi/DiR2Cl5KF-Y/maxresdefault.jpg" alt="Rainbow GG Minecraft" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                         <div class="absolute inset-0 bg-black/10 group-hover:bg-black/70 transition-colors duration-300"></div>
-                        <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 transition-all duration-300 z-10 absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 drop-shadow-lg"></i>
+                        <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-500 z-10 flex items-center justify-center">
+                            <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg transition-colors duration-300"></i>
+                        </div>
                     </div>
                     <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
                         <h3 class="font-bold text-white mb-1">Rainbow GG Minecraft</h3>
@@ -500,7 +510,9 @@
                         <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Авг. 2025</div>
                         <img src="https://s.fotora.ru/62e6649f87f8ed75.jpeg" alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                         <div class="absolute inset-0 bg-black/10 group-hover:bg-black/70 transition-colors duration-300"></div>
-                        <i class="fa-brands fa-instagram text-4xl text-white/80 group-hover:text-pink-500 transition-all duration-300 z-10 absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 drop-shadow-lg"></i>
+                        <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-500 z-10 flex items-center justify-center">
+                            <i class="fa-brands fa-instagram text-4xl text-white/80 group-hover:text-pink-500 drop-shadow-lg transition-colors duration-300"></i>
+                        </div>
                     </div>
                     <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
                         <h3 class="font-bold text-white mb-1">Продажные блоггеры</h3>
@@ -514,7 +526,9 @@
                         <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Окт. 2024</div>
                         <img src="https://i.ytimg.com/vi/zf-iC5QRgCA/maxresdefault.jpg" alt="Rainbow GG Minecraft" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                         <div class="absolute inset-0 bg-black/10 group-hover:bg-black/70 transition-colors duration-300"></div>
-                        <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 transition-all duration-300 z-10 absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 drop-shadow-lg"></i>
+                        <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-500 z-10 flex items-center justify-center">
+                            <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg transition-colors duration-300"></i>
+                        </div>
                     </div>
                     <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
                         <h3 class="font-bold text-white mb-1">Rainbow GG Minecraft</h3>
@@ -528,7 +542,9 @@
                         <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Июль 2024</div>
                         <img src="https://yt3.googleusercontent.com/jXudDnrVzU91mcKOam60VYvOLx9QJm8UjxJK12dYU2aXTNkTTDI3qWnywgiPusACrKtmu1v8hQ=s1080-c-k-c0x00ffffff-no-rj" alt="Трейлеры Resolver" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                         <div class="absolute inset-0 bg-black/10 group-hover:bg-black/70 transition-colors duration-300"></div>
-                        <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 transition-all duration-300 z-10 absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 drop-shadow-lg"></i>
+                        <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-500 z-10 flex items-center justify-center">
+                            <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg transition-colors duration-300"></i>
+                        </div>
                     </div>
                     <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
                         <h3 class="font-bold text-white mb-1">Трейлеры Resolver</h3>
@@ -542,7 +558,9 @@
                         <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Фев. 2025</div>
                         <img src="https://i.ytimg.com/vi/tedMCl3rgio/maxresdefault.jpg" alt="Green Agriculture" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                         <div class="absolute inset-0 bg-black/10 group-hover:bg-black/70 transition-colors duration-300"></div>
-                        <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 transition-all duration-300 z-10 absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 drop-shadow-lg"></i>
+                        <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-500 z-10 flex items-center justify-center">
+                            <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg transition-colors duration-300"></i>
+                        </div>
                     </div>
                     <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
                         <h3 class="font-bold text-white mb-1">Green Agriculture</h3>
@@ -556,7 +574,9 @@
                         <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Авг. 2025</div>
                         <img src="https://i.ytimg.com/vi/gtErHwRld1o/hqdefault.jpg" alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                         <div class="absolute inset-0 bg-black/10 group-hover:bg-black/70 transition-colors duration-300"></div>
-                        <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 transition-all duration-300 z-10 absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 drop-shadow-lg"></i>
+                        <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-500 z-10 flex items-center justify-center">
+                            <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg transition-colors duration-300"></i>
+                        </div>
                     </div>
                     <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
                         <h3 class="font-bold text-white mb-1">Фимайн — 
@@ -571,7 +591,9 @@
                         <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Март 2025</div>
                         <img src="https://i.ytimg.com/vi/JyMkIKBMSFY/hqdefault.jpg" alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                         <div class="absolute inset-0 bg-black/10 group-hover:bg-black/70 transition-colors duration-300"></div>
-                        <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 transition-all duration-300 z-10 absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 drop-shadow-lg"></i>
+                        <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-500 z-10 flex items-center justify-center">
+                            <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg transition-colors duration-300"></i>
+                        </div>
                     </div>
                     <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
                         <h3 class="font-bold text-white mb-1">Фимайн — 
@@ -586,7 +608,9 @@
                         <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Нояб. 2024</div>
                         <img src="https://i.ytimg.com/vi/p-t8exzF_d0/hqdefault.jpg" alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                         <div class="absolute inset-0 bg-black/10 group-hover:bg-black/70 transition-colors duration-300"></div>
-                        <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 transition-all duration-300 z-10 absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 drop-shadow-lg"></i>
+                        <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-500 z-10 flex items-center justify-center">
+                            <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg transition-colors duration-300"></i>
+                        </div>
                     </div>
                     <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
                         <h3 class="font-bold text-white mb-1">Фимайн — 
@@ -601,7 +625,9 @@
                         <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Авг. 2024</div>
                         <img src="https://yt3.googleusercontent.com/QhxcGch86Xv3dmjjE5sMGupkcNPRabhlqGSqMq7GJEwhouCpUmY8udRWMluVaXdFIEo2LeTx0g=s1080-c-k-c0x00000000-no-rj" alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                         <div class="absolute inset-0 bg-black/10 group-hover:bg-black/70 transition-colors duration-300"></div>
-                        <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 transition-all duration-300 z-10 absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 drop-shadow-lg"></i>
+                        <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-500 z-10 flex items-center justify-center">
+                            <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg transition-colors duration-300"></i>
+                        </div>
                     </div>
                     <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
                         <h3 class="font-bold text-white mb-1">Монтаж для Делика</h3>
