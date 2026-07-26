@@ -12,7 +12,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-        /* --- STREAMING_CHUNK:Определение глобальных переменных цвета --- */
+        /* --- Определение глобальных переменных цвета --- */
         :root {
             /* Базовые цвета */
             --color-bg: #0a021c; 
@@ -54,7 +54,7 @@
             min-height: 100vh;
         }
 
-        /* --- STREAMING_CHUNK:Анимированный фон (Масляные разводы) --- */
+        /* --- Анимированный фон (Масляные разводы) --- */
         .mesh-bg {
             position: fixed;
             inset: 0;
@@ -81,14 +81,13 @@
             100% { transform: translate(-10%, 5%) scale(0.9); }
         }
 
-        /* --- STREAMING_CHUNK:Стили карточек и кнопок --- */
+        /* --- Стили карточек и кнопок --- */
         .glass-card {
             background: var(--color-card-bg);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--color-card-border);
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            /* Плавный возврат в исходное положение */
             transition: transform 0.2s ease-out; 
             transform-style: preserve-3d;
         }
@@ -102,13 +101,12 @@
             position: absolute;
             inset: 0;
             border-radius: inherit;
-            padding: 1px; /* Толщина светящейся рамки */
+            padding: 1px;
             background: radial-gradient(
                 400px circle at var(--mouse-x, -100px) var(--mouse-y, -100px),
                 var(--color-accent),
                 transparent 40%
             );
-            /* Обрезаем всё, кроме рамки */
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
@@ -117,36 +115,6 @@
             z-index: 5;
             opacity: var(--spotlight-opacity, 0);
             transition: opacity 0.3s ease;
-        }
-
-        .link-btn {
-            display: flex;
-            align-items: center;
-            width: 100%;
-            padding: 1rem 1.25rem;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 0.75rem;
-            color: var(--color-text-main);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .link-btn:hover {
-            background: rgba(255, 255, 255, 0.08);
-            transform: translateY(-2px);
-        }
-
-        .btn-primary {
-            background: var(--color-accent);
-            border: none;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: var(--color-accent-hover);
-            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.5);
         }
 
         /* Подсветка скиллов при наведении */
@@ -161,8 +129,7 @@
             transform: translateY(-2px);
         }
 
-        /* --- STREAMING_CHUNK:Стили Плеера --- */
-        /* Плашка вынесена ИЗ карточки, поэтому позиционируется относительно Wrapper'а */
+        /* --- Стили Плеера --- */
         .player-panel {
             position: absolute;
             z-index: 5;
@@ -181,7 +148,6 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        /* Для мобилок выезжает вниз из-под карточки */
         @media (max-width: 768px) {
             .player-panel {
                 bottom: -5rem;
@@ -198,7 +164,6 @@
             }
         }
         
-        /* Для ПК выезжает вправо из-под карточки */
         @media (min-width: 769px) {
             .player-panel {
                 top: 1.5rem;
@@ -207,7 +172,7 @@
             }
             .player-panel.active {
                 opacity: 1;
-                transform: translateX(105%) scale(1); /* Выезд вправо */
+                transform: translateX(105%) scale(1);
                 pointer-events: auto;
             }
         }
@@ -253,7 +218,6 @@
             100% { transform: scale(1.5); opacity: 0; }
         }
 
-        /* Ползунок громкости */
         input[type=range] {
             -webkit-appearance: none;
             width: 100px;
@@ -299,42 +263,32 @@
     <!-- Контент -->
     <div class="relative z-10 flex flex-col items-center pt-20 pb-20 px-4 w-full gap-16">
         
-        <!-- Обертка карточки (анимируется появление, чтобы не ломать 3D наклон внутри) -->
         <div class="relative w-full max-w-md mx-auto fade-in-up z-20">
             
-            <!-- --- STREAMING_CHUNK:HTML Плеера (вынесен из карточки) --- -->
             <!-- Выпадающая панель плеера -->
             <div id="player-panel" class="player-panel">
                 <div class="flex items-center gap-3 w-64 overflow-hidden">
-                <!-- Блок обложки: картинка заменяет иконку -->
                     <div class="w-10 h-10 rounded overflow-hidden flex-shrink-0 bg-[var(--color-accent)] flex items-center justify-center text-white">
-                        <!-- Если картинка не загрузится, покажется иконка -->
                         <img src="https://cdn-image.zvuk.com/pic?hash=90b321de-52a5-4f53-8a6d-bfe0cb66b3b5&id=38128316&size=medium&type=release" alt="Cover" class="w-full h-full object-cover onError='this.style.display=\"none\"'">
-                        <!-- <i class="fa-solid fa-music absolute"></i> -->
                     </div>
-    
-                <!-- Блок с текстом: фиксированная ширина и скрытие вылезающего текста -->
-                <div class="flex-1 min-w-0 overflow-hidden">
-                    <!-- Контейнер для бегущей строки -->
-                    <div class="w-full overflow-hidden whitespace-nowrap mask-gradient">
-                        <h4 class="inline-block text-sm font-bold text-white leading-tight animate-marquee hover:[animation-play-state:paused] pr-3">
-                            Outsider No More
-                        </h4>
+                    <div class="flex-1 min-w-0 overflow-hidden">
+                        <div class="w-full overflow-hidden whitespace-nowrap mask-gradient">
+                            <h4 class="inline-block text-sm font-bold text-white leading-tight animate-marquee hover:[animation-play-state:paused] pr-3">
+                                Outsider No More
+                            </h4>
+                        </div>
+                        <p class="text-xs text-gray-400 truncate">P.T. Adamczyk</p>
                     </div>
-                    <p class="text-xs text-gray-400 truncate">P.T. Adamczyk</p>
                 </div>
-            </div>
                 <div class="flex items-center gap-2 ml-2">
                     <i class="fa-solid fa-volume-low text-xs text-gray-400"></i>
-                    <!-- Громкость 30% = value="0.3" -->
                     <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.3">
                 </div>
             </div>
 
-            <!-- Сама карточка (наклоняется и светится) -->
+            <!-- Сама карточка -->
             <div id="main-card" class="glass-card spotlight-border rounded-3xl relative p-8 text-center group z-10">
                 
-                <!-- Кнопка Play/Pause -->
                 <button id="music-toggle" class="music-btn" aria-label="Play music">
                     <i class="fa-solid fa-play ml-1" id="music-icon"></i>
                     <div class="music-pulse"></div>
@@ -343,7 +297,6 @@
                 <!-- Аватарка -->
                 <div class="relative w-28 h-28 mx-auto mb-6">
                     <div class="absolute inset-0 bg-[var(--color-accent)] rounded-full blur-[20px] opacity-40 group-hover:opacity-70 transition-opacity duration-500"></div>
-                    <!-- Сюда вставляете ссылку на фото -->
                     <img src="https://i.imgur.com/YYl2MS3.jpeg" alt="Profile" class="relative w-full h-full object-cover rounded-full border-2 border-white/10 z-10">
                 </div>
 
@@ -363,22 +316,22 @@
                     <span class="skill-badge px-3 py-1 text-xs font-medium bg-white/5 border border-white/10 rounded-full text-gray-300 cursor-default">Google AI</span>
                 </div>
 
-                <!-- Ссылки -->
+                <!-- Ссылки (Дизайн перенесен в классы HTML для стабильности на Vercel) -->
                 <div class="flex flex-col gap-3">
-                    <a href="#portfolio" class="link-btn btn-primary spotlight-border justify-center group-link">
+                    <a href="#portfolio" class="flex items-center justify-center w-full px-5 py-4 bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white font-medium rounded-xl transition-all hover:-translate-y-1 shadow-[0_8px_25px_rgba(139,92,246,0.5)] spotlight-border">
                         <i class="fa-solid fa-circle-play mr-3"></i>
                         Портфолио ↓
                     </a>
-                    <a href="https://telegram.me/fulestor" class="link-btn spotlight-border group-link">
+                    <a href="https://telegram.me/fulestor" class="flex items-center w-full px-5 py-4 bg-white/5 border border-white/10 hover:bg-white/10 text-white font-medium rounded-xl transition-all hover:-translate-y-1 spotlight-border group-link">
                         <i class="fa-brands fa-telegram text-[var(--color-accent)] text-lg mr-3 w-5 text-center"></i>
                         Связаться в Telegram
                     </a>
-                    <a href="https://www.youtube.com/@delik_kryt/videos" class="link-btn spotlight-border group-link">
+                    <a href="https://www.youtube.com/@delik_kryt/videos" class="flex items-center w-full px-5 py-4 bg-white/5 border border-white/10 hover:bg-white/10 text-white font-medium rounded-xl transition-all hover:-translate-y-1 spotlight-border group-link">
                         <i class="fa-brands fa-youtube text-[var(--color-accent)] text-lg mr-3 w-5 text-center"></i>
                         Мой YouTube канал
                     </a>
                     <hr style="border: none; height: 1px; opacity: 60%; background: linear-gradient(to right, transparent, var(--color-accent), transparent); margin: 15px 0;">
-                    <a href="https://telegram.me/EXZALTIVE" class="link-btn spotlight-border group-link">
+                    <a href="https://telegram.me/EXZALTIVE" class="flex items-center w-full px-5 py-4 bg-white/5 border border-white/10 hover:bg-white/10 text-white font-medium rounded-xl transition-all hover:-translate-y-1 spotlight-border group-link">
                         <i class="fa-brands fa-telegram text-[var(--color-accent)] text-lg mr-3 w-5 text-center"></i>
                         Студия EXZALTIVE
                     </a>
@@ -386,7 +339,7 @@
             </div>
         </div>
 
-        <!-- --- STREAMING_CHUNK:Секция Портфолио (Гибрид Картинка + Иконка) --- -->
+        <!-- Секция Портфолио -->
         <section id="portfolio" class="w-full max-w-4xl mx-auto flex flex-col items-center fade-in-up z-10" style="animation-delay: 0.2s;">
             <h2 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
                 <i class="fa-solid fa-film text-[var(--color-accent)]"></i> Мои работы
@@ -394,14 +347,10 @@
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full px-4">
                 
-                <!-- Проект 1 -->
                 <a href="#" class="glass-card spotlight-border rounded-2xl overflow-hidden group block hover:-translate-y-2 transition-transform duration-300">
                     <div class="h-48 relative flex items-center justify-center overflow-hidden">
-                        <!-- Фоновая картинка. Замените src на превью вашего видео -->
                         <img src="https://placehold.co/150x150/1a1a1a/ffffff?text=Делик" alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
-                        <!-- Темное наложение -->
                         <div class="absolute inset-0 bg-black/30 group-hover:bg-black/85 transition-colors duration-300"></div>
-                        <!-- Иконка поверх -->
                         <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 transition-all duration-300 z-10 absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 drop-shadow-lg"></i>
                     </div>
                     <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)]">
@@ -410,14 +359,10 @@
                     </div>
                 </a>
 
-                <!-- Проект 1 -->
                 <a href="#" class="glass-card spotlight-border rounded-2xl overflow-hidden group block hover:-translate-y-2 transition-transform duration-300">
                     <div class="h-48 relative flex items-center justify-center overflow-hidden">
-                        <!-- Фоновая картинка. Замените src на превью вашего видео -->
                         <img src="https://i.ytimg.com/vi/QnHQds4DmOI/hqdefault.jpg?sqp=-oaymwEnCNACELwBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLDE8F9YwBEhjeGq7wiTFabeh8yGRA" alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                        <!-- Темное наложение -->
                         <div class="absolute inset-0 bg-black/30 group-hover:bg-black/85 transition-colors duration-300"></div>
-                        <!-- Иконка поверх -->
                         <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 transition-all duration-300 z-10 absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 drop-shadow-lg"></i>
                     </div>
                     <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)]">
@@ -432,12 +377,12 @@
 
     </div>
 
-    <!-- Аудио трек -->
+    <!-- Аудио трек (Обязательно скачайте и положите файл рядом с index.html!) -->
     <audio id="bg-audio" loop>
-        <source src="https://ru.hitmoz.org/get/music/20220305/PT_Adamczyk_-_16_Outsider_No_More_Cyberpunk_2077_OST_73893203.mp3" type="audio/mpeg">
+        <source src="outsider-no-more.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- --- STREAMING_CHUNK:Логика JavaScript --- -->
+    <!-- --- Логика JavaScript --- -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
@@ -449,25 +394,20 @@
             const volumeSlider = document.getElementById('volume-slider');
             
             let isPlaying = false;
-            let playPromise;
             
             // Стартовая громкость (30%)
             audio.volume = 0.3;
 
-            toggleBtn.addEventListener('click', (e) => {
+            toggleBtn.addEventListener('click', async (e) => {
                 // Останавливаем всплытие клика, чтобы не мешать анимациям
                 e.stopPropagation(); 
                 
                 if (isPlaying) {
-                    if (playPromise !== undefined) {
-                        playPromise.then(_ => {
-                            audio.pause();
-                            icon.classList.replace('fa-pause', 'fa-play');
-                            toggleBtn.classList.remove('playing');
-                            playerPanel.classList.remove('active');
-                            isPlaying = false;
-                        }).catch(error => console.error(error));
-                    }
+                    audio.pause();
+                    icon.classList.replace('fa-pause', 'fa-play');
+                    toggleBtn.classList.remove('playing');
+                    playerPanel.classList.remove('active');
+                    isPlaying = false;
                 } else {
                     // Сразу показываем панель (UI реагирует мгновенно)
                     icon.classList.replace('fa-play', 'fa-pause');
@@ -475,16 +415,15 @@
                     playerPanel.classList.add('active');
                     isPlaying = true;
                     
-                    // Запускаем звук
-                    playPromise = audio.play();
-                    playPromise.catch(error => {
-                        console.error("Автовоспроизведение заблокировано", error);
-                        // Если браузер заблокировал звук, откатываем UI назад
+                    try {
+                        await audio.play();
+                    } catch (error) {
+                        console.error("Ошибка аудио (нужно загрузить mp3 файл в папку проекта):", error);
+                        // Откатываем UI только при реальной ошибке браузера/файла
                         icon.classList.replace('fa-pause', 'fa-play');
                         toggleBtn.classList.remove('playing');
-                        playerPanel.classList.remove('active');
                         isPlaying = false;
-                    });
+                    }
                 }
             });
 
