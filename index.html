@@ -31,29 +31,7 @@
             /* Текст */
             --color-text-main: #ffffff;
         }
-
-        @keyframes marquee {
-            0% { transform: translate3d(2%, 0, 0); }
-            100% { transform: translate3d(-15%, 0, 0); }
-        }
-        .animate-marquee {
-            display: inline-block;
-            animation: marquee 6s linear infinite;
-            /* Фикс рендеринга шрифта: */
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            text-rendering: optimizeLegibility;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--color-bg);
-            color: var(--color-text-main);
-            overflow-x: hidden;
-            margin: 0;
-            min-height: 100vh;
-        }
-
+        
         /* --- Анимированный фон (Масляные разводы) --- */
         .mesh-bg {
             position: fixed;
@@ -127,6 +105,37 @@
             box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
             color: #fff;
             transform: translateY(-2px);
+        }
+        
+        /* Маска для плавного растворения текста по краям (Fade-out) */
+        .mask-gradient {
+            -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        .animate-marquee {
+            display: flex;
+            width: max-content;
+            animation: marquee 7s linear infinite;
+            will-change: transform;
+            /* Фикс рендеринга шрифта: */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text-main);
+            overflow-x: hidden;
+            margin: 0;
+            min-height: 100vh;
         }
 
         /* --- Стили Плеера --- */
@@ -271,14 +280,18 @@
                     <div class="w-10 h-10 rounded overflow-hidden flex-shrink-0 bg-[var(--color-accent)] flex items-center justify-center text-white">
                         <img src="https://cdn-image.zvuk.com/pic?hash=90b321de-52a5-4f53-8a6d-bfe0cb66b3b5&id=38128316&size=medium&type=release" alt="Cover" class="w-full h-full object-cover onError='this.style.display=\"none\"'">
                     </div>
-                    <div class="flex-1 min-w-0 overflow-hidden">
-                        <div class="w-full overflow-hidden whitespace-nowrap mask-gradient">
-                            <h4 class="inline-block text-sm font-bold text-white leading-tight animate-marquee hover:[animation-play-state:paused] pr-3">
-                                Outsider No More
-                            </h4>
+                    <!-- ... existing code ... -->
+                <!-- Блок с текстом: фиксированная ширина и скрытие вылезающего текста -->
+                <div class="flex-1 min-w-0 overflow-hidden">
+                    <!-- Контейнер для бегущей строки -->
+                    <div class="w-full overflow-hidden mask-gradient flex">
+                        <div class="animate-marquee hover:[animation-play-state:paused]">
+                            <h4 class="text-sm font-bold text-white leading-tight pr-6 shrink-0">Outsider No More</h4>
+                            <h4 class="text-sm font-bold text-white leading-tight pr-6 shrink-0" aria-hidden="true">Outsider No More</h4>
                         </div>
-                        <p class="text-xs text-gray-400 truncate">P.T. Adamczyk</p>
                     </div>
+                    <p class="text-xs text-gray-400 truncate mt-0.5">P.T. Adamczyk</p>
+                </div>
                 </div>
                 <div class="flex items-center gap-2 ml-2">
                     <i class="fa-solid fa-volume-low text-xs text-gray-400"></i>
@@ -322,16 +335,16 @@
                         <i class="fa-solid fa-circle-play mr-3"></i>
                         Портфолио ↓
                     </a>
-                    <a href="https://telegram.me/fulestor" class="flex items-center w-full px-5 py-4 bg-white/5 border border-white/10 hover:bg-white/10 text-white font-medium rounded-xl transition-all hover:-translate-y-1 spotlight-border group-link">
+                    <a href="https://telegram.me/fulestor" target="_blank class="flex items-center w-full px-5 py-4 bg-white/5 border border-white/10 hover:bg-white/10 text-white font-medium rounded-xl transition-all hover:-translate-y-1 spotlight-border group-link">
                         <i class="fa-brands fa-telegram text-[var(--color-accent)] text-lg mr-3 w-5 text-center"></i>
                         Связаться в Telegram
                     </a>
-                    <a href="https://www.youtube.com/@delik_kryt/videos" class="flex items-center w-full px-5 py-4 bg-white/5 border border-white/10 hover:bg-white/10 text-white font-medium rounded-xl transition-all hover:-translate-y-1 spotlight-border group-link">
+                    <a href="https://www.youtube.com/@delik_kryt/videos" target="_blank class="flex items-center w-full px-5 py-4 bg-white/5 border border-white/10 hover:bg-white/10 text-white font-medium rounded-xl transition-all hover:-translate-y-1 spotlight-border group-link">
                         <i class="fa-brands fa-youtube text-[var(--color-accent)] text-lg mr-3 w-5 text-center"></i>
                         Мой YouTube канал
                     </a>
                     <hr style="border: none; height: 1px; opacity: 60%; background: linear-gradient(to right, transparent, var(--color-accent), transparent); margin: 15px 0;">
-                    <a href="https://telegram.me/EXZALTIVE" class="flex items-center w-full px-5 py-4 bg-white/5 border border-white/10 hover:bg-white/10 text-white font-medium rounded-xl transition-all hover:-translate-y-1 spotlight-border group-link">
+                    <a href="https://telegram.me/EXZALTIVE" target="_blank class="flex items-center w-full px-5 py-4 bg-white/5 border border-white/10 hover:bg-white/10 text-white font-medium rounded-xl transition-all hover:-translate-y-1 spotlight-border group-link">
                         <i class="fa-brands fa-telegram text-[var(--color-accent)] text-lg mr-3 w-5 text-center"></i>
                         Студия EXZALTIVE
                     </a>
@@ -339,42 +352,64 @@
             </div>
         </div>
 
-        <!-- Секция Портфолио -->
+       <!-- ... existing code ... -->
+        <!-- --- STREAMING_CHUNK:Секция Портфолио (Гибрид Картинка + Иконка) --- -->
         <section id="portfolio" class="w-full max-w-4xl mx-auto flex flex-col items-center fade-in-up z-10" style="animation-delay: 0.2s;">
             <h2 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
                 <i class="fa-solid fa-film text-[var(--color-accent)]"></i> Мои работы
             </h2>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full px-4">
+            <!-- Bento-сетка: flex-гибрид с центрированием и динамичными размерами -->
+            <div class="grid grid-cols-1 md:grid-cols-3 md:auto-rows-[220px] grid-flow-row-dense gap-6 w-full px-4 place-content-center justify-items-center md:justify-items-stretch">
                 
-                <a href="#" class="glass-card spotlight-border rounded-2xl overflow-hidden group block hover:-translate-y-2 transition-transform duration-300">
-                    <div class="h-48 relative flex items-center justify-center overflow-hidden">
-                        <img src="https://placehold.co/150x150/1a1a1a/ffffff?text=Делик" alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-black/30 group-hover:bg-black/85 transition-colors duration-300"></div>
+                <!-- Проект 1: Широкая плашка (2 колонки в ширину) -->
+                <a href="#" class="glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-300 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1">
+                    <div class="relative flex-1 flex items-center justify-center overflow-hidden min-h-[160px]">
+                        <!-- Дата работы -->
+                        <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Ноя. 2023</div>
+                        <img src="https://i.ytimg.com/vi/QnHQds4DmOI/hqdefault.jpg" alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/30 group-hover:bg-black/70 transition-colors duration-300"></div>
                         <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 transition-all duration-300 z-10 absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 drop-shadow-lg"></i>
                     </div>
-                    <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)]">
+                    <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
                         <h3 class="font-bold text-white mb-1">Монтаж для YouTube</h3>
-                        <p class="text-xs text-gray-400">Динамичный влог с цветокоррекцией и саунд-дизайном.</p>
+                        <p class="text-xs text-gray-400 line-clamp-1">Динамичный влог с цветокоррекцией и саунд-дизайном.</p>
                     </div>
                 </a>
 
-                <a href="#" class="glass-card spotlight-border rounded-2xl overflow-hidden group block hover:-translate-y-2 transition-transform duration-300">
-                    <div class="h-48 relative flex items-center justify-center overflow-hidden">
-                        <img src="https://i.ytimg.com/vi/QnHQds4DmOI/hqdefault.jpg?sqp=-oaymwEnCNACELwBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLDE8F9YwBEhjeGq7wiTFabeh8yGRA" alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-black/30 group-hover:bg-black/85 transition-colors duration-300"></div>
-                        <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 transition-all duration-300 z-10 absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 drop-shadow-lg"></i>
+                <!-- Проект 2: Высокая плашка (2 строки в высоту, 1 в ширину) -->
+                <a href="#" class="glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-300 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2">
+                    <div class="relative flex-1 flex items-center justify-center overflow-hidden min-h-[220px]">
+                        <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Авг. 2023</div>
+                        <img src="https://placehold.co/300x600/1a1a2e/ffffff?text=Reels" alt="Reels" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/30 group-hover:bg-black/70 transition-colors duration-300"></div>
+                        <i class="fa-brands fa-instagram text-4xl text-white/80 group-hover:text-pink-500 transition-all duration-300 z-10 absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 drop-shadow-lg"></i>
                     </div>
-                    <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)]">
-                        <h3 class="font-bold text-white mb-1">Монтаж для YouTube</h3>
-                        <p class="text-xs text-gray-400">Динамичный влог с цветокоррекцией и саунд-дизайном.</p>
+                    <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
+                        <h3 class="font-bold text-white mb-1">Instagram Reels</h3>
+                        <p class="text-xs text-gray-400 line-clamp-2">Короткие вертикальные видео с удержанием внимания.</p>
                     </div>
                 </a>
+                
+                <!-- Проект 3: Обычная плашка или широкая -->
+                <a href="#" class="glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-300 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1">
+                    <div class="relative flex-1 flex items-center justify-center overflow-hidden min-h-[160px]">
+                        <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Янв. 2024</div>
+                        <img src="https://placehold.co/600x300/1a1a2e/ffffff?text=Promo" alt="Promo" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/30 group-hover:bg-black/70 transition-colors duration-300"></div>
+                        <i class="fa-solid fa-bolt text-4xl text-white/80 group-hover:text-yellow-400 transition-all duration-300 z-10 absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 drop-shadow-lg"></i>
+                    </div>
+                    <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
+                        <h3 class="font-bold text-white mb-1">Рекламный креатив</h3>
+                        <p class="text-xs text-gray-400 line-clamp-1">Динамичный монтаж для привлечения внимания.</p>
+                    </div>
+                </a>
+
             </div>
             
-            <p class="text-gray-500 text-xs mt-10">© 2024. Все права защищены.</p>
+            <p class="text-gray-500 text-xs mt-10">© 2026. Все права защищены.</p>
         </section>
-
+<!-- ... existing code ... -->
     </div>
 
     <!-- Аудио трек (Обязательно скачайте и положите файл рядом с index.html!) -->
