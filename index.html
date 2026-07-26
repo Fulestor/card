@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>delmyname Монтажёр | Визитка</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        /* --- STREAMING_CHUNK:Определение глобальных переменных цвета --- */
+        :root {
+            /* Базовые цвета */
+            --color-bg: #0a021c; 
+            --color-accent: #8b5cf6; 
+            --color-accent-hover: #7c3aed;
+            
+            /* Цвета карточек */
+            --color-card-bg: rgba(20, 20, 25, 0.6);
+            --color-card-border: rgba(255, 255, 255, 0.08);
+            
+            /* Цвета фоновых разводов */
+            --blob-1: #7f00fb;
+            --blob-2: #0008ff;
+            --blob-3: #4f81ff;
+            
+            /* Текст */
+            --color-text-main: #ffffff;
+        }
+
+        @keyframes marquee {
+            0% { transform: translate3d(2%, 0, 0); }
+            100% { transform: translate3d(-15%, 0, 0); }
+        }
+        .animate-marquee {
+            display: inline-block;
+            animation: marquee 6s linear infinite;
+            /* Фикс рендеринга шрифта: */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text-main);
+            overflow-x: hidden;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        /* --- STREAMING_CHUNK:Анимированный фон (Масляные разводы) --- */
+        .mesh-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            background: var(--color-bg);
+        }
+
+        .blob {
+            position: absolute;
+            filter: blur(40px);
+            opacity: 0.3; /* Яркие, но мягкие пятна */
+            animation: moveBlob 10s infinite alternate ease-in-out;
+            border-radius: 40%;
+        }
+
+        .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--blob-1); }
+        .blob-2 { bottom: -20%; right: -10%; width: 60vw; height: 60vw; background: var(--blob-2); animation-delay: -5s; }
+        .blob-3 { top: 30%; left: 20%; width: 50vw; height: 50vw; background: var(--blob-3); animation-delay: -10s; }
+
+        @keyframes moveBlob {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(10%, 15%) scale(1.1); }
+            100% { transform: translate(-10%, 5%) scale(0.9); }
+        }
+
+        /* --- STREAMING_CHUNK:Стили карточек и кнопок --- */
+        .glass-card {
+            background: var(--color-card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--color-card-border);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            /* Плавный возврат в исходное положение */
+            transition: transform 0.2s ease-out; 
+            transform-style: preserve-3d;
+        }
+
+        /* Маска для свечения строго по контуру 1px (Spotlight) */
+        .spotlight-border {
+            position: relative;
+        }
+        .spotlight-border::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px; /* Толщина светящейся рамки */
+            background: radial-gradient(
+                400px circle at var(--mouse-x, -100px) var(--mouse-y, -100px),
+                var(--color-accent),
+                transparent 40%
+            );
+            /* Обрезаем всё, кроме рамки */
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            z-index: 5;
+            opacity: var(--spotlight-opacity, 0);
+            transition: opacity 0.3s ease;
+        }
+
+        .link-btn {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 1rem 1.25rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 0.75rem;
+            color: var(--color-text-main);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .link-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: var(--color-accent);
+            border: none;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--color-accent-hover);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.5);
+        }
+
+        /* Подсветка скиллов при наведении */
+        .skill-badge {
+            transition: all 0.3s ease;
+        }
+        .skill-badge:hover {
+            background-color: rgba(139, 92, 246, 0.2);
+            border-color: var(--color-accent);
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        /* --- STREAMING_CHUNK:Стили Плеера --- */
+        /* Плашка вынесена ИЗ карточки, поэтому позиционируется относительно Wrapper'а */
+        .player-panel {
+            position: absolute;
+            z-index: 5;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--color-card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--color-card-border);
+            border-radius: 1rem;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* Для мобилок выезжает вниз из-под карточки */
+        @media (max-width: 768px) {
+            .player-panel {
+                bottom: -5rem;
+                right: 0;
+                left: 0;
+                margin: 0 auto;
+                width: max-content;
+                transform: translateY(-20px) scale(0.95);
+            }
+            .player-panel.active {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                pointer-events: auto;
+            }
+        }
+        
+        /* Для ПК выезжает вправо из-под карточки */
+        @media (min-width: 769px) {
+            .player-panel {
+                top: 1.5rem;
+                right: 0; 
+                transform: translateX(0) scale(0.95);
+            }
+            .player-panel.active {
+                opacity: 1;
+                transform: translateX(105%) scale(1); /* Выезд вправо */
+                pointer-events: auto;
+            }
+        }
+
+        .music-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            z-index: 10; 
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: white;
+        }
+
+        .music-btn:hover {
+            background: var(--color-accent);
+            transform: scale(1.05);
+        }
+
+        .music-pulse {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: var(--color-accent);
+            z-index: -1;
+            opacity: 0;
+        }
+
+        .playing .music-pulse {
+            animation: pulse 1.2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.4; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+
+        /* Ползунок громкости */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100px;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 12px;
+            width: 12px;
+            border-radius: 50%;
+            background: var(--color-accent);
+            cursor: pointer;
+            margin-top: -4px;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: rgba(255,255,255,0.2);
+            border-radius: 2px;
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s forwards ease-out;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="relative selection:bg-purple-500/30">
+
+    <!-- Фоновые элементы -->
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <!-- Контент -->
+    <div class="relative z-10 flex flex-col items-center pt-20 pb-20 px-4 w-full gap-16">
+        
+        <!-- Обертка карточки (анимируется появление, чтобы не ломать 3D наклон внутри) -->
+        <div class="relative w-full max-w-md mx-auto fade-in-up z-20">
+            
+            <!-- --- STREAMING_CHUNK:HTML Плеера (вынесен из карточки) --- -->
+            <!-- Выпадающая панель плеера -->
+            <div id="player-panel" class="player-panel">
+                <div class="flex items-center gap-3 w-64 overflow-hidden">
+                <!-- Блок обложки: картинка заменяет иконку -->
+                    <div class="w-10 h-10 rounded overflow-hidden flex-shrink-0 bg-[var(--color-accent)] flex items-center justify-center text-white">
+                        <!-- Если картинка не загрузится, покажется иконка -->
+                        <img src="https://avatars.yandex.net/get-music-content/17722696/323c7244.a.20801335-2/m1000x1000" alt="Cover" class="w-full h-full object-cover onError='this.style.display=\"none\"'">
+                        <!-- <i class="fa-solid fa-music absolute"></i> -->
+                    </div>
+    
+                <!-- Блок с текстом: фиксированная ширина и скрытие вылезающего текста -->
+                <div class="flex-1 min-w-0 overflow-hidden">
+                    <!-- Контейнер для бегущей строки -->
+                    <div class="w-full overflow-hidden whitespace-nowrap mask-gradient">
+                        <h4 class="inline-block text-sm font-bold text-white leading-tight animate-marquee hover:[animation-play-state:paused] pr-3">
+                            Never Fade Away (SAMURAI Cover)
+                        </h4>
+                    </div>
+                    <p class="text-xs text-gray-400 truncate">P.T. Adamczyk, Olga Jankowska</p>
+                </div>
+            </div>
+                <div class="flex items-center gap-2 ml-2">
+                    <i class="fa-solid fa-volume-low text-xs text-gray-400"></i>
+                    <!-- Громкость 30% = value="0.3" -->
+                    <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.3">
+                </div>
+            </div>
+
+            <!-- Сама карточка (наклоняется и светится) -->
+            <div id="main-card" class="glass-card spotlight-border rounded-3xl relative p-8 text-center group z-10">
+                
+                <!-- Кнопка Play/Pause -->
+                <button id="music-toggle" class="music-btn" aria-label="Play music">
+                    <i class="fa-solid fa-play ml-1" id="music-icon"></i>
+                    <div class="music-pulse"></div>
+                </button>
+
+                <!-- Аватарка -->
+                <div class="relative w-28 h-28 mx-auto mb-6">
+                    <div class="absolute inset-0 bg-[var(--color-accent)] rounded-full blur-[20px] opacity-40 group-hover:opacity-70 transition-opacity duration-500"></div>
+                    <!-- Сюда вставляете ссылку на фото -->
+                    <img src="https://i.imgur.com/YYl2MS3.jpeg" alt="Profile" class="relative w-full h-full object-cover rounded-full border-2 border-white/10 z-10">
+                </div>
+
+                <h1 class="text-3xl font-bold text-white mb-1 tracking-tight">
+                    Герман<span class="text-white/50 font-medium"> delmyname</span>
+                </h1>
+                <p class="text-[var(--color-accent)] font-semibold text-sm tracking-widest uppercase mb-4">Video editor & creator</p>
+                <p class="text-gray-300 text-sm mb-6 leading-relaxed">
+                    Создаю динамичные видео, Reels, Shorts и рекламные креативы.
+                    <span class="text-white font-semibold">Воплощаю ваши идеи в кадре. 🎬</span>
+                </p>
+
+                <!-- Плашки навыков -->
+                <div class="flex flex-wrap justify-center gap-2 mb-8">
+                    <span class="skill-badge px-3 py-1 text-xs font-medium bg-white/5 border border-white/10 rounded-full text-gray-300 cursor-default">Premiere Pro</span>
+                    <span class="skill-badge px-3 py-1 text-xs font-medium bg-white/5 border border-white/10 rounded-full text-gray-300 cursor-default">After Effects</span>
+                    <span class="skill-badge px-3 py-1 text-xs font-medium bg-white/5 border border-white/10 rounded-full text-gray-300 cursor-default">Google AI</span>
+                </div>
+
+                <!-- Ссылки -->
+                <div class="flex flex-col gap-3">
+                    <a href="#portfolio" class="link-btn btn-primary spotlight-border justify-center group-link">
+                        <i class="fa-solid fa-circle-play mr-3"></i>
+                        Портфолио ↓
+                    </a>
+                    <a href="https://telegram.me/fulestor" class="link-btn spotlight-border group-link">
+                        <i class="fa-brands fa-telegram text-[var(--color-accent)] text-lg mr-3 w-5 text-center"></i>
+                        Связаться в Telegram
+                    </a>
+                    <a href="https://www.youtube.com/@delik_kryt/videos" class="link-btn spotlight-border group-link">
+                        <i class="fa-brands fa-youtube text-[var(--color-accent)] text-lg mr-3 w-5 text-center"></i>
+                        Мой YouTube канал
+                    </a>
+                    <hr style="border: none; height: 1px; opacity: 60%; background: linear-gradient(to right, transparent, var(--color-accent), transparent); margin: 15px 0;">
+                    <a href="https://telegram.me/EXZALTIVE" class="link-btn spotlight-border group-link">
+                        <i class="fa-brands fa-telegram text-[var(--color-accent)] text-lg mr-3 w-5 text-center"></i>
+                        Студия EXZALTIVE
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- --- STREAMING_CHUNK:Секция Портфолио (Гибрид Картинка + Иконка) --- -->
+        <section id="portfolio" class="w-full max-w-4xl mx-auto flex flex-col items-center fade-in-up z-10" style="animation-delay: 0.2s;">
+            <h2 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                <i class="fa-solid fa-film text-[var(--color-accent)]"></i> Мои работы
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full px-4">
+                
+                <!-- Проект 1 -->
+                <a href="#" class="glass-card spotlight-border rounded-2xl overflow-hidden group block hover:-translate-y-2 transition-transform duration-300">
+                    <div class="h-48 relative flex items-center justify-center overflow-hidden">
+                        <!-- Фоновая картинка. Замените src на превью вашего видео -->
+                        <img src="https://placehold.co/150x150/1a1a1a/ffffff?text=Делик" alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+                        <!-- Темное наложение -->
+                        <div class="absolute inset-0 bg-black/30 group-hover:bg-black/85 transition-colors duration-300"></div>
+                        <!-- Иконка поверх -->
+                        <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 transition-all duration-300 z-10 absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 drop-shadow-lg"></i>
+                    </div>
+                    <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)]">
+                        <h3 class="font-bold text-white mb-1">Монтаж для YouTube</h3>
+                        <p class="text-xs text-gray-400">Динамичный влог с цветокоррекцией и саунд-дизайном.</p>
+                    </div>
+                </a>
+
+                <!-- Проект 1 -->
+                <a href="#" class="glass-card spotlight-border rounded-2xl overflow-hidden group block hover:-translate-y-2 transition-transform duration-300">
+                    <div class="h-48 relative flex items-center justify-center overflow-hidden">
+                        <!-- Фоновая картинка. Замените src на превью вашего видео -->
+                        <img src="https://i.ytimg.com/vi/QnHQds4DmOI/hqdefault.jpg?sqp=-oaymwEnCNACELwBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLDE8F9YwBEhjeGq7wiTFabeh8yGRA" alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <!-- Темное наложение -->
+                        <div class="absolute inset-0 bg-black/30 group-hover:bg-black/85 transition-colors duration-300"></div>
+                        <!-- Иконка поверх -->
+                        <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 transition-all duration-300 z-10 absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 drop-shadow-lg"></i>
+                    </div>
+                    <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)]">
+                        <h3 class="font-bold text-white mb-1">Монтаж для YouTube</h3>
+                        <p class="text-xs text-gray-400">Динамичный влог с цветокоррекцией и саунд-дизайном.</p>
+                    </div>
+                </a>
+            </div>
+            
+            <p class="text-gray-500 text-xs mt-10">© 2024. Все права защищены.</p>
+        </section>
+
+    </div>
+
+    <!-- Аудио трек -->
+    <audio id="bg-audio" loop>
+        <source src="https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- --- STREAMING_CHUNK:Логика JavaScript --- -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            /* --- 1. Логика Плеера --- */
+            const audio = document.getElementById('bg-audio');
+            const toggleBtn = document.getElementById('music-toggle');
+            const icon = document.getElementById('music-icon');
+            const playerPanel = document.getElementById('player-panel');
+            const volumeSlider = document.getElementById('volume-slider');
+            
+            let isPlaying = false;
+            let playPromise;
+            
+            // Стартовая громкость (30%)
+            audio.volume = 0.3;
+
+            toggleBtn.addEventListener('click', (e) => {
+                // Останавливаем всплытие клика, чтобы не мешать анимациям
+                e.stopPropagation(); 
+                
+                if (isPlaying) {
+                    if (playPromise !== undefined) {
+                        playPromise.then(_ => {
+                            audio.pause();
+                            icon.classList.replace('fa-pause', 'fa-play');
+                            toggleBtn.classList.remove('playing');
+                            playerPanel.classList.remove('active');
+                            isPlaying = false;
+                        }).catch(error => console.error(error));
+                    }
+                } else {
+                    // Сразу показываем панель (UI реагирует мгновенно)
+                    icon.classList.replace('fa-play', 'fa-pause');
+                    toggleBtn.classList.add('playing');
+                    playerPanel.classList.add('active');
+                    isPlaying = true;
+                    
+                    // Запускаем звук
+                    playPromise = audio.play();
+                    playPromise.catch(error => {
+                        console.error("Автовоспроизведение заблокировано", error);
+                        // Если браузер заблокировал звук, откатываем UI назад
+                        icon.classList.replace('fa-pause', 'fa-play');
+                        toggleBtn.classList.remove('playing');
+                        playerPanel.classList.remove('active');
+                        isPlaying = false;
+                    });
+                }
+            });
+
+            // Изменение громкости ползунком
+            if (volumeSlider) {
+                volumeSlider.addEventListener('input', (e) => {
+                    audio.volume = e.target.value;
+                });
+            }
+
+            /* --- 2. 3D Наклон Карточки --- */
+            const mainCard = document.getElementById('main-card');
+            
+            if (mainCard) {
+                mainCard.addEventListener('mousemove', (e) => {
+                    const rect = mainCard.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    // Легкий наклон (до 4 градусов)
+                    const rotateX = ((y - centerY) / centerY) * -4; 
+                    const rotateY = ((x - centerX) / centerX) * 4;
+                    
+                    mainCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                });
+
+                mainCard.addEventListener('mouseleave', () => {
+                    mainCard.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
+                });
+            }
+
+            /* --- 3. Spotlight (Свечение рамки) --- */
+            // Применяем ко всем элементам с классом spotlight-border
+            const spotlightElements = document.querySelectorAll('.spotlight-border');
+            
+            spotlightElements.forEach(el => {
+                el.addEventListener('mousemove', (e) => {
+                    const rect = el.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    // Передаем координаты мыши в CSS переменные
+                    el.style.setProperty('--mouse-x', `${x}px`);
+                    el.style.setProperty('--mouse-y', `${y}px`);
+                    el.style.setProperty('--spotlight-opacity', `1`);
+                });
+
+                el.addEventListener('mouseleave', () => {
+                    el.style.setProperty('--spotlight-opacity', `0`);
+                });
+            });
+
+            /* --- 4. Плавный скролл --- */
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const targetId = this.getAttribute('href');
+                    if(targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if(targetElement) {
+                        e.preventDefault();
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>
