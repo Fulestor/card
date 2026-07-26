@@ -45,8 +45,11 @@
             88.8% { transform: skewX(-0.1953125deg) skewY(-0.1953125deg); }
         }
 
-        /* Запускаем при наведении ТОЛЬКО на ссылку, кнопку, заголовок или саму иконку (Убрали ховер со всей карточки) */
-        a:hover i, button:hover i, h2:hover i, i:hover {
+        a:hover i:not(.no-jello), 
+        button:hover i:not(.no-jello), 
+        .glass-card:hover i:not(.no-jello), 
+        h2:hover i:not(.no-jello), 
+        i:hover:not(.no-jello) {
             animation: icon-jello 0.9s both;
             transform-origin: center;
         }
@@ -410,7 +413,7 @@
         <!-- --- STREAMING_CHUNK:Секция Портфолио --- -->
         <section id="portfolio" class="w-full max-w-4xl mx-auto flex flex-col items-center fade-in-up z-10" style="animation-delay: 0.2s;">
             <h2 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
-                <i class="fa-solid fa-film text-[var(--color-accent)]"></i> Мои работы
+                <i class="fa-solid fa-film no-jello text-[var(--color-accent)]"></i> Мои работы
             </h2>
             
             <!-- Bento-сетка: flex-гибрид с центрированием и динамичными размерами -->
@@ -419,7 +422,7 @@
                 <a href="https://www.youtube.com/@bratdvaa" target="_blank" class="glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-300 w-full max-w-md md:max-w-none md:col-span-3 md:row-span-2">
                     <div class="relative flex-1 flex items-center justify-center overflow-hidden min-h-[240px]">
                         <div class="absolute top-3 left-3 z-20 bg-black/40 backdrop-blur-md w-6 h-6 flex items-center justify-center rounded-md border border-[var(--color-accent)] text-xs text-white/70" title="Закреплено">
-                            <i class="fa-solid fa-thumbtack" style="transform: rotate(45deg);"></i>
+                            <i class="fa-solid fa-thumbtack no-jello" style="animation: none; transform: rotate(45deg);"></i>
                         </div>
                         <!-- Дата работы -->
                         <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Авг. 2025</div>
