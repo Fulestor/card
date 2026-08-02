@@ -124,8 +124,8 @@
             pointer-events: none;
             
             /* Статичная маска по центру (создает "Фокус" в центре экрана) */
-            -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 70%);
-            mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 70%);
+            -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 70%);
+            mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 70%);
         }
 
         .workspace-grid-pattern {
@@ -134,8 +134,8 @@
             inset: -60px; 
             
             background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+                linear-gradient(rgba(255, 255, 255, 0.085) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.085) 1px, transparent 1px);
             background-size: 60px 60px;
             
             /* Сообщаем браузеру, что будем двигать этот слой на видеокарте */
@@ -742,7 +742,7 @@
 
                 function animateGrid(time) {
                     // Скорость "дыхания/дрейфа": 0.003 - медленно и ненавязчиво
-                    const drift = time * 0.003; 
+                    const drift = time * 0.008; 
                     
                     // x двигается только по времени
                     // y двигается по времени МИНУС скролл (умножаем на 0.5 для эффекта глубины)
