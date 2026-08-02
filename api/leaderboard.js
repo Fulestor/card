@@ -1,24 +1,29 @@
 export default async function handler(req, res) {
-    // Vercel автоматически подставит эти переменные
-    const KV_URL = process.env.KV_REST_API_URL;
-    const KV_TOKEN = process.env.KV_REST_API_TOKEN;
+    // Проверяем всевозможные варианты названий переменных, которые может передать Vercel
+    const KV_URL = process.env.KV_REST_API_URL || process.env.KV_URL;
+    const KV_TOKEN = process.env.KV_REST_API_TOKEN || process.env.KV_PASSWORD;
 
     if (!KV_URL || !KV_TOKEN) {
-        return res.status(500).json({ error: 'База данных не подключена' });
+        return res.status(500).json({ 
+            error: 'База данных не подключена', 
+            debug: { hasUrl: !!KV_URL, hasToken: !!KV_TOKEN } 
+        });
     }
 
-    // Если фронтенд запрашивает список лидеров
     if (req.method === 'GET') {
         try {
-            // Достаем топ-10 игроков (команда ZREVRANGE)
-            const response = await fetch(`${KV_URL}/ZREVRANGE/snake_leaderboard/0/9/WITHSCORES`, {
-                headers: { Authorization: `Bearer ${KV_TOKEN}` }
+            const response = await fetch(KV_URL, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${KV_TOKEN}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(["ZREVRANGE", "snake_leaderboard", 0, 9, "WITHSCORES"])
             });
             const data = await response.json();
             
             const formatted = [];
-            // Redis отдает массив в виде ["Имя1", "Очки1", "Имя2", "Очки2"], собираем его в объекты
-            if (data.result) {
+            if (data.result && Array.isArray(data.result)) {
                 for (let i = 0; i < data.result.length; i += 2) {
                     formatted.push({ 
                         name: data.result[i], 
@@ -28,22 +33,26 @@ export default async function handler(req, res) {
             }
             return res.status(200).json(formatted);
         } catch (error) {
-            return res.status(500).json({ error: 'Ошибка чтения из БД' });
+            return res.status(500).json({ error: 'Ошибка чтения из БД', details: error.message });
         }
     }
 
-    // Если фронтенд отправляет новый рекорд
     if (req.method === 'POST') {
         try {
             const { name, score } = req.body;
             
-            // Сохраняем результат. Если игрок с таким именем уже есть, рекорд обновится (команда ZADD)
-            await fetch(`${KV_URL}/ZADD/snake_leaderboard/${score}/${encodeURIComponent(name)}`, {
-                headers: { Authorization: `Bearer ${KV_TOKEN}` }
+            await fetch(KV_URL, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${KV_TOKEN}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(["ZADD", "snake_leaderboard", score, name])
             });
+            
             return res.status(200).json({ success: true });
         } catch (error) {
-            return res.status(500).json({ error: 'Ошибка записи в БД' });
+            return res.status(500).json({ error: 'Ошибка записи в БД', details: error.message });
         }
     }
 
