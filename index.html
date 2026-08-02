@@ -549,7 +549,7 @@
         </div>
     </div>
 
-    <!-- ДОБАВЛЕН КЛАСС scroll-reveal -->
+    <!-- Портфолио -->
     <section class="w-full max-w-4xl 2xl:max-w-6xl mx-auto flex flex-col items-center scroll-reveal z-10" id="portfolio">
         <h2 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
             <i class="fa-solid fa-film no-jello text-[var(--color-accent)]"></i> Мои работы
@@ -756,8 +756,7 @@
                     </div>
                 </div>
                 <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
-                    <h3 class="font-bold text-white mb-1">Фимайн — 
-                    Я Сделал БЕСКОНЕЧНЫЙ Источник Денег на АНАРХИИ ФанТайм</h3>
+                    <h3 class="font-bold text-white mb-1">Фимайн — Я Сделал БЕСКОНЕЧНЫЙ Источник Денег на АНАРХИИ ФанТайм</h3>
                     <p class="text-sm text-gray-200 line-clamp-1">Динамичный летсплей с добавлением эффектов.</p>
                 </div>
             </a>
@@ -771,8 +770,7 @@
                     </div>
                 </div>
                 <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
-                    <h3 class="font-bold text-white mb-1">Фимайн — 
-                    Я стал МИЛЛИАРДЕРОМ В ПЕРВЫЙ ДЕНЬ ВАЙПА На Анархии ФанТайм</h3>
+                    <h3 class="font-bold text-white mb-1">Фимайн — Я стал МИЛЛИАРДЕРОМ В ПЕРВЫЙ ДЕНЬ ВАЙПА На Анархии ФанТайм</h3>
                     <p class="text-sm text-gray-200 line-clamp-1">Динамичный летсплей с добавлением эффектов.</p>
                 </div>
             </a>
@@ -786,8 +784,7 @@
                     </div>
                 </div>
                 <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
-                    <h3 class="font-bold text-white mb-1">Фимайн — 
-                    Получил КНЯЗЯ ЗА 24 ЧАСА ИГРЫ НА АНАРХИИ ФАНТАЙМ</h3>
+                    <h3 class="font-bold text-white mb-1">Фимайн — Получил КНЯЗЯ ЗА 24 ЧАСА ИГРЫ НА АНАРХИИ ФАНТАЙМ</h3>
                     <p class="text-sm text-gray-200 line-clamp-1">Динамичный летсплей с добавлением эффектов.</p>
                 </div>
             </a>
@@ -839,7 +836,7 @@
             </button>
         </div>
 
-        <!-- ТАБЛИЦА ЛИДЕРОВ (Заглушки + локальный юзер) -->
+        <!-- ТАБЛИЦА ЛИДЕРОВ -->
         <div id="snake-leaderboard" class="absolute inset-0 bg-[#0a021c] hidden flex-col z-20 p-6">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-xl font-bold text-white"><i class="fa-solid fa-trophy text-[var(--color-accent)] mr-2"></i>ТОП ИГРОКОВ</h2>
@@ -862,682 +859,691 @@
 <source src="outsider-no-more.mp3" type="audio/mpeg"/>
 </audio>
 
-<script>
-        const UI_VOLUME = 0.15; 
-        
-        const uiSounds = {
-            hover: new Audio('ui-hover.mp3'),
-            click: new Audio('ui-click.mp3')
-        };
-        
-        uiSounds.hover.volume = UI_VOLUME;
-        uiSounds.click.volume = UI_VOLUME;
+<!-- Скрипт игры и Firebase -->
+<script type="module">
+    // ИМПОРТЫ БАЗЫ ДАННЫХ ЧЕРЕЗ CDN (чтобы работало без сборщиков типа Webpack/Vite)
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-        function playUiSound(type) {
-            const s = uiSounds[type];
-            if (s) {
-                s.currentTime = 0;
-                s.play().catch(() => {}); 
-            }
+    // КОНФИГУРАЦИЯ FIREBASE С ТВОИМИ КЛЮЧАМИ
+    const firebaseConfig = {
+        apiKey: "AIzaSyBqEHY1U4JZAohw7cJNhPciJGrh6mgIHVk",
+        authDomain: "delmysnakeleader.firebaseapp.com",
+        projectId: "delmysnakeleader",
+        storageBucket: "delmysnakeleader.firebasestorage.app",
+        messagingSenderId: "1083442947791",
+        appId: "1:1083442947791:web:3b380e10d12ead7d5c39ba",
+        measurementId: "G-RXTZ4504M0"
+    };
+
+    // Инициализация Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const UI_VOLUME = 0.15; 
+    
+    const uiSounds = {
+        hover: new Audio('ui-hover.mp3'),
+        click: new Audio('ui-click.mp3')
+    };
+    
+    uiSounds.hover.volume = UI_VOLUME;
+    uiSounds.click.volume = UI_VOLUME;
+
+    function playUiSound(type) {
+        const s = uiSounds[type];
+        if (s) {
+            s.currentTime = 0;
+            s.play().catch(() => {}); 
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+
+        document.querySelectorAll('.glass-btn, .portfolio-item, .filter-btn, .music-btn, #avatar-img').forEach(el => {
+            el.addEventListener('mouseenter', () => playUiSound('hover'));
+        });
+        document.querySelectorAll('.filter-btn, .glass-btn, .music-btn, #avatar-img, #close-snake-btn, #restart-snake-btn, #leaderboard-btn, #close-leaderboard-btn').forEach(el => {
+            el.addEventListener('click', () => playUiSound('click'));
+        });
+
+        /* --- Intersection Observer для анимации по скроллу --- */
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, { 
+            threshold: 0.1, 
+            rootMargin: "0px 0px -50px 0px" 
+        });
+        
+        const portfolioSection = document.getElementById('portfolio');
+        if (portfolioSection) {
+            scrollObserver.observe(portfolioSection);
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
+        /* --- СЕТКА --- */
+        const gridPattern = document.querySelector('.workspace-grid-pattern');
+        if (gridPattern) {
+            let scrollY = 0;
+            window.addEventListener('scroll', () => {
+                scrollY = window.scrollY;
+            }, { passive: true }); 
 
-            document.querySelectorAll('.glass-btn, .portfolio-item, .filter-btn, .music-btn, #avatar-img').forEach(el => {
-                el.addEventListener('mouseenter', () => playUiSound('hover'));
-            });
-            document.querySelectorAll('.filter-btn, .glass-btn, .music-btn, #avatar-img, #close-snake-btn, #restart-snake-btn, #leaderboard-btn, #close-leaderboard-btn').forEach(el => {
-                el.addEventListener('click', () => playUiSound('click'));
-            });
+            const mod = (n, m) => ((n % m) + m) % m;
 
-            /* --- Intersection Observer для анимации по скроллу --- */
-            const scrollObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        // Если раскомментить строчку ниже, анимация сработает только 1 раз
-                        // scrollObserver.unobserve(entry.target); 
-                    }
-                });
-            }, { 
-                threshold: 0.1, // Срабатывает когда 10% блока видно на экране
-                rootMargin: "0px 0px -50px 0px" // Небольшой отступ снизу
-            });
-            
-            const portfolioSection = document.getElementById('portfolio');
-            if (portfolioSection) {
-                scrollObserver.observe(portfolioSection);
-            }
+            function animateGrid(time) {
+                const drift = time * 0.008; 
+                const x = mod(drift, 60);
+                const y = mod(drift - (scrollY * 0.5), 60); 
 
-            /* --- СЕТКА --- */
-            const gridPattern = document.querySelector('.workspace-grid-pattern');
-            if (gridPattern) {
-                let scrollY = 0;
-                window.addEventListener('scroll', () => {
-                    scrollY = window.scrollY;
-                }, { passive: true }); 
-
-                const mod = (n, m) => ((n % m) + m) % m;
-
-                function animateGrid(time) {
-                    const drift = time * 0.008; 
-                    const x = mod(drift, 60);
-                    const y = mod(drift - (scrollY * 0.5), 60); 
-
-                    gridPattern.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-                    requestAnimationFrame(animateGrid);
-                }
+                gridPattern.style.transform = `translate3d(${x}px, ${y}px, 0)`;
                 requestAnimationFrame(animateGrid);
             }
-
-            /* --- ЛОГИКА ПЛЕЕРА --- */
-            const audio = document.getElementById('bg-audio');
-            const toggleBtn = document.getElementById('music-toggle');
-            const icon = document.getElementById('music-icon');
-            const playerPanel = document.getElementById('player-panel');
-            const volumeSlider = document.getElementById('volume-slider');
-            
-            let isPlaying = false;
-            audio.volume = 0.3;
-
-            toggleBtn.addEventListener('click', async (e) => {
-                e.stopPropagation(); 
-                
-                if (isPlaying) {
-                    audio.pause();
-                    icon.classList.replace('fa-pause', 'fa-play');
-                    toggleBtn.classList.remove('playing');
-                    playerPanel.classList.remove('active');
-                    isPlaying = false;
-                } else {
-                    icon.classList.replace('fa-play', 'fa-pause');
-                    toggleBtn.classList.add('playing');
-                    playerPanel.classList.add('active');
-                    isPlaying = true;
-                    
-                    try {
-                        await audio.play();
-                    } catch (error) {
-                        console.error("Ошибка аудио:", error);
-                        icon.classList.replace('fa-pause', 'fa-play');
-                        toggleBtn.classList.remove('playing');
-                        isPlaying = false;
-                    }
-                }
-            });
-
-            if (volumeSlider) {
-                volumeSlider.addEventListener('input', (e) => {
-                    audio.volume = e.target.value;
-                });
-            }
-
-            /* --- ХОВЕР И 3D --- */
-            const mainCard = document.getElementById('main-card');
-            const spotlightElements = document.querySelectorAll('.spotlight-border');
-            let rafId;
-
-            function handlePointerMove(e, el) {
-                if (rafId) cancelAnimationFrame(rafId);
-                
-                rafId = requestAnimationFrame(() => {
-                    const rect = el.getBoundingClientRect();
-                    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-                    
-                    const x = clientX - rect.left;
-                    const y = clientY - rect.top;
-                    
-                    el.style.setProperty('--mouse-x', `${x}px`);
-                    el.style.setProperty('--mouse-y', `${y}px`);
-                    el.style.setProperty('--spotlight-opacity', `1`);
-
-                    if (el === mainCard) {
-                        const centerX = rect.width / 2;
-                        const centerY = rect.height / 2;
-                        
-                        const rotateX = ((y - centerY) / centerY) * -3.5; 
-                        const rotateY = ((x - centerX) / centerX) * 3.5;
-                        
-                        mainCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-                    }
-                });
-            }
-
-            function handlePointerLeave(el) {
-                if (rafId) cancelAnimationFrame(rafId);
-                el.style.setProperty('--spotlight-opacity', `0`);
-                if (el === mainCard) {
-                    mainCard.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
-                }
-            }
-
-            if (mainCard) {
-                mainCard.addEventListener('mousemove', (e) => handlePointerMove(e, mainCard));
-                mainCard.addEventListener('touchmove', (e) => handlePointerMove(e, mainCard), { passive: true });
-                mainCard.addEventListener('mouseleave', () => handlePointerLeave(mainCard));
-                mainCard.addEventListener('touchend', () => handlePointerLeave(mainCard));
-            }
-
-            spotlightElements.forEach(el => {
-                if (el !== mainCard) {
-                    el.addEventListener('mousemove', (e) => handlePointerMove(e, el));
-                    el.addEventListener('touchmove', (e) => handlePointerMove(e, el), { passive: true });
-                    el.addEventListener('mouseleave', () => handlePointerLeave(el));
-                    el.addEventListener('touchend', () => handlePointerLeave(el));
-                }
-            });
-
-            /* --- ПЛАВНЫЙ СКРОЛЛ --- */
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    const targetId = this.getAttribute('href');
-                    if(targetId === '#') return;
-                    
-                    const targetElement = document.querySelector(targetId);
-                    if(targetElement) {
-                        e.preventDefault();
-                        targetElement.scrollIntoView({
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            }); 
-
-            /* --- DISCORD ПАСХАЛКА + ФИЛЬТРЫ --- */
-            const filterBtns = document.querySelectorAll('.filter-btn');
-            const portfolioItems = document.querySelectorAll('.portfolio-item');
-            const portfolioGrid = document.getElementById('portfolio-grid');
-            
-            const shakeElements = [
-                document.getElementById('main-content-wrapper'),
-                document.getElementById('player-inner')
-            ];
-            
-            let glitchTimeout;
-            let filterTimeout;
-            let filterClickCount = 0;
-            let filterShakeTimeout;
-            let filterResetTimeout;
-            
-            const easterEggMessages = [
-                "Ай!", "Эй!", "Хватит", "Остановись", "Зачем?", "Тебе заняться нечем?", 
-                "Прекрати", "Мне больно!", "ОСТАНОВИСЬ", "Сайт сломается!", 
-                "10", "9", "8", "7", "Это не шутка!", "ПОЩАДИ", "ААААААА"
-            ];
-
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    
-                    if (glitchTimeout) clearTimeout(glitchTimeout);
-                    if (filterTimeout) clearTimeout(filterTimeout);
-
-                    portfolioGrid.classList.remove('glitch-active');
-                    void portfolioGrid.offsetWidth; 
-                    portfolioGrid.classList.add('glitch-active');
-                    
-                    glitchTimeout = setTimeout(() => {
-                        portfolioGrid.classList.remove('glitch-active');
-                    }, 250);
-
-                    filterBtns.forEach(b => {
-                        b.classList.remove('active', 'bg-[var(--color-accent)]', 'text-white', 'border-[var(--color-accent)]');
-                        b.classList.add('bg-white/5', 'text-gray-300', 'border-white/10');
-                    });
-                    
-                    this.classList.add('active', 'bg-[var(--color-accent)]', 'text-white', 'border-[var(--color-accent)]');
-                    this.classList.remove('bg-white/5', 'text-gray-300', 'border-white/10');
-
-                    const filterValue = this.getAttribute('data-filter');
-
-                    filterTimeout = setTimeout(() => {
-                        portfolioItems.forEach(item => {
-                            const rawCategories = item.getAttribute('data-category');
-                            if (!rawCategories) return; 
-
-                            const itemCategoriesArray = rawCategories.split(',').map(cat => cat.trim());
-                            
-                            if (filterValue === 'all' || itemCategoriesArray.includes(filterValue)) {
-                                item.classList.remove('hide');
-                            } else {
-                                item.classList.add('hide');
-                            }
-                        });
-                    }, 125); 
-
-                    // ТРЯСКА ПО КЛИКАМ (КОМБО)
-                    filterClickCount++;
-                    clearTimeout(filterResetTimeout);
-                    
-                    filterResetTimeout = setTimeout(() => { 
-                        filterClickCount = 0; 
-                    }, 400);
-
-                    if (filterClickCount > 3) {
-                        clearTimeout(filterShakeTimeout);
-                        
-                        let intensity = Math.min(filterClickCount, 30);
-                        
-                        shakeElements.forEach(el => {
-                            el.classList.add('is-shaking');
-                            el.style.setProperty('--shake-x', `${Math.random() * (intensity * 0.3)}px`);
-                            el.style.setProperty('--shake-y', `${Math.random() * (intensity * 0.3)}px`);
-                            el.style.setProperty('--shake-r', `${(Math.random() - 0.5) * (intensity * 0.05)}deg`);
-                        });
-
-                        filterShakeTimeout = setTimeout(() => {
-                            shakeElements.forEach(el => el.classList.remove('is-shaking'));
-                        }, 150);
-
-                        const toast = document.createElement('div');
-                        let msgIndex = Math.min(filterClickCount - 4, easterEggMessages.length - 1);
-                        toast.textContent = easterEggMessages[msgIndex];
-                        
-                        toast.className = 'absolute text-[#ff0055] font-black text-base md:text-lg pointer-events-none z-[200] whitespace-nowrap drop-shadow-[0_0_12px_rgba(255,0,85,1)] select-none';
-                        toast.style.position = 'fixed';
-                        toast.style.left = `${e.clientX}px`;
-                        toast.style.top = `${e.clientY}px`;
-                        toast.style.transform = `translate(-50%, -50%) scale(0.5)`;
-                        toast.style.opacity = '1';
-                        toast.style.transition = 'all 3s cubic-bezier(0.16, 1, 0.3, 1)'; 
-                        
-                        document.body.appendChild(toast);
-
-                        requestAnimationFrame(() => {
-                            requestAnimationFrame(() => {
-                                const randomX = (Math.random() - 0.5) * 120;
-                                const flyY = 60 + Math.random() * 40; 
-                                toast.style.transform = `translate(calc(-50% + ${randomX}px), calc(-50% - ${flyY}px)) scale(1.3)`;
-                                toast.style.opacity = '0';
-                            });
-                        });
-                        
-                        setTimeout(() => toast.remove(), 3000);
-                    }
-                });
-            });
-
-            /* --- ПАСХАЛКА 2: MINECRAFT КРИПЕР --- */
-            const profileImg = document.getElementById('avatar-img');
-            let mcClickCount = 0;
-            let mcClickTimer;
-            let mcEasterEggActive = false;
-
-            profileImg.addEventListener('click', (e) => {
-                e.preventDefault();
-                
-                mcClickCount++;
-                clearTimeout(mcClickTimer);
-                
-                if (mcClickCount === 3 && !mcEasterEggActive) {
-                    mcEasterEggActive = true;
-                    mcClickCount = 0;
-                    
-                    document.documentElement.style.setProperty('--color-accent', '#22c55e'); 
-                    document.documentElement.style.setProperty('--color-accent-hover', '#16a34a');
-                    document.documentElement.style.setProperty('--blob-1', '#22c55e'); 
-                    document.documentElement.style.setProperty('--blob-3', '#4ade80');
-                    
-                    const creeperContainer = document.createElement('div');
-                    creeperContainer.style.cssText = 'position:fixed; inset:0; pointer-events:none; z-index:2; overflow:hidden;';
-                    document.body.appendChild(creeperContainer);
-                    
-                    let creeperInterval = setInterval(() => {
-                        if (document.hidden) return;
-                        
-                        const creeper = document.createElement('div');
-                        creeper.innerHTML = `<svg viewBox="0 0 8 8" width="40" height="40" xmlns="http://www.w3.org/2000/svg"><rect width="8" height="8" fill="#22c55e"/><rect x="1" y="2" width="2" height="2" fill="#111"/><rect x="5" y="2" width="2" height="2" fill="#111"/><rect x="3" y="4" width="2" height="3" fill="#111"/><rect x="2" y="5" width="1" height="2" fill="#111"/><rect x="5" y="5" width="1" height="2" fill="#111"/></svg>`;
-                        
-                        const startPos = Math.random() * 100; 
-                        creeper.style.cssText = `position:absolute; bottom:-50px; left:${startPos}vw; opacity: 0.6; transition: transform 6s linear, opacity 6s ease-in; filter: drop-shadow(0 0 10px #22c55e); will-change: transform, opacity;`;
-                        creeperContainer.appendChild(creeper);
-                        
-                        requestAnimationFrame(() => {
-                            requestAnimationFrame(() => {
-                                creeper.style.transform = `translate3d(0, -110vh, 0) rotate(${(Math.random() - 0.5) * 90}deg)`;
-                                creeper.style.opacity = '0';
-                            });
-                        });
-                        
-                        setTimeout(() => creeper.remove(), 6000);
-                    }, 600);
-                    
-                    window.addEventListener('unload', () => clearInterval(creeperInterval));
-                } else {
-                    mcClickTimer = setTimeout(() => { mcClickCount = 0; }, 400);
-                }
-            });
-
-            /* --- ГЕНЕРАЦИЯ ЮЗЕРНЕЙМА И ЛОКАЛЬНЫЕ РЕКОРДЫ --- */
-const adjs = [
-    'Redstone', 'Iron', 'Quantum', 'Blox', 'Epic', 'Brave', 
-    'Gamer', 'Golden', 'Dark', 'Cosmic', 'Marvelous', 'Fabric'
-];
-const nouns = [
-    'Creeper', 'Batman', 'Shinobi', 'Avenger', 'Jedi', 'Noob', 
-    'Titan', 'Hokage', 'ChickenFarmer', 'Spider', 'Witcher', 'Miner'
-];
-
-let localUsername = localStorage.getItem('delmyname_snakeUser');
-if (!localUsername) {
-    // Без цифр и нижних подчеркиваний (например: RedstoneCreeper или FabricChickenFarmer)
-    localUsername = adjs[Math.floor(Math.random() * adjs.length)] + nouns[Math.floor(Math.random() * nouns.length)];
-    localStorage.setItem('delmyname_snakeUser', localUsername);
-}
-document.getElementById('snake-username-display').innerText = localUsername;
-
-let localBestScore = parseInt(localStorage.getItem('delmyname_snakeBestScore')) || 0;
-document.getElementById('snake-best-score').innerText = localBestScore;
-
-            /* --- ИГРА: ПЛАВНАЯ ЗМЕЙКА (LERP РЕНДЕРИНГ) --- */
-            const snakeOverlay = document.getElementById('snake-overlay');
-            const openSnakeBtn = document.getElementById('open-snake-btn');
-            const closeSnakeBtn = document.getElementById('close-snake-btn');
-            const canvas = document.getElementById('snake-canvas');
-            const ctx = canvas.getContext('2d');
-            const scoreEl = document.getElementById('snake-score');
-            const finalScoreEl = document.getElementById('snake-final-score');
-            const gameOverScreen = document.getElementById('snake-game-over');
-            const restartBtn = document.getElementById('restart-snake-btn');
-            const leaderboardBtn = document.getElementById('leaderboard-btn');
-            const closeLeaderboardBtn = document.getElementById('close-leaderboard-btn');
-            const leaderboardScreen = document.getElementById('snake-leaderboard');
-
-            canvas.width = 400;
-            canvas.height = 400;
-
-            const gridSize = 20;
-            const tileCount = canvas.width / gridSize;
-
-            let snake = [];
-            let dx = 0;
-            let dy = 0;
-            let foodX;
-            let foodY;
-            let score = 0;
-            
-            let gameActive = false;
-            let changingDirection = false; 
-            
-            let lastLogicUpdate = 0;
-            let currentSpeed = 150; 
-            let animationFrameId;
-
-            function initGame() {
-                // Структура сегмента: {текущая X, текущая Y, старая X, старая Y} для плавной интерполяции
-                snake = [
-                    {x: 10, y: 10, oldX: 10, oldY: 10},
-                    {x: 10, y: 11, oldX: 10, oldY: 11},
-                    {x: 10, y: 12, oldX: 10, oldY: 12}
-                ];
-                dx = 0;
-                dy = -1; 
-                score = 0;
-                currentSpeed = 150;
-                scoreEl.innerText = score;
-                gameOverScreen.classList.add('hidden');
-                gameOverScreen.classList.remove('flex');
-                gameActive = true;
-                changingDirection = false;
-                placeFood();
-                
-                cancelAnimationFrame(animationFrameId);
-                lastLogicUpdate = performance.now();
-                requestAnimationFrame(gameLoop);
-            }
-
-            function placeFood() {
-                foodX = Math.floor(Math.random() * tileCount);
-                foodY = Math.floor(Math.random() * tileCount);
-                for (let part of snake) {
-                    if (part.x === foodX && part.y === foodY) return placeFood();
-                }
-            }
-
-            function updateSnakeLogic() {
-                changingDirection = false;
-                
-                // Запоминаем старые позиции для анимации
-                snake.forEach(part => {
-                    part.oldX = part.x;
-                    part.oldY = part.y;
-                });
-
-                const nx = snake[0].x + dx;
-                const ny = snake[0].y + dy;
-
-                // Проверка столкновений
-                if (nx < 0 || nx >= tileCount || ny < 0 || ny >= tileCount) return gameOver();
-                for (let i = 0; i < snake.length; i++) {
-                    if (nx === snake[i].x && ny === snake[i].y) return gameOver();
-                }
-
-                // Проверка еды
-                if (nx === foodX && ny === foodY) {
-                    score += 10;
-                    scoreEl.innerText = score;
-                    playUiSound('hover'); 
-                    placeFood();
-                    currentSpeed = Math.max(50, 150 - (score * 0.5));
-                    
-                    // Добавляем новую голову, хвост не трогаем (рост)
-                    snake.unshift({ x: nx, y: ny, oldX: snake[0].x, oldY: snake[0].y });
-                } else {
-                    // Перемещаем хвост на место новой головы
-                    let tail = snake.pop();
-                    tail.x = nx;
-                    tail.y = ny;
-                    tail.oldX = snake[0].x; // Он анимируется ОТ старой головы
-                    tail.oldY = snake[0].y;
-                    snake.unshift(tail);
-                }
-            }
-
-            function drawSmoothSnake(progress) {
-                ctx.fillStyle = '#0a021c';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-                // Отрисовка еды
-                ctx.fillStyle = '#22c55e';
-                ctx.shadowBlur = 10;
-                ctx.shadowColor = '#22c55e';
-                ctx.fillRect(foodX * gridSize + 2, foodY * gridSize + 2, gridSize - 4, gridSize - 4);
-                ctx.shadowBlur = 0;
-                
-                // Отрисовка змейки с интерполяцией
-                snake.forEach((part, index) => {
-                    ctx.fillStyle = index === 0 ? '#a78bfa' : '#8b5cf6'; 
-                    if(index === 0) {
-                        ctx.shadowBlur = 15;
-                        ctx.shadowColor = '#8b5cf6';
-                    } else {
-                        ctx.shadowBlur = 0;
-                    }
-                    
-                    // Формула линейной интерполяции: start + (end - start) * progress
-                    let renderX = part.oldX + (part.x - part.oldX) * progress;
-                    let renderY = part.oldY + (part.y - part.oldY) * progress;
-                    
-                    ctx.fillRect(renderX * gridSize + 1, renderY * gridSize + 1, gridSize - 2, gridSize - 2);
-                });
-                ctx.shadowBlur = 0;
-            }
-
-            function gameLoop(time) {
-                if (!gameActive) return;
-
-                let elapsed = time - lastLogicUpdate;
-                
-                if (elapsed >= currentSpeed) {
-                    updateSnakeLogic();
-                    lastLogicUpdate = time;
-                    elapsed = 0;
-                }
-
-                if (gameActive) {
-                    // Прогресс от 0.0 до 1.0 между логическими тиками
-                    let progress = Math.min(elapsed / currentSpeed, 1);
-                    drawSmoothSnake(progress);
-                    animationFrameId = requestAnimationFrame(gameLoop);
-                }
-            }
-
-            function gameOver() {
-    gameActive = false;
-    finalScoreEl.innerText = score;
-    gameOverScreen.classList.remove('hidden');
-    gameOverScreen.classList.add('flex');
-    playUiSound('click');
-    
-    // Обновление локального рекорда и отправка в базу
-    if (score > localBestScore) {
-        localBestScore = score;
-        localStorage.setItem('delmyname_snakeBestScore', localBestScore);
-        document.getElementById('snake-best-score').innerText = localBestScore;
-        
-        // Отправляем данные на наш сервер в фоне
-        fetch('/api/leaderboard', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name: localUsername, score: localBestScore })
-        }).catch(err => console.error('Не удалось сохранить рекорд', err));
-    }
-    
-    updateLeaderboardUI();
-}
-
-            // Управление клавиатурой
-            document.addEventListener('keydown', (e) => {
-                if (!gameActive) return;
-                if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight","w","a","s","d"].includes(e.key)) {
-                    e.preventDefault();
-                }
-                
-                if (changingDirection) return;
-                
-                if ( (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') && dy === 0) { dx = 0; dy = -1; changingDirection = true; }
-                if ( (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') && dy === 0) { dx = 0; dy = 1; changingDirection = true; }
-                if ( (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') && dx === 0) { dx = -1; dy = 0; changingDirection = true; }
-                if ( (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') && dx === 0) { dx = 1; dy = 0; changingDirection = true; }
-            }, {passive: false});
-
-            // Управление свайпами
-            let touchStartX = 0;
-            let touchStartY = 0;
-
-            snakeOverlay.addEventListener('touchstart', (e) => {
-                if (!gameActive) return;
-                touchStartX = e.changedTouches[0].screenX;
-                touchStartY = e.changedTouches[0].screenY;
-            }, {passive: false});
-
-            snakeOverlay.addEventListener('touchmove', (e) => {
-                if (!gameActive) return;
-                e.preventDefault(); 
-            }, {passive: false});
-
-            snakeOverlay.addEventListener('touchend', (e) => {
-                if (!gameActive || changingDirection) return;
-                let touchEndX = e.changedTouches[0].screenX;
-                let touchEndY = e.changedTouches[0].screenY;
-                
-                let deltaX = touchEndX - touchStartX;
-                let deltaY = touchEndY - touchStartY;
-
-                if (Math.abs(deltaX) < 30 && Math.abs(deltaY) < 30) return;
-
-                if (Math.abs(deltaX) > Math.abs(deltaY)) {
-                    if (deltaX > 0 && dx === 0) { dx = 1; dy = 0; changingDirection = true; } 
-                    else if (deltaX < 0 && dx === 0) { dx = -1; dy = 0; changingDirection = true; } 
-                } else {
-                    if (deltaY > 0 && dy === 0) { dx = 0; dy = 1; changingDirection = true; } 
-                    else if (deltaY < 0 && dy === 0) { dx = 0; dy = -1; changingDirection = true; }
-                }
-            });
-
-            // Открытие / Закрытие игры
-            openSnakeBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                snakeOverlay.classList.remove('hidden');
-                snakeOverlay.classList.add('flex');
-                
-                requestAnimationFrame(() => {
-                    snakeOverlay.style.opacity = '1';
-                });
-                
-                setTimeout(initGame, 300);
-            });
-
-            closeSnakeBtn.addEventListener('click', () => {
-                gameActive = false;
-                cancelAnimationFrame(animationFrameId);
-                snakeOverlay.style.opacity = '0';
-                setTimeout(() => {
-                    snakeOverlay.classList.remove('flex');
-                    snakeOverlay.classList.add('hidden');
-                }, 300);
-            });
-
-            restartBtn.addEventListener('click', initGame);
-            
-            // ЛИДЕРБОРД UI (Теперь работает с реальной базой)
-async function updateLeaderboardUI() {
-    const listEl = document.getElementById('leaderboard-list');
-    listEl.innerHTML = '<div class="text-center text-gray-400 mt-10">Загрузка данных...</div>';
-
-    try {
-        const response = await fetch('/api/leaderboard');
-        const leaders = await response.json();
-        
-        listEl.innerHTML = '';
-        
-        if (leaders.length === 0) {
-            listEl.innerHTML = '<div class="text-center text-gray-400 mt-10">Пока никого нет. Стань первым!</div>';
-            return;
+            requestAnimationFrame(animateGrid);
         }
 
-        leaders.forEach((player, index) => {
-            const row = document.createElement('div');
-            row.className = 'leaderboard-row';
+        /* --- ЛОГИКА ПЛЕЕРА --- */
+        const audio = document.getElementById('bg-audio');
+        const toggleBtn = document.getElementById('music-toggle');
+        const icon = document.getElementById('music-icon');
+        const playerPanel = document.getElementById('player-panel');
+        const volumeSlider = document.getElementById('volume-slider');
+        
+        let isPlaying = false;
+        audio.volume = 0.3;
+
+        toggleBtn.addEventListener('click', async (e) => {
+            e.stopPropagation(); 
             
-            // Если это имя текущего пользователя - подсвечиваем
-            const isMe = player.name === localUsername;
-            if (isMe) row.style.backgroundColor = 'rgba(139, 92, 246, 0.1)'; 
-            
-            let rankClass = '';
-            if (index === 0) rankClass = 'leaderboard-rank-1';
-            if (index === 1) rankClass = 'leaderboard-rank-2';
-            if (index === 2) rankClass = 'leaderboard-rank-3';
-            
-            row.innerHTML = `
-                <div class="flex items-center gap-3">
-                    <span class="w-4 text-left ${rankClass}">${index + 1}</span>
-                    <span class="${isMe ? 'text-[var(--color-accent)] font-bold' : 'text-gray-300'}">${player.name}</span>
-                </div>
-                <span class="${isMe ? 'text-[#22c55e]' : 'text-white'} font-bold">${player.score}</span>
-            `;
-            listEl.appendChild(row);
+            if (isPlaying) {
+                audio.pause();
+                icon.classList.replace('fa-pause', 'fa-play');
+                toggleBtn.classList.remove('playing');
+                playerPanel.classList.remove('active');
+                isPlaying = false;
+            } else {
+                icon.classList.replace('fa-play', 'fa-pause');
+                toggleBtn.classList.add('playing');
+                playerPanel.classList.add('active');
+                isPlaying = true;
+                
+                try {
+                    await audio.play();
+                } catch (error) {
+                    console.error("Ошибка аудио:", error);
+                    icon.classList.replace('fa-pause', 'fa-play');
+                    toggleBtn.classList.remove('playing');
+                    isPlaying = false;
+                }
+            }
         });
-    } catch (err) {
-        listEl.innerHTML = '<div class="text-center text-red-400 mt-10">Ошибка загрузки таблицы</div>';
-    }
-}
 
-            leaderboardBtn.addEventListener('click', () => {
-                updateLeaderboardUI();
-                leaderboardScreen.classList.remove('hidden');
-                leaderboardScreen.classList.add('flex');
+        if (volumeSlider) {
+            volumeSlider.addEventListener('input', (e) => {
+                audio.volume = e.target.value;
             });
+        }
 
-            closeLeaderboardBtn.addEventListener('click', () => {
-                leaderboardScreen.classList.add('hidden');
-                leaderboardScreen.classList.remove('flex');
+        /* --- ХОВЕР И 3D --- */
+        const mainCard = document.getElementById('main-card');
+        const spotlightElements = document.querySelectorAll('.spotlight-border');
+        let rafId;
+
+        function handlePointerMove(e, el) {
+            if (rafId) cancelAnimationFrame(rafId);
+            
+            rafId = requestAnimationFrame(() => {
+                const rect = el.getBoundingClientRect();
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                
+                const x = clientX - rect.left;
+                const y = clientY - rect.top;
+                
+                el.style.setProperty('--mouse-x', `${x}px`);
+                el.style.setProperty('--mouse-y', `${y}px`);
+                el.style.setProperty('--spotlight-opacity', `1`);
+
+                if (el === mainCard) {
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateX = ((y - centerY) / centerY) * -3.5; 
+                    const rotateY = ((x - centerX) / centerX) * 3.5;
+                    
+                    mainCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                }
             });
+        }
 
-            /* --- Инициализация интерфейса при стар --- */
-            updateLeaderboardUI();
+        function handlePointerLeave(el) {
+            if (rafId) cancelAnimationFrame(rafId);
+            el.style.setProperty('--spotlight-opacity', `0`);
+            if (el === mainCard) {
+                mainCard.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
+            }
+        }
 
+        if (mainCard) {
+            mainCard.addEventListener('mousemove', (e) => handlePointerMove(e, mainCard));
+            mainCard.addEventListener('touchmove', (e) => handlePointerMove(e, mainCard), { passive: true });
+            mainCard.addEventListener('mouseleave', () => handlePointerLeave(mainCard));
+            mainCard.addEventListener('touchend', () => handlePointerLeave(mainCard));
+        }
+
+        spotlightElements.forEach(el => {
+            if (el !== mainCard) {
+                el.addEventListener('mousemove', (e) => handlePointerMove(e, el));
+                el.addEventListener('touchmove', (e) => handlePointerMove(e, el), { passive: true });
+                el.addEventListener('mouseleave', () => handlePointerLeave(el));
+                el.addEventListener('touchend', () => handlePointerLeave(el));
+            }
+        });
+
+        /* --- ПЛАВНЫЙ СКРОЛЛ --- */
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    e.preventDefault();
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
         }); 
-    </script>
+
+        /* --- DISCORD ПАСХАЛКА + ФИЛЬТРЫ --- */
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+        const portfolioGrid = document.getElementById('portfolio-grid');
+        
+        const shakeElements = [
+            document.getElementById('main-content-wrapper'),
+            document.getElementById('player-inner')
+        ];
+        
+        let glitchTimeout;
+        let filterTimeout;
+        let filterClickCount = 0;
+        let filterShakeTimeout;
+        let filterResetTimeout;
+        
+        const easterEggMessages = [
+            "Ай!", "Эй!", "Хватит", "Остановись", "Зачем?", "Тебе заняться нечем?", 
+            "Прекрати", "Мне больно!", "ОСТАНОВИСЬ", "Сайт сломается!", 
+            "10", "9", "8", "7", "Это не шутка!", "ПОЩАДИ", "ААААААА"
+        ];
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                
+                if (glitchTimeout) clearTimeout(glitchTimeout);
+                if (filterTimeout) clearTimeout(filterTimeout);
+
+                portfolioGrid.classList.remove('glitch-active');
+                void portfolioGrid.offsetWidth; 
+                portfolioGrid.classList.add('glitch-active');
+                
+                glitchTimeout = setTimeout(() => {
+                    portfolioGrid.classList.remove('glitch-active');
+                }, 250);
+
+                filterBtns.forEach(b => {
+                    b.classList.remove('active', 'bg-[var(--color-accent)]', 'text-white', 'border-[var(--color-accent)]');
+                    b.classList.add('bg-white/5', 'text-gray-300', 'border-white/10');
+                });
+                
+                this.classList.add('active', 'bg-[var(--color-accent)]', 'text-white', 'border-[var(--color-accent)]');
+                this.classList.remove('bg-white/5', 'text-gray-300', 'border-white/10');
+
+                const filterValue = this.getAttribute('data-filter');
+
+                filterTimeout = setTimeout(() => {
+                    portfolioItems.forEach(item => {
+                        const rawCategories = item.getAttribute('data-category');
+                        if (!rawCategories) return; 
+
+                        const itemCategoriesArray = rawCategories.split(',').map(cat => cat.trim());
+                        
+                        if (filterValue === 'all' || itemCategoriesArray.includes(filterValue)) {
+                            item.classList.remove('hide');
+                        } else {
+                            item.classList.add('hide');
+                        }
+                    });
+                }, 125); 
+
+                filterClickCount++;
+                clearTimeout(filterResetTimeout);
+                
+                filterResetTimeout = setTimeout(() => { 
+                    filterClickCount = 0; 
+                }, 400);
+
+                if (filterClickCount > 3) {
+                    clearTimeout(filterShakeTimeout);
+                    
+                    let intensity = Math.min(filterClickCount, 30);
+                    
+                    shakeElements.forEach(el => {
+                        el.classList.add('is-shaking');
+                        el.style.setProperty('--shake-x', `${Math.random() * (intensity * 0.3)}px`);
+                        el.style.setProperty('--shake-y', `${Math.random() * (intensity * 0.3)}px`);
+                        el.style.setProperty('--shake-r', `${(Math.random() - 0.5) * (intensity * 0.05)}deg`);
+                    });
+
+                    filterShakeTimeout = setTimeout(() => {
+                        shakeElements.forEach(el => el.classList.remove('is-shaking'));
+                    }, 150);
+
+                    const toast = document.createElement('div');
+                    let msgIndex = Math.min(filterClickCount - 4, easterEggMessages.length - 1);
+                    toast.textContent = easterEggMessages[msgIndex];
+                    
+                    toast.className = 'absolute text-[#ff0055] font-black text-base md:text-lg pointer-events-none z-[200] whitespace-nowrap drop-shadow-[0_0_12px_rgba(255,0,85,1)] select-none';
+                    toast.style.position = 'fixed';
+                    toast.style.left = `${e.clientX}px`;
+                    toast.style.top = `${e.clientY}px`;
+                    toast.style.transform = `translate(-50%, -50%) scale(0.5)`;
+                    toast.style.opacity = '1';
+                    toast.style.transition = 'all 3s cubic-bezier(0.16, 1, 0.3, 1)'; 
+                    
+                    document.body.appendChild(toast);
+
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+                            const randomX = (Math.random() - 0.5) * 120;
+                            const flyY = 60 + Math.random() * 40; 
+                            toast.style.transform = `translate(calc(-50% + ${randomX}px), calc(-50% - ${flyY}px)) scale(1.3)`;
+                            toast.style.opacity = '0';
+                        });
+                    });
+                    
+                    setTimeout(() => toast.remove(), 3000);
+                }
+            });
+        });
+
+        /* --- ПАСХАЛКА 2: MINECRAFT КРИПЕР --- */
+        const profileImg = document.getElementById('avatar-img');
+        let mcClickCount = 0;
+        let mcClickTimer;
+        let mcEasterEggActive = false;
+
+        profileImg.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            mcClickCount++;
+            clearTimeout(mcClickTimer);
+            
+            if (mcClickCount === 3 && !mcEasterEggActive) {
+                mcEasterEggActive = true;
+                mcClickCount = 0;
+                
+                document.documentElement.style.setProperty('--color-accent', '#22c55e'); 
+                document.documentElement.style.setProperty('--color-accent-hover', '#16a34a');
+                document.documentElement.style.setProperty('--blob-1', '#22c55e'); 
+                document.documentElement.style.setProperty('--blob-3', '#4ade80');
+                
+                const creeperContainer = document.createElement('div');
+                creeperContainer.style.cssText = 'position:fixed; inset:0; pointer-events:none; z-index:2; overflow:hidden;';
+                document.body.appendChild(creeperContainer);
+                
+                let creeperInterval = setInterval(() => {
+                    if (document.hidden) return;
+                    
+                    const creeper = document.createElement('div');
+                    creeper.innerHTML = `<svg viewBox="0 0 8 8" width="40" height="40" xmlns="http://www.w3.org/2000/svg"><rect width="8" height="8" fill="#22c55e"/><rect x="1" y="2" width="2" height="2" fill="#111"/><rect x="5" y="2" width="2" height="2" fill="#111"/><rect x="3" y="4" width="2" height="3" fill="#111"/><rect x="2" y="5" width="1" height="2" fill="#111"/><rect x="5" y="5" width="1" height="2" fill="#111"/></svg>`;
+                    
+                    const startPos = Math.random() * 100; 
+                    creeper.style.cssText = `position:absolute; bottom:-50px; left:${startPos}vw; opacity: 0.6; transition: transform 6s linear, opacity 6s ease-in; filter: drop-shadow(0 0 10px #22c55e); will-change: transform, opacity;`;
+                    creeperContainer.appendChild(creeper);
+                    
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+                            creeper.style.transform = `translate3d(0, -110vh, 0) rotate(${(Math.random() - 0.5) * 90}deg)`;
+                            creeper.style.opacity = '0';
+                        });
+                    });
+                    
+                    setTimeout(() => creeper.remove(), 6000);
+                }, 600);
+                
+                window.addEventListener('unload', () => clearInterval(creeperInterval));
+            } else {
+                mcClickTimer = setTimeout(() => { mcClickCount = 0; }, 400);
+            }
+        });
+
+        /* --- ГЕНЕРАЦИЯ ЮЗЕРНЕЙМА И ЛОКАЛЬНЫЕ РЕКОРДЫ --- */
+        const adjs = [
+            'Redstone', 'Iron', 'Quantum', 'Blox', 'Epic', 'Brave', 
+            'Gamer', 'Golden', 'Dark', 'Cosmic', 'Marvelous', 'Fabric'
+        ];
+        const nouns = [
+            'Creeper', 'Batman', 'Shinobi', 'Avenger', 'Jedi', 'Noob', 
+            'Titan', 'Hokage', 'ChickenFarmer', 'Spider', 'Witcher', 'Miner'
+        ];
+
+        let localUsername = localStorage.getItem('delmyname_snakeUser');
+        if (!localUsername) {
+            localUsername = adjs[Math.floor(Math.random() * adjs.length)] + nouns[Math.floor(Math.random() * nouns.length)];
+            localStorage.setItem('delmyname_snakeUser', localUsername);
+        }
+        document.getElementById('snake-username-display').innerText = localUsername;
+
+        let localBestScore = parseInt(localStorage.getItem('delmyname_snakeBestScore')) || 0;
+        document.getElementById('snake-best-score').innerText = localBestScore;
+
+        /* --- ИГРА: ПЛАВНАЯ ЗМЕЙКА (LERP РЕНДЕРИНГ) --- */
+        const snakeOverlay = document.getElementById('snake-overlay');
+        const openSnakeBtn = document.getElementById('open-snake-btn');
+        const closeSnakeBtn = document.getElementById('close-snake-btn');
+        const canvas = document.getElementById('snake-canvas');
+        const ctx = canvas.getContext('2d');
+        const scoreEl = document.getElementById('snake-score');
+        const finalScoreEl = document.getElementById('snake-final-score');
+        const gameOverScreen = document.getElementById('snake-game-over');
+        const restartBtn = document.getElementById('restart-snake-btn');
+        const leaderboardBtn = document.getElementById('leaderboard-btn');
+        const closeLeaderboardBtn = document.getElementById('close-leaderboard-btn');
+        const leaderboardScreen = document.getElementById('snake-leaderboard');
+
+        canvas.width = 400;
+        canvas.height = 400;
+
+        const gridSize = 20;
+        const tileCount = canvas.width / gridSize;
+
+        let snake = [];
+        let dx = 0;
+        let dy = 0;
+        let foodX;
+        let foodY;
+        let score = 0;
+        
+        let gameActive = false;
+        let changingDirection = false; 
+        
+        let lastLogicUpdate = 0;
+        let currentSpeed = 150; 
+        let animationFrameId;
+
+        function initGame() {
+            snake = [
+                {x: 10, y: 10, oldX: 10, oldY: 10},
+                {x: 10, y: 11, oldX: 10, oldY: 11},
+                {x: 10, y: 12, oldX: 10, oldY: 12}
+            ];
+            dx = 0;
+            dy = -1; 
+            score = 0;
+            currentSpeed = 150;
+            scoreEl.innerText = score;
+            gameOverScreen.classList.add('hidden');
+            gameOverScreen.classList.remove('flex');
+            gameActive = true;
+            changingDirection = false;
+            placeFood();
+            
+            cancelAnimationFrame(animationFrameId);
+            lastLogicUpdate = performance.now();
+            requestAnimationFrame(gameLoop);
+        }
+
+        function placeFood() {
+            foodX = Math.floor(Math.random() * tileCount);
+            foodY = Math.floor(Math.random() * tileCount);
+            for (let part of snake) {
+                if (part.x === foodX && part.y === foodY) return placeFood();
+            }
+        }
+
+        function updateSnakeLogic() {
+            changingDirection = false;
+            
+            snake.forEach(part => {
+                part.oldX = part.x;
+                part.oldY = part.y;
+            });
+
+            const nx = snake[0].x + dx;
+            const ny = snake[0].y + dy;
+
+            if (nx < 0 || nx >= tileCount || ny < 0 || ny >= tileCount) return gameOver();
+            for (let i = 0; i < snake.length; i++) {
+                if (nx === snake[i].x && ny === snake[i].y) return gameOver();
+            }
+
+            if (nx === foodX && ny === foodY) {
+                score += 10;
+                scoreEl.innerText = score;
+                playUiSound('hover'); 
+                placeFood();
+                currentSpeed = Math.max(50, 150 - (score * 0.5));
+                
+                snake.unshift({ x: nx, y: ny, oldX: snake[0].x, oldY: snake[0].y });
+            } else {
+                let tail = snake.pop();
+                tail.x = nx;
+                tail.y = ny;
+                tail.oldX = snake[0].x; 
+                tail.oldY = snake[0].y;
+                snake.unshift(tail);
+            }
+        }
+
+        function drawSmoothSnake(progress) {
+            ctx.fillStyle = '#0a021c';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#22c55e';
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = '#22c55e';
+            ctx.fillRect(foodX * gridSize + 2, foodY * gridSize + 2, gridSize - 4, gridSize - 4);
+            ctx.shadowBlur = 0;
+            
+            snake.forEach((part, index) => {
+                ctx.fillStyle = index === 0 ? '#a78bfa' : '#8b5cf6'; 
+                if(index === 0) {
+                    ctx.shadowBlur = 15;
+                    ctx.shadowColor = '#8b5cf6';
+                } else {
+                    ctx.shadowBlur = 0;
+                }
+                
+                let renderX = part.oldX + (part.x - part.oldX) * progress;
+                let renderY = part.oldY + (part.y - part.oldY) * progress;
+                
+                ctx.fillRect(renderX * gridSize + 1, renderY * gridSize + 1, gridSize - 2, gridSize - 2);
+            });
+            ctx.shadowBlur = 0;
+        }
+
+        function gameLoop(time) {
+            if (!gameActive) return;
+
+            let elapsed = time - lastLogicUpdate;
+            
+            if (elapsed >= currentSpeed) {
+                updateSnakeLogic();
+                lastLogicUpdate = time;
+                elapsed = 0;
+            }
+
+            if (gameActive) {
+                let progress = Math.min(elapsed / currentSpeed, 1);
+                drawSmoothSnake(progress);
+                animationFrameId = requestAnimationFrame(gameLoop);
+            }
+        }
+
+        // Логика отправки данных в Firebase
+        function gameOver() {
+            gameActive = false;
+            finalScoreEl.innerText = score;
+            gameOverScreen.classList.remove('hidden');
+            gameOverScreen.classList.add('flex');
+            playUiSound('click');
+            
+            if (score > localBestScore) {
+                localBestScore = score;
+                localStorage.setItem('delmyname_snakeBestScore', localBestScore);
+                document.getElementById('snake-best-score').innerText = localBestScore;
+                
+                // Отправка в Firebase
+                addDoc(collection(db, "leaderboard"), {
+                    name: localUsername,
+                    score: localBestScore,
+                    timestamp: Date.now()
+                }).then(() => {
+                    updateLeaderboardUI();
+                }).catch(err => console.error('Не удалось сохранить рекорд', err));
+            } else {
+                updateLeaderboardUI();
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (!gameActive) return;
+            if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight","w","a","s","d"].includes(e.key)) {
+                e.preventDefault();
+            }
+            
+            if (changingDirection) return;
+            
+            if ( (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') && dy === 0) { dx = 0; dy = -1; changingDirection = true; }
+            if ( (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') && dy === 0) { dx = 0; dy = 1; changingDirection = true; }
+            if ( (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') && dx === 0) { dx = -1; dy = 0; changingDirection = true; }
+            if ( (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') && dx === 0) { dx = 1; dy = 0; changingDirection = true; }
+        }, {passive: false});
+
+        let touchStartX = 0;
+        let touchStartY = 0;
+
+        snakeOverlay.addEventListener('touchstart', (e) => {
+            if (!gameActive) return;
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+        }, {passive: false});
+
+        snakeOverlay.addEventListener('touchmove', (e) => {
+            if (!gameActive) return;
+            e.preventDefault(); 
+        }, {passive: false});
+
+        snakeOverlay.addEventListener('touchend', (e) => {
+            if (!gameActive || changingDirection) return;
+            let touchEndX = e.changedTouches[0].screenX;
+            let touchEndY = e.changedTouches[0].screenY;
+            
+            let deltaX = touchEndX - touchStartX;
+            let deltaY = touchEndY - touchStartY;
+
+            if (Math.abs(deltaX) < 30 && Math.abs(deltaY) < 30) return;
+
+            if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                if (deltaX > 0 && dx === 0) { dx = 1; dy = 0; changingDirection = true; } 
+                else if (deltaX < 0 && dx === 0) { dx = -1; dy = 0; changingDirection = true; } 
+            } else {
+                if (deltaY > 0 && dy === 0) { dx = 0; dy = 1; changingDirection = true; } 
+                else if (deltaY < 0 && dy === 0) { dx = 0; dy = -1; changingDirection = true; }
+            }
+        });
+
+        openSnakeBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            snakeOverlay.classList.remove('hidden');
+            snakeOverlay.classList.add('flex');
+            
+            requestAnimationFrame(() => {
+                snakeOverlay.style.opacity = '1';
+            });
+            
+            setTimeout(initGame, 300);
+        });
+
+        closeSnakeBtn.addEventListener('click', () => {
+            gameActive = false;
+            cancelAnimationFrame(animationFrameId);
+            snakeOverlay.style.opacity = '0';
+            setTimeout(() => {
+                snakeOverlay.classList.remove('flex');
+                snakeOverlay.classList.add('hidden');
+            }, 300);
+        });
+
+        restartBtn.addEventListener('click', initGame);
+        
+        // Чтение данных из Firebase
+        async function updateLeaderboardUI() {
+            const listEl = document.getElementById('leaderboard-list');
+            listEl.innerHTML = '<div class="text-center text-gray-400 mt-10">Загрузка данных...</div>';
+
+            try {
+                const leaders = [];
+                // Запрашиваем топ-10 игроков
+                const q = query(collection(db, "leaderboard"), orderBy("score", "desc"), limit(10));
+                const querySnapshot = await getDocs(q);
+                
+                querySnapshot.forEach((doc) => {
+                    leaders.push(doc.data());
+                });
+                
+                listEl.innerHTML = '';
+                
+                if (leaders.length === 0) {
+                    listEl.innerHTML = '<div class="text-center text-gray-400 mt-10">Пока никого нет. Стань первым!</div>';
+                    return;
+                }
+
+                leaders.forEach((player, index) => {
+                    const row = document.createElement('div');
+                    row.className = 'leaderboard-row';
+                    
+                    const isMe = player.name === localUsername;
+                    if (isMe) row.style.backgroundColor = 'rgba(139, 92, 246, 0.1)'; 
+                    
+                    let rankClass = '';
+                    if (index === 0) rankClass = 'leaderboard-rank-1';
+                    if (index === 1) rankClass = 'leaderboard-rank-2';
+                    if (index === 2) rankClass = 'leaderboard-rank-3';
+                    
+                    row.innerHTML = `
+                        <div class="flex items-center gap-3">
+                            <span class="w-4 text-left ${rankClass}">${index + 1}</span>
+                            <span class="${isMe ? 'text-[var(--color-accent)] font-bold' : 'text-gray-300'}">${player.name}</span>
+                        </div>
+                        <span class="${isMe ? 'text-[#22c55e]' : 'text-white'} font-bold">${player.score}</span>
+                    `;
+                    listEl.appendChild(row);
+                });
+            } catch (err) {
+                console.error("Firebase Error:", err);
+                listEl.innerHTML = '<div class="text-center text-red-400 mt-10">Ошибка загрузки таблицы</div>';
+            }
+        }
+
+        leaderboardBtn.addEventListener('click', () => {
+            updateLeaderboardUI();
+            leaderboardScreen.classList.remove('hidden');
+            leaderboardScreen.classList.add('flex');
+        });
+
+        closeLeaderboardBtn.addEventListener('click', () => {
+            leaderboardScreen.classList.add('hidden');
+            leaderboardScreen.classList.remove('flex');
+        });
+
+        updateLeaderboardUI();
+    }); 
+</script>
 </body>
 </html>
