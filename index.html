@@ -1,22 +1,29 @@
 <!DOCTYPE html>
-
 <html lang="ru">
 <head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>delmyname | Визитка</title>
+<meta name="description" content="Создаю динамичные видео, Reels, Shorts. Воплощаю ваши идеи в кадре.">
 <meta content="delmyname | Video Editor & Creator" property="og:title"/>
-<meta content="Создаю динамичные видео, Reels, Shorts." property="og:description"/>
+<meta content="Создаю динамичные видео, Reels, Shorts. Воплощаю ваши идеи в кадре." property="og:description"/>
 <meta content="https://delmyname.vercel.app/og-image.png" property="og:image"/>
 <meta content="https://delmyname.vercel.app" property="og:url"/>
 <meta content="website" property="og:type"/>
 <meta content="summary_large_image" name="twitter:card"/>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>delmyname | Визитка</title>
-<link href="https://s.fotora.ru/0e59c2750971d9b6.png" rel="icon" type="image/jpeg"/>
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
-<style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
+<link href="https://s.fotora.ru/0e59c2750971d9b6.png" rel="icon" type="image/jpeg"/>
+
+<!-- Preload Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" media="print" onload="this.media='all'"/>
+
+<!-- Tailwind CSS via CDN (Development only, replace with compiled CSS for Production) -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
         :root {
             --color-bg: #0a021c; 
             --color-accent: #8b5cf6; 
@@ -32,16 +39,22 @@
             --color-text-main: #ffffff;
         }
 
+        body {
+   		 font-family: 'Inter', sans-serif;
+   		 background-color: var(--color-bg) !important;
+   		 color: var(--color-text-main) !important;
+   		 overflow-x: hidden;
+   		 margin: 0;
+  		  min-height: 100vh;
+   		 transition: background-color 1s ease;
+	}
+
         .portfolio-item {
             transition: opacity 0.4s ease-out, transform 0.4s ease-out;
         }
         
         .portfolio-item.hide {
-            opacity: 0;
-            transform: scale(0.9);
-            pointer-events: none;
-            position: absolute;
-            visibility: hidden; 
+            display: none;
         }
 
         .filter-btn.active {
@@ -78,15 +91,19 @@
             overflow: hidden;
             background: var(--color-bg);
             transition: background-color 1s ease;
+            pointer-events: none;
         }
 
+        /* Optimized blur using hardware acceleration */
         .blob {
             position: absolute;
-            filter: blur(40px);
             opacity: 0.3;
             animation: moveBlob 10s infinite alternate ease-in-out;
             border-radius: 40%;
             transition: background 1s ease;
+            filter: blur(30px);
+            will-change: transform, background;
+            transform: translateZ(0); 
         }
 
         .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--blob-1); }
@@ -94,60 +111,51 @@
         .blob-3 { top: 30%; left: 20%; width: 50vw; height: 50vw; background: var(--blob-3); animation-delay: -10s; }
 
         @keyframes moveBlob {
-            0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(10%, 15%) scale(1.1); }
-            100% { transform: translate(-10%, 5%) scale(0.9); }
+            0% { transform: translate3d(0, 0, 0) scale(1); }
+            50% { transform: translate3d(10%, 15%, 0) scale(1.1); }
+            100% { transform: translate3d(-10%, 5%, 0) scale(0.9); }
         }
 
-/* --- Базовая сетка с анимированной маской --- */
-.workspace-grid {
-    position: fixed; /* Оставляем fixed, чтобы маска не растягивалась на 5 км вниз */
-    inset: 0;
-    z-index: 1; 
-    pointer-events: none;
-    
-    /* Сама сетка */
-    background-image: 
-        linear-gradient(rgba(255, 255, 255, 0.2) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.2) 1px, transparent 1px);
-    background-size: 40px 40px;
-    background-position: 0px 0px; /* Важно для работы скрипта */
+        /* --- ИДЕАЛЬНО ОПТИМИЗИРОВАННАЯ СЕТКА --- */
+        .workspace-grid-mask {
+            position: fixed; 
+            inset: 0;
+            z-index: 1; 
+            pointer-events: none;
+            
+            /* Статичная маска по центру (создает "Фокус" в центре экрана) */
+            -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 70%);
+            mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 70%);
+        }
 
-    /* Диагональная градиентная маска */
-    -webkit-mask-image: linear-gradient(115deg, transparent 15%, black 50%, transparent 85%);
-    mask-image: linear-gradient(115deg, transparent 15%, black 50%, transparent 85%);
-
-    -webkit-mask-size: 200% 200%;
-    mask-size: 200% 200%;
-
-    /* Анимация переливания/дыхания маски */
-    animation: grid-flow 12s ease-in-out infinite alternate;
-}
-
-@keyframes grid-flow {
-    0% {
-        -webkit-mask-position: 0% 50%;
-        mask-position: 0% 50%;
-    }
-    100% {
-        -webkit-mask-position: 100% 50%;
-        mask-position: 100% 50%;
-    }
-}
+        .workspace-grid-pattern {
+            position: absolute;
+            /* Делаем сетку больше экрана на 60px (размер одной ячейки) во все стороны */
+            inset: -60px; 
+            
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            
+            /* Сообщаем браузеру, что будем двигать этот слой на видеокарте */
+            will-change: transform; 
+        }
+        
         /* --- Стили карточек --- */
         .glass-card {
             background: var(--color-card-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--color-card-border);
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             transition: transform 0.2s ease-out; 
             transform-style: preserve-3d;
+            will-change: transform;
         }
 
         .spotlight-border {
             position: relative;
-            /* Сбрасываем переменные, чтобы дочерние элементы не наследовали свечение родителя */
             --spotlight-opacity: 0;
             --mouse-x: -100px;
             --mouse-y: -100px;
@@ -192,12 +200,13 @@
             padding: 1rem 1.25rem;
             background: rgba(255, 255, 255, 0.04); 
             border: 1px solid rgba(255, 255, 255, 0.1); 
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(8px);
             border-radius: 0.75rem;
             color: #ffffff;
             font-weight: 500;
             text-decoration: none;
             transition: all 0.3s ease;
+            will-change: transform;
         }
 
         .glass-btn:hover {
@@ -223,8 +232,8 @@
         }
 
         @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-50%, 0, 0); }
         }
         
         .animate-marquee {
@@ -235,16 +244,6 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             text-rendering: optimizeLegibility;
-        }
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--color-bg);
-            color: var(--color-text-main);
-            overflow-x: hidden;
-            margin: 0;
-            min-height: 100vh;
-            transition: background-color 1s ease;
         }
 
         .player-panel {
@@ -263,6 +262,7 @@
             align-items: center;
             gap: 1rem;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            will-change: transform, opacity;
         }
 
         @media (max-width: 768px) {
@@ -272,11 +272,11 @@
                 left: 0;
                 margin: 0 auto;
                 width: max-content;
-                transform: translateY(-20px) scale(0.95);
+                transform: translate3d(0, -20px, 0) scale(0.95);
             }
             .player-panel.active {
                 opacity: 1;
-                transform: translateY(0) scale(1);
+                transform: translate3d(0, 0, 0) scale(1);
                 pointer-events: auto;
             }
         }
@@ -285,11 +285,11 @@
             .player-panel {
                 top: 1.5rem;
                 right: 0; 
-                transform: translateX(0) scale(0.95);
+                transform: translate3d(0, 0, 0) scale(0.95);
             }
             .player-panel.active {
                 opacity: 1;
-                transform: translateX(105%) scale(1);
+                transform: translate3d(105%, 0, 0) scale(1);
                 pointer-events: auto;
             }
         }
@@ -310,6 +310,7 @@
             cursor: pointer;
             transition: all 0.3s;
             color: white;
+            will-change: transform;
         }
 
         .music-btn:hover {
@@ -360,11 +361,11 @@
         .fade-in-up {
             animation: fadeInUp 0.8s forwards ease-out;
             opacity: 0;
-            transform: translateY(20px);
+            transform: translate3d(0, 20px, 0);
         }
 
         @keyframes fadeInUp {
-            to { opacity: 1; transform: translateY(0); }
+            to { opacity: 1; transform: translate3d(0, 0, 0); }
         }
 
         ::-webkit-scrollbar { width: 2px; }
@@ -372,24 +373,35 @@
         ::-webkit-scrollbar-thumb { background: rgba(139, 92, 246, 0.3); border-radius: 2px; }
         ::-webkit-scrollbar-thumb:hover { background: rgba(139, 92, 246, 0.6); }
 
+        .select-none {
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
     </style>
 </head>
-<body class="relative selection:bg-purple-500/30">
+<body class="bg-[#0a021c] text-white relative selection:bg-purple-500/30">
 <!-- Блобы на фоне -->
 <div class="mesh-bg">
 <div class="blob blob-1"></div>
 <div class="blob blob-2"></div>
 <div class="blob blob-3"></div>
 </div>
+
+<!-- Оптимизированная сетка -->
+<div class="workspace-grid-mask">
+    <div class="workspace-grid-pattern"></div>
+</div>
+
 <!-- Контейнер для кинематографичных частиц -->
 <div class="fixed inset-0 pointer-events-none overflow-hidden" id="particles-bg" style="z-index: 1;"></div>
-<div class="workspace-grid"></div>
+
 <div class="relative z-10 flex flex-col items-center pt-20 pb-20 px-4 w-full gap-16">
 <div class="relative w-full max-w-md mx-auto fade-in-up z-20">
 <div class="player-panel" id="player-panel">
 <div class="flex items-center gap-3 w-64 overflow-hidden">
 <div class="w-10 h-10 rounded overflow-hidden flex-shrink-0 bg-[var(--color-accent)] flex items-center justify-center text-white">
-<img alt="Cover" class="w-full h-full object-cover onError='this.style.display=\" none\"'"="" src="https://cdn-image.zvuk.com/pic?hash=90b321de-52a5-4f53-8a6d-bfe0cb66b3b5&id=38128316&size=medium&type=release"/>
+<img alt="Cover" class="w-full h-full object-cover" onerror="this.style.display='none'" src="https://cdn-image.zvuk.com/pic?hash=90b321de-52a5-4f53-8a6d-bfe0cb66b3b5&id=38128316&size=medium&type=release"/>
 </div>
 <div class="flex-1 min-w-0 overflow-hidden">
 <div class="w-full overflow-hidden mask-gradient flex">
@@ -414,7 +426,7 @@
 </button>
 <div class="relative w-28 h-28 mx-auto mb-5 group/avatar">
 <div class="absolute inset-0 bg-[var(--color-accent)] rounded-full blur-[20px] opacity-40 group-hover/card:opacity-70 transition-opacity duration-500 pointer-events-none"></div>
-<img alt="Profile" class="relative w-full h-full object-cover rounded-full border-2 border-white/10 z-10 cursor-pointer" id="avatar-img" src="https://s.fotora.ru/855e832a165681a6.png"/>
+<img alt="Profile" class="relative w-full h-full object-cover rounded-full border-2 border-white/10 z-10 cursor-pointer select-none" id="avatar-img" src="https://s.fotora.ru/855e832a165681a6.png" draggable="false"/>
 <div class="absolute -top-12 left-1/2 -translate-x-1/2 bg-[#0a021c]/90 backdrop-blur-md border border-[var(--color-accent)] text-white text-xs px-3 py-1.5 rounded-lg opacity-0 group-hover/avatar:opacity-100 group-hover/avatar:-translate-y-1 transition-all duration-300 pointer-events-none whitespace-nowrap z-20 shadow-[0_0_15px_color-mix(in_srgb,var(--color-accent)_40%,transparent)]">
                         Нажми 3 раза 🤫
                     </div>
@@ -463,7 +475,7 @@
 <button class="filter-btn px-4 py-2 text-sm font-medium rounded-full bg-white/5 text-gray-300 border border-white/10 transition-all hover:bg-white/10 hover:text-white" data-filter="shorts">Shorts / Reels</button>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-3 2xl:grid-cols-4 auto-rows-[300px] grid-flow-row-dense gap-6 w-full px-4 place-content-center justify-items-center md:justify-items-stretch" id="portfolio-grid">
-<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-3 2xl:col-span-4 md:row-span-1" data-category="irl" draggable="false" href="https://www.youtube.com/@bratdvaa" style="" target="_blank">
+<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-3 2xl:col-span-4 md:row-span-1" data-category="irl" draggable="false" href="https://www.youtube.com/@bratdvaa" target="_blank">
 <div class="relative flex-1 flex items-center justify-center overflow-hidden">
 <div class="absolute top-3 left-3 z-20 bg-black/40 backdrop-blur-md w-6 h-6 flex items-center justify-center rounded-md border border-[var(--color-accent)] text-xs text-white/70" title="Закреплено">
 <i class="fa-solid fa-thumbtack no-jello" style="animation: none; transform: rotate(45deg);"></i>
@@ -480,7 +492,7 @@
 <p class="text-sm text-gray-200 line-clamp-1">Мой крупный проект — Динамичный IRL контент в формате шоу.</p>
 </div>
 </a>
-<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2" data-category="irl, shorts" href="https://disk.yandex.ru/i/qrLRHdzb-r2EPg" style="" target="_blank">
+<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2" data-category="irl, shorts" href="https://disk.yandex.ru/i/qrLRHdzb-r2EPg" target="_blank">
 <div class="relative flex-1 flex items-center justify-center overflow-hidden min-h-[240px]">
 <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Авг. 2026</div>
 <img alt="Авиация" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://s.fotora.ru/86f9f8d03605cb7f.png"/>
@@ -494,7 +506,7 @@
 <p class="text-sm text-gray-200 line-clamp-1">Склейка, саунд, color</p>
 </div>
 </a>
-<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1" data-category="irl" draggable="false" href="https://disk.yandex.ru/i/1-1H46zRa50SBQ" style="" target="_blank">
+<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1" data-category="irl" draggable="false" href="https://disk.yandex.ru/i/1-1H46zRa50SBQ" target="_blank">
 <div class="relative flex-1 flex items-center justify-center overflow-hidden">
 <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Фев. 2026</div>
 <img alt="Работа по биологии" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" draggable="false" loading="lazy" src="https://s.fotora.ru/e01f54d170b02fb6.jpeg"/>
@@ -508,7 +520,7 @@
 <p class="text-sm text-gray-200 line-clamp-1">Работа с нейросетями, цветокорреция.</p>
 </div>
 </a>
-<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2" data-category="irl, shorts" draggable="false" href="https://www.instagram.com/prodajnie" style="" target="_blank">
+<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2" data-category="irl, shorts" draggable="false" href="https://www.instagram.com/prodajnie" target="_blank">
 <div class="relative flex-1 flex items-center justify-center overflow-hidden">
 <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Авг. 2025</div>
 <img alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" draggable="false" loading="lazy" src="https://s.fotora.ru/62e6649f87f8ed75.jpeg"/>
@@ -522,7 +534,7 @@
 <p class="text-sm text-gray-200 line-clamp-1">Рекламные ролики для разных брендов.</p>
 </div>
 </a>
-<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2" data-category="irl, shorts" href="https://disk.yandex.ru/i/HLhs7LcHXgLbbQ" style="" target="_blank">
+<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2" data-category="irl, shorts" href="https://disk.yandex.ru/i/HLhs7LcHXgLbbQ" target="_blank">
 <div class="relative flex-1 flex items-center justify-center overflow-hidden">
 <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Нояб. 2025</div>
 <img alt="Переходники | Продажные" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://s.fotora.ru/9d5dd16efd650621.png"/>
@@ -536,7 +548,7 @@
 <p class="text-sm text-gray-200 line-clamp-1">Монтаж готовой склейки</p>
 </div>
 </a>
-<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2" data-category="irl, shorts" href="https://disk.yandex.ru/i/YjBJA_Bq4iBvJg" style="" target="_blank">
+<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2" data-category="irl, shorts" href="https://disk.yandex.ru/i/YjBJA_Bq4iBvJg" target="_blank">
 <div class="relative flex-1 flex items-center justify-center overflow-hidden">
 <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Дек. 2025</div>
 <img alt="День 4 | Продажные" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://s.fotora.ru/33fabac0404f7088.png"/>
@@ -550,7 +562,7 @@
 <p class="text-sm text-gray-200 line-clamp-1">Монтаж готовой склейки</p>
 </div>
 </a>
-<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2" data-category="irl, shorts" draggable="false" href="https://disk.yandex.ru/i/XSNDFEKIv8c0Pw" style="" target="_blank">
+<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2" data-category="irl, shorts" draggable="false" href="https://disk.yandex.ru/i/XSNDFEKIv8c0Pw" target="_blank">
 <div class="relative flex-1 flex items-center justify-center overflow-hidden">
 <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Дек. 2025</div>
 <img alt="Сказка | Продажные" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" draggable="false" loading="lazy" src="https://s.fotora.ru/36b18de29c3d5e78.png"/>
@@ -564,7 +576,7 @@
 <p class="text-sm text-gray-200 line-clamp-1">Съёмка, сборка, эффекты</p>
 </div>
 </a>
-<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1" data-category="gaming" href="https://www.youtube.com/watch?v=9mKflJB1Gmo" style="" target="_blank">
+<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1" data-category="gaming" href="https://www.youtube.com/watch?v=9mKflJB1Gmo" target="_blank">
 <div class="relative flex-1 flex items-center justify-center overflow-hidden">
 <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Янв. 2025</div>
 <img alt="Rainbow GG Minecraft" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://i.ytimg.com/vi/9mKflJB1Gmo/maxresdefault.jpg"/>
@@ -578,7 +590,7 @@
 <p class="text-sm text-gray-200 line-clamp-1">485к, монтаж англоязычных роликов.</p>
 </div>
 </a>
-<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1" data-category="gaming" href="https://www.youtube.com/watch?v=DiR2Cl5KF-Y" style="" target="_blank">
+<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1" data-category="gaming" href="https://www.youtube.com/watch?v=DiR2Cl5KF-Y" target="_blank">
 <div class="relative flex-1 flex items-center justify-center overflow-hidden">
 <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Нояб. 2024</div>
 <img alt="Rainbow GG Minecraft" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://i.ytimg.com/vi/DiR2Cl5KF-Y/maxresdefault.jpg"/>
@@ -592,7 +604,7 @@
 <p class="text-sm text-gray-200 line-clamp-1">188к, монтаж англоязычных роликов</p>
 </div>
 </a>
-<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2" data-category="gaming, shorts" draggable="false" href="https://www.youtube.com/shorts/F8kd9Q-64VM" style="" target="_blank">
+<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2" data-category="gaming, shorts" draggable="false" href="https://www.youtube.com/shorts/F8kd9Q-64VM" target="_blank">
 <div class="relative flex-1 flex items-center justify-center overflow-hidden">
 <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Дек. 2024</div>
 <img alt="YT Shorts для Делика" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" draggable="false" loading="lazy" src="https://i.ytimg.com/vi/F8kd9Q-64VM/oar2.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLAYEOIUNvQIbfHXuw0XMInc9n4Gxw&usqp=CCk"/>
@@ -606,7 +618,7 @@
 <p class="text-sm text-gray-200 line-clamp-1">Динамичный монтаж с добавлением эффектов</p>
 </div>
 </a>
-<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-1" data-category="gaming" href="https://www.youtube.com/watch?v=zf-iC5QRgCA&" style="" target="_blank">
+<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-1" data-category="gaming" href="https://www.youtube.com/watch?v=zf-iC5QRgCA&" target="_blank">
 <div class="relative flex-1 flex items-center justify-center overflow-hidden">
 <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Окт. 2024</div>
 <img alt="Rainbow GG Minecraft" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://i.ytimg.com/vi/zf-iC5QRgCA/maxresdefault.jpg"/>
@@ -620,7 +632,7 @@
 <p class="text-sm text-gray-200 line-clamp-1">Монтаж англоязычных роликов</p>
 </div>
 </a>
-<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-1" data-category="gaming" href="https://www.youtube.com/@mc_resolver" style="" target="_blank">
+<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-1" data-category="gaming" href="https://www.youtube.com/@mc_resolver" target="_blank">
 <div class="relative flex-1 flex items-center justify-center overflow-hidden">
 <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Июль 2024</div>
 <img alt="Трейлеры Resolver" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://yt3.googleusercontent.com/jXudDnrVzU91mcKOam60VYvOLx9QJm8UjxJK12dYU2aXTNkTTDI3qWnywgiPusACrKtmu1v8hQ=s1080-c-k-c0x00ffffff-no-rj"/>
@@ -634,7 +646,7 @@
 <p class="text-sm text-gray-200 line-clamp-1">Короткометражки к обновлениям сервера</p>
 </div>
 </a>
-<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1" data-category="irl" href="https://www.youtube.com/@ashleymccuen" style="" target="_blank">
+<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1" data-category="irl" href="https://www.youtube.com/@ashleymccuen" target="_blank">
 <div class="relative flex-1 flex items-center justify-center overflow-hidden">
 <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Фев. 2025</div>
 <img alt="Green Agriculture" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://i.ytimg.com/vi/tedMCl3rgio/maxresdefault.jpg"/>
@@ -648,7 +660,7 @@
 <p class="text-sm text-gray-200 line-clamp-1">Создание англоязычных видео с использованием ИИ</p>
 </div>
 </a>
-<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1" data-category="gaming" href="https://www.youtube.com/watch?v=gtErHwRld1o" style="" target="_blank">
+<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1" data-category="gaming" href="https://www.youtube.com/watch?v=gtErHwRld1o" target="_blank">
 <div class="relative flex-1 flex items-center justify-center overflow-hidden">
 <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Авг. 2025</div>
 <img alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://i.ytimg.com/vi/gtErHwRld1o/hqdefault.jpg"/>
@@ -663,7 +675,7 @@
 <p class="text-sm text-gray-200 line-clamp-1">Динамичный летсплей с добавлением эффектов.</p>
 </div>
 </a>
-<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1" data-category="gaming" href="https://www.youtube.com/watch?v=JyMkIKBMSFY" style="" target="_blank">
+<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1" data-category="gaming" href="https://www.youtube.com/watch?v=JyMkIKBMSFY" target="_blank">
 <div class="relative flex-1 flex items-center justify-center overflow-hidden">
 <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Март 2025</div>
 <img alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://i.ytimg.com/vi/JyMkIKBMSFY/hqdefault.jpg"/>
@@ -678,7 +690,7 @@
 <p class="text-sm text-gray-200 line-clamp-1">Динамичный летсплей с добавлением эффектов.</p>
 </div>
 </a>
-<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:row-span-1 md:col-span-1" data-category="gaming" href="https://www.youtube.com/watch?v=p-t8exzF_d0" style="" target="_blank">
+<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:row-span-1 md:col-span-1" data-category="gaming" href="https://www.youtube.com/watch?v=p-t8exzF_d0" target="_blank">
 <div class="relative flex-1 flex items-center justify-center overflow-hidden">
 <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Нояб. 2024</div>
 <img alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://i.ytimg.com/vi/p-t8exzF_d0/hqdefault.jpg"/>
@@ -693,7 +705,7 @@
 <p class="text-sm text-gray-200 line-clamp-1">Динамичный летсплей с добавлением эффектов.</p>
 </div>
 </a>
-<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-1" data-category="gaming" href="https://www.youtube.com/@delik_kryt" style="" target="_blank">
+<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-1" data-category="gaming" href="https://www.youtube.com/@delik_kryt" target="_blank">
 <div class="relative flex-1 flex items-center justify-center overflow-hidden">
 <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Авг. 2024</div>
 <img alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://yt3.googleusercontent.com/QhxcGch86Xv3dmjjE5sMGupkcNPRabhlqGSqMq7GJEwhouCpUmY8udRWMluVaXdFIEo2LeTx0g=s1080-c-k-c0x00000000-no-rj"/>
@@ -711,22 +723,39 @@
 <p class="text-gray-500 text-xs mt-10">© 2026. Все права защищены.</p>
 </section>
 </div>
-<audio id="bg-audio" loop="">
+<audio id="bg-audio" loop="" preload="none">
 <source src="outsider-no-more.mp3" type="audio/mpeg"/>
 </audio>
 <script>
         document.addEventListener('DOMContentLoaded', () => {
-            
-	    /* --- Скролл сетки вместе со страницей --- */
-            const gridBg = document.querySelector('.workspace-grid');
-            if (gridBg) {
+
+            /* --- Оптимизированная интерактивная сетка (Дыхание + Скролл) --- */
+            const gridPattern = document.querySelector('.workspace-grid-pattern');
+            if (gridPattern) {
+                let scrollY = 0;
                 window.addEventListener('scroll', () => {
-                    // Сдвигаем узор сетки вверх синхронно со скроллом вниз
-                    gridBg.style.backgroundPosition = `0px -${window.scrollY}px`;
+                    scrollY = window.scrollY;
+                }, { passive: true }); // passive: true делает скролл максимально плавным на смартфонах
+
+                // Безопасный остаток от деления для JS (чтобы не было проблем с отрицательными числами)
+                const mod = (n, m) => ((n % m) + m) % m;
+
+                function animateGrid(time) {
+                    // Скорость "дыхания/дрейфа": 0.003 - медленно и ненавязчиво
+                    const drift = time * 0.003; 
                     
-                    // P.S. Если хочешь эффект глубины (параллакс), 
-                    // умножь scrollY на 0.5 вот так: -${window.scrollY * 0.5}px
-                });
+                    // x двигается только по времени
+                    // y двигается по времени МИНУС скролл (умножаем на 0.5 для эффекта глубины)
+                    // Используем % 60, так как размер ячейки сетки 60px.
+                    // Когда сетка сдвигается на 60px, она возвращается в 0, и этот скачок невидим!
+                    const x = mod(drift, 60);
+                    const y = mod(drift - (scrollY * 0.5), 60); 
+
+                    // Двигаем сетку через GPU с помощью translate3d
+                    gridPattern.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+                    requestAnimationFrame(animateGrid);
+                }
+                requestAnimationFrame(animateGrid);
             }
 
             /* --- Логика Плеера --- */
@@ -773,43 +802,58 @@
 
             /* --- 3D Наклон Карточки --- */
             const mainCard = document.getElementById('main-card');
-            if (mainCard) {
+            if (mainCard && window.matchMedia("(hover: hover)").matches) {
+                let rafId;
+                
                 mainCard.addEventListener('mousemove', (e) => {
-                    const rect = mainCard.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
+                    if (rafId) cancelAnimationFrame(rafId);
                     
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-                    
-                    const rotateX = ((y - centerY) / centerY) * -4; 
-                    const rotateY = ((x - centerX) / centerX) * 4;
-                    
-                    mainCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                    rafId = requestAnimationFrame(() => {
+                        const rect = mainCard.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+                        
+                        const centerX = rect.width / 2;
+                        const centerY = rect.height / 2;
+                        
+                        const rotateX = ((y - centerY) / centerY) * -4; 
+                        const rotateY = ((x - centerX) / centerX) * 4;
+                        
+                        mainCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                    });
                 });
 
                 mainCard.addEventListener('mouseleave', () => {
+                    if (rafId) cancelAnimationFrame(rafId);
                     mainCard.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
                 });
             }
 
             /* --- Spotlight (Свечение рамки) --- */
             const spotlightElements = document.querySelectorAll('.spotlight-border');
-            spotlightElements.forEach(el => {
-                el.addEventListener('mousemove', (e) => {
-                    const rect = el.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    
-                    el.style.setProperty('--mouse-x', `${x}px`);
-                    el.style.setProperty('--mouse-y', `${y}px`);
-                    el.style.setProperty('--spotlight-opacity', `1`);
-                });
+            if (window.matchMedia("(hover: hover)").matches) {
+                spotlightElements.forEach(el => {
+                    let rafId;
+                    el.addEventListener('mousemove', (e) => {
+                        if (rafId) cancelAnimationFrame(rafId);
+                        
+                        rafId = requestAnimationFrame(() => {
+                            const rect = el.getBoundingClientRect();
+                            const x = e.clientX - rect.left;
+                            const y = e.clientY - rect.top;
+                            
+                            el.style.setProperty('--mouse-x', `${x}px`);
+                            el.style.setProperty('--mouse-y', `${y}px`);
+                            el.style.setProperty('--spotlight-opacity', `1`);
+                        });
+                    });
 
-                el.addEventListener('mouseleave', () => {
-                    el.style.setProperty('--spotlight-opacity', `0`);
+                    el.addEventListener('mouseleave', () => {
+                        if (rafId) cancelAnimationFrame(rafId);
+                        el.style.setProperty('--spotlight-opacity', `0`);
+                    });
                 });
-            });
+            }
 
             /* --- Плавный скролл --- */
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -851,12 +895,8 @@
                         
                         if (filterValue === 'all' || itemCategoriesArray.includes(filterValue)) {
                             item.classList.remove('hide');
-                            item.style.position = '';
-                            item.style.visibility = '';
                         } else {
                             item.classList.add('hide');
-                            item.style.position = '';
-                            item.style.visibility = '';
                         }
                     });
                 });
@@ -864,12 +904,18 @@
 
             /* --- Фоновые частицы (Кинематографичное боке) --- */
             const particlesContainer = document.getElementById('particles-bg');
+            let activeParticles = 0;
+            const maxParticles = window.innerWidth < 768 ? 15 : 30; // Fewer particles on mobile
+
             if (particlesContainer) {
-                for(let i = 0; i < 30; i++) {
+                for(let i = 0; i < maxParticles; i++) {
                     createCinematicParticle();
                 }
 
                 function createCinematicParticle() {
+                    if (activeParticles >= maxParticles) return;
+                    activeParticles++;
+                    
                     const p = document.createElement('div');
                     const size = Math.random() * 8 + 2; 
                     const isBlurry = Math.random() > 0.5;
@@ -885,21 +931,36 @@
                         opacity: ${Math.random() * 0.3 + 0.1};
                         filter: blur(${isBlurry ? Math.random() * 4 + 2 : 0}px);
                         transition: transform ${Math.random() * 20 + 15}s linear, opacity 5s ease-in-out;
+                        will-change: transform, opacity;
+                        transform: translateZ(0);
                     `;
                     particlesContainer.appendChild(p);
 
                     setTimeout(() => {
-                        p.style.transform = `translate(${ (Math.random() - 0.5) * 200 }px, ${ (Math.random() - 0.5) * 200 - 150 }px)`;
+                        p.style.transform = `translate3d(${ (Math.random() - 0.5) * 200 }px, ${ (Math.random() - 0.5) * 200 - 150 }px, 0)`;
                     }, 50);
 
                     setTimeout(() => {
                         p.style.opacity = '0';
                         setTimeout(() => {
                             p.remove();
-                            createCinematicParticle();
+                            activeParticles--;
+                            // Recreate particle only if tab is active to save resources
+                            if (!document.hidden) {
+                                requestAnimationFrame(createCinematicParticle);
+                            }
                         }, 5000);
                     }, (Math.random() * 15000) + 10000);
                 }
+                
+                // Resume particle creation when tab becomes visible
+                document.addEventListener("visibilitychange", () => {
+                    if (!document.hidden) {
+                        while (activeParticles < maxParticles) {
+                             createCinematicParticle();
+                        }
+                    }
+                });
             }
 
             /* --- ПАСХАЛКА (Тройной клик по аватарке) --- */
@@ -908,7 +969,10 @@
             let clickTimer;
             let easterEggActive = false;
 
-            profileImg.addEventListener('click', () => {
+            profileImg.addEventListener('click', (e) => {
+                // Prevent selection behavior on mobile/desktop
+                e.preventDefault();
+                
                 clickCount++;
                 clearTimeout(clickTimer);
                 
@@ -925,21 +989,30 @@
                     creeperContainer.style.cssText = 'position:fixed; inset:0; pointer-events:none; z-index:2; overflow:hidden;';
                     document.body.appendChild(creeperContainer);
                     
-                    setInterval(() => {
+                    let creeperInterval = setInterval(() => {
+                        // Stop if tab is hidden
+                        if (document.hidden) return;
+                        
                         const creeper = document.createElement('div');
                         creeper.innerHTML = `<svg viewBox="0 0 8 8" width="40" height="40" xmlns="http://www.w3.org/2000/svg"><rect width="8" height="8" fill="#22c55e"/><rect x="1" y="2" width="2" height="2" fill="#111"/><rect x="5" y="2" width="2" height="2" fill="#111"/><rect x="3" y="4" width="2" height="3" fill="#111"/><rect x="2" y="5" width="1" height="2" fill="#111"/><rect x="5" y="5" width="1" height="2" fill="#111"/></svg>`;
                         
                         const startPos = Math.random() * 100; 
-                        creeper.style.cssText = `position:absolute; bottom:-50px; left:${startPos}vw; opacity: 0.6; transition: transform 6s linear, opacity 6s ease-in; filter: drop-shadow(0 0 10px #22c55e);`;
+                        creeper.style.cssText = `position:absolute; bottom:-50px; left:${startPos}vw; opacity: 0.6; transition: transform 6s linear, opacity 6s ease-in; filter: drop-shadow(0 0 10px #22c55e); will-change: transform, opacity;`;
                         creeperContainer.appendChild(creeper);
                         
-                        setTimeout(() => {
-                            creeper.style.transform = `translateY(-110vh) rotate(${(Math.random() - 0.5) * 90}deg)`;
-                            creeper.style.opacity = '0';
-                        }, 50);
+                        // Use requestAnimationFrame for smoother start
+                        requestAnimationFrame(() => {
+                            requestAnimationFrame(() => {
+                                creeper.style.transform = `translate3d(0, -110vh, 0) rotate(${(Math.random() - 0.5) * 90}deg)`;
+                                creeper.style.opacity = '0';
+                            });
+                        });
                         
                         setTimeout(() => creeper.remove(), 6000);
                     }, 600);
+                    
+                    // Cleanup interval if user leaves the page
+                    window.addEventListener('unload', () => clearInterval(creeperInterval));
                 } else {
                     clickTimer = setTimeout(() => { clickCount = 0; }, 400);
                 }
