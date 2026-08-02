@@ -1452,7 +1452,7 @@
             let deltaY = touchY - touchStartY;
 
             // Как только палец сдвинулся на 30px — МГНОВЕННО фиксируем свайп
-            if (Math.abs(deltaX) > 30 || Math.abs(deltaY) > 30) {
+            if (Math.abs(deltaX) > 15 || Math.abs(deltaY) > 15) {
                 if (Math.abs(deltaX) > Math.abs(deltaY)) {
                     if (deltaX > 0 && dx === 0) { dx = 1; dy = 0; changingDirection = true; } 
                     else if (deltaX < 0 && dx === 0) { dx = -1; dy = 0; changingDirection = true; } 
