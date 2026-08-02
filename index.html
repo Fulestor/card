@@ -862,8 +862,9 @@
 <!-- Скрипт игры и Firebase -->
 <script type="module">
     // ИМПОРТЫ БАЗЫ ДАННЫХ ЧЕРЕЗ CDN (чтобы работало без сборщиков типа Webpack/Vite)
+    // ОБНОВЛЕНИЕ: добавили импорты doc и setDoc
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { getFirestore, collection, doc, setDoc, getDocs, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     // КОНФИГУРАЦИЯ FIREBASE С ТВОИМИ КЛЮЧАМИ
     const firebaseConfig = {
@@ -1398,8 +1399,9 @@
                 localStorage.setItem('delmyname_snakeBestScore', localBestScore);
                 document.getElementById('snake-best-score').innerText = localBestScore;
                 
-                // Отправка в Firebase
-                addDoc(collection(db, "leaderboard"), {
+                // ИСПОЛЬЗУЕМ setDoc и ID документа == localUsername
+                // Это перезапишет старый рекорд пользователя, если он его побил
+                setDoc(doc(db, "leaderboard", localUsername), {
                     name: localUsername,
                     score: localBestScore,
                     timestamp: Date.now()
