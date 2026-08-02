@@ -1427,38 +1427,49 @@
             if ( (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') && dx === 0) { dx = 1; dy = 0; changingDirection = true; }
         }, {passive: false});
 
-        let touchStartX = 0;
+                let touchStartX = 0;
         let touchStartY = 0;
+        let swipeHandled = false; // Флаг, чтобы не дублировать свайпы
 
         snakeOverlay.addEventListener('touchstart', (e) => {
             if (!gameActive) return;
             touchStartX = e.changedTouches[0].screenX;
             touchStartY = e.changedTouches[0].screenY;
+            swipeHandled = false; // Сбрасываем флаг при новом касании
         }, {passive: false});
 
         snakeOverlay.addEventListener('touchmove', (e) => {
             if (!gameActive) return;
-            e.preventDefault(); 
+            e.preventDefault(); // Блокируем скролл страницы
+            
+            // Если направление уже меняется или свайп уже засчитан — ждем
+            if (changingDirection || swipeHandled) return;
+
+            let touchX = e.changedTouches[0].screenX;
+            let touchY = e.changedTouches[0].screenY;
+            
+            let deltaX = touchX - touchStartX;
+            let deltaY = touchY - touchStartY;
+
+            // Как только палец сдвинулся на 30px — МГНОВЕННО фиксируем свайп
+            if (Math.abs(deltaX) > 30 || Math.abs(deltaY) > 30) {
+                if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                    if (deltaX > 0 && dx === 0) { dx = 1; dy = 0; changingDirection = true; } 
+                    else if (deltaX < 0 && dx === 0) { dx = -1; dy = 0; changingDirection = true; } 
+                } else {
+                    if (deltaY > 0 && dy === 0) { dx = 0; dy = 1; changingDirection = true; } 
+                    else if (deltaY < 0 && dy === 0) { dx = 0; dy = -1; changingDirection = true; }
+                }
+                swipeHandled = true; // Запоминаем, что в этом касании команда уже отдана
+            }
         }, {passive: false});
 
         snakeOverlay.addEventListener('touchend', (e) => {
-            if (!gameActive || changingDirection) return;
-            let touchEndX = e.changedTouches[0].screenX;
-            let touchEndY = e.changedTouches[0].screenY;
-            
-            let deltaX = touchEndX - touchStartX;
-            let deltaY = touchEndY - touchStartY;
-
-            if (Math.abs(deltaX) < 30 && Math.abs(deltaY) < 30) return;
-
-            if (Math.abs(deltaX) > Math.abs(deltaY)) {
-                if (deltaX > 0 && dx === 0) { dx = 1; dy = 0; changingDirection = true; } 
-                else if (deltaX < 0 && dx === 0) { dx = -1; dy = 0; changingDirection = true; } 
-            } else {
-                if (deltaY > 0 && dy === 0) { dx = 0; dy = 1; changingDirection = true; } 
-                else if (deltaY < 0 && dy === 0) { dx = 0; dy = -1; changingDirection = true; }
-            }
+            // Событие отрыва пальца больше не используем для расчетов, 
+            // так как всё обрабатывается моментально в touchmove
+            if (!gameActive) return;
         });
+
 
         openSnakeBtn.addEventListener('click', (e) => {
             e.preventDefault();
