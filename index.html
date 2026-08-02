@@ -816,8 +816,8 @@
                         const centerX = rect.width / 2;
                         const centerY = rect.height / 2;
                         
-                        const rotateX = ((y - centerY) / centerY) * -4; 
-                        const rotateY = ((x - centerX) / centerX) * 4;
+                        const rotateX = ((y - centerY) / centerY) * -44; 
+                        const rotateY = ((x - centerX) / centerX) * 44;
                         
                         mainCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
                     });
@@ -905,7 +905,7 @@
             /* --- Фоновые частицы (Кинематографичное боке) --- */
             const particlesContainer = document.getElementById('particles-bg');
             let activeParticles = 0;
-            const maxParticles = window.innerWidth < 768 ? 15 : 30; // Fewer particles on mobile
+            const maxParticles = window.innerWidth < 768 ? 15 : 60; // Fewer particles on mobile
 
             if (particlesContainer) {
                 for(let i = 0; i < maxParticles; i++) {
