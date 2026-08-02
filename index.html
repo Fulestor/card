@@ -20,7 +20,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" media="print" onload="this.media='all'"/>
 
-<!-- Tailwind CSS via CDN (Development only, replace with compiled CSS for Production) -->
+<!-- Tailwind CSS via CDN -->
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
@@ -40,17 +40,17 @@
         }
 
         body {
-   		 font-family: 'Inter', sans-serif;
-   		 background-color: var(--color-bg) !important;
-   		 color: var(--color-text-main) !important;
-   		 overflow-x: hidden;
-   		 margin: 0;
-  		  min-height: 100vh;
-   		 transition: background-color 1s ease;
-	}
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-bg) !important;
+            color: var(--color-text-main) !important;
+            overflow-x: hidden;
+            margin: 0;
+            min-height: 100vh;
+            transition: background-color 1s ease;
+        }
 
         .portfolio-item {
-            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+            transition: opacity 0.25s ease-out, transform 0.25s ease-out;
         }
         
         .portfolio-item.hide {
@@ -62,7 +62,7 @@
             border-color: var(--color-accent);
             color: #ffffff;
         }
-	
+    
         @keyframes icon-jello {
             0%, 11.1%, 100% { transform: none; }
             22.2% { transform: skewX(-12.5deg) skewY(-12.5deg); }
@@ -86,7 +86,7 @@
         /* --- Фон и Блобы --- */
         .mesh-bg {
             position: fixed;
-            inset: 0;
+            inset: -50px; 
             z-index: 0;
             overflow: hidden;
             background: var(--color-bg);
@@ -94,7 +94,6 @@
             pointer-events: none;
         }
 
-        /* Optimized blur using hardware acceleration */
         .blob {
             position: absolute;
             opacity: 0.3;
@@ -116,29 +115,23 @@
             100% { transform: translate3d(-10%, 5%, 0) scale(0.9); }
         }
 
-        /* --- ИДЕАЛЬНО ОПТИМИЗИРОВАННАЯ СЕТКА --- */
+        /* --- СЕТКА --- */
         .workspace-grid-mask {
             position: fixed; 
-            inset: 0;
+            inset: -50px; 
             z-index: 1; 
             pointer-events: none;
-            
-            /* Статичная маска по центру (создает "Фокус" в центре экрана) */
             -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 70%);
             mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 70%);
         }
 
         .workspace-grid-pattern {
             position: absolute;
-            /* Делаем сетку больше экрана на 60px (размер одной ячейки) во все стороны */
             inset: -60px; 
-            
             background-image: 
                 linear-gradient(rgba(255, 255, 255, 0.085) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255, 255, 255, 0.085) 1px, transparent 1px);
             background-size: 60px 60px;
-            
-            /* Сообщаем браузеру, что будем двигать этот слой на видеокарте */
             will-change: transform; 
         }
         
@@ -225,30 +218,32 @@
         .btn-primary:hover {
             background: var(--color-accent-hover) !important;
         }
-		
+        
         .mask-gradient {
             -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
             mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
         }
 
-        @keyframes marquee {
-            0% { transform: translate3d(0, 0, 0); }
-            100% { transform: translate3d(-50%, 0, 0); }
+        /* --- БЕСШОВНАЯ БЕГУЩАЯ СТРОКА --- */
+        .marquee-track {
+            display: inline-flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding-right: 1.5rem; 
+            width: max-content;
+            animation: scroll-left 10s linear infinite;
+            will-change: transform;
         }
         
-        .animate-marquee {
-            display: flex;
-            width: max-content;
-            animation: marquee 7s linear infinite;
-            will-change: transform;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            text-rendering: optimizeLegibility;
+        @keyframes scroll-left {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-50%, 0, 0); } 
         }
 
+        /* --- ФИКСИРОВАННЫЙ ПЛЕЕР --- */
         .player-panel {
-            position: absolute;
-            z-index: 5;
+            position: fixed;
+            z-index: 100;
             opacity: 0;
             pointer-events: none;
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
@@ -258,38 +253,36 @@
             border: 1px solid var(--color-card-border);
             border-radius: 1rem;
             padding: 1rem;
-            display: flex;
+            display: inline-flex; 
             align-items: center;
             gap: 1rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
             will-change: transform, opacity;
+            width: max-content; 
         }
 
         @media (max-width: 768px) {
             .player-panel {
-                bottom: -5rem;
-                right: 0;
-                left: 0;
-                margin: 0 auto;
-                width: max-content;
-                transform: translate3d(0, -20px, 0) scale(0.95);
+                bottom: 2rem;
+                left: 50%;
+                transform: translate3d(-50%, 20px, 0) scale(0.95);
             }
             .player-panel.active {
                 opacity: 1;
-                transform: translate3d(0, 0, 0) scale(1);
+                transform: translate3d(-50%, 0, 0) scale(1);
                 pointer-events: auto;
             }
         }
         
         @media (min-width: 769px) {
             .player-panel {
-                top: 1.5rem;
-                right: 0; 
-                transform: translate3d(0, 0, 0) scale(0.95);
+                bottom: 2rem;
+                left: 75%; 
+                transform: translate3d(-50%, 20px, 0) scale(0.95);
             }
             .player-panel.active {
                 opacity: 1;
-                transform: translate3d(105%, 0, 0) scale(1);
+                transform: translate3d(-50%, 0, 0) scale(1);
                 pointer-events: auto;
             }
         }
@@ -358,6 +351,7 @@
             border-radius: 2px;
         }
 
+        /* --- АНИМАЦИЯ ПОЯВЛЕНИЯ (ЗАГРУЗКА И СКРОЛЛ) --- */
         .fade-in-up {
             animation: fadeInUp 0.8s forwards ease-out;
             opacity: 0;
@@ -366,6 +360,18 @@
 
         @keyframes fadeInUp {
             to { opacity: 1; transform: translate3d(0, 0, 0); }
+        }
+        
+        .scroll-reveal {
+            opacity: 0;
+            transform: translate3d(0, 40px, 0);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            will-change: opacity, transform;
+        }
+        
+        .scroll-reveal.is-visible {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
         }
 
         ::-webkit-scrollbar { width: 2px; }
@@ -378,9 +384,66 @@
             -webkit-user-select: none;
         }
 
+        /* --- SKELETON LOADER --- */
+        .skeleton {
+            background: linear-gradient(90deg, rgba(255,255,255,0.02) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.02) 75%);
+            background-size: 200% 100%;
+            animation: loadingSkeleton 1.5s infinite;
+        }
+        @keyframes loadingSkeleton {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* --- GLITCH TRANSITION --- */
+        @keyframes coolGlitch {
+            0% { transform: translate(0) skew(0); filter: none; }
+            10% { transform: translate(-4px, 2px) skew(-1deg); filter: drop-shadow(-4px 0 rgba(255,0,85,0.8)) drop-shadow(4px 0 rgba(0,255,255,0.8)); opacity: 0.9; }
+            20% { transform: translate(4px, -2px) skew(1deg); filter: drop-shadow(4px 0 rgba(255,0,85,0.8)) drop-shadow(-4px 0 rgba(0,255,255,0.8)); opacity: 0.9; }
+            30% { transform: translate(-2px, 4px) skew(-0.5deg); filter: none; opacity: 1; }
+            40% { transform: translate(2px, -2px) skew(0.5deg); filter: drop-shadow(-2px 0 rgba(255,0,85,0.8)) drop-shadow(2px 0 rgba(0,255,255,0.8)); }
+            50% { transform: translate(-4px, -4px) skew(-1deg); opacity: 0.8; }
+            60% { transform: translate(4px, 2px) skew(1deg); filter: drop-shadow(4px 0 rgba(255,0,85,0.8)) drop-shadow(-4px 0 rgba(0,255,255,0.8)); }
+            70% { transform: translate(0, 0) skew(0); filter: none; opacity: 1; }
+            80% { transform: translate(-2px, -2px); }
+            100% { transform: translate(0) skew(0); filter: none; }
+        }
+        .glitch-active {
+            animation: coolGlitch 0.25s cubic-bezier(.25, .46, .45, .94) both;
+            will-change: transform, filter, opacity;
+        }
+
+        /* --- БЕЗОПАСНАЯ ТРЯСКА --- */
+        @keyframes safe-shake {
+            0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+            25% { transform: translate3d(var(--shake-x, -1px), var(--shake-y, 1px), 0) rotate(var(--shake-r, -0.2deg)); }
+            50% { transform: translate3d(calc(var(--shake-x, -1px) * -1), calc(var(--shake-y, 1px) * -1), 0) rotate(calc(var(--shake-r, -0.2deg) * -1)); }
+            75% { transform: translate3d(var(--shake-x, -1px), calc(var(--shake-y, 1px) * -1), 0) rotate(var(--shake-r, -0.2deg)); }
+        }
+        .is-shaking {
+            animation: safe-shake 0.08s ease-in-out infinite;
+        }
+        
+        /* --- СТИЛИ ДЛЯ ЛИДЕРБОРДА --- */
+        .leaderboard-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-family: monospace;
+            font-size: 0.875rem;
+        }
+        .leaderboard-row:last-child {
+            border-bottom: none;
+        }
+        .leaderboard-rank-1 { color: #facc15; font-weight: bold; }
+        .leaderboard-rank-2 { color: #94a3b8; font-weight: bold; }
+        .leaderboard-rank-3 { color: #b45309; font-weight: bold; }
+
     </style>
 </head>
 <body class="bg-[#0a021c] text-white relative selection:bg-purple-500/30">
+
 <!-- Блобы на фоне -->
 <div class="mesh-bg">
 <div class="blob blob-1"></div>
@@ -393,372 +456,481 @@
     <div class="workspace-grid-pattern"></div>
 </div>
 
+<!-- Плеер -->
+<div class="player-panel" id="player-panel">
+    <div id="player-inner" class="flex items-center gap-3 w-full">
+        <div class="relative w-10 h-10 flex-shrink-0 z-10">
+            <div class="absolute inset-0 z-[-1] opacity-70 blur-[15px] scale-[1.6] rounded-full pointer-events-none transition-all duration-700" style="background-image: url('https://cdn-image.zvuk.com/pic?hash=90b321de-52a5-4f53-8a6d-bfe0cb66b3b5&id=38128316&size=medium&type=release'); background-size: cover; background-position: center;"></div>
+            
+            <div class="w-full h-full rounded overflow-hidden bg-[var(--color-accent)] flex items-center justify-center text-white relative z-10">
+                <img alt="Cover" class="w-full h-full object-cover" onerror="this.style.display='none'" src="https://cdn-image.zvuk.com/pic?hash=90b321de-52a5-4f53-8a6d-bfe0cb66b3b5&id=38128316&size=medium&type=release"/>
+            </div>
+        </div>
+
+        <div class="flex-1 min-w-0 overflow-hidden relative z-10 w-[180px] md:w-[220px]">
+            <div class="w-full overflow-hidden mask-gradient flex">
+                <div class="marquee-track hover:[animation-play-state:paused]">
+                    <h4 class="text-sm font-bold text-white leading-tight whitespace-nowrap">Outsider No More</h4>
+                    <span class="text-[10px] text-white/30 leading-tight">✦</span>
+                    <h4 class="text-sm font-bold text-white leading-tight whitespace-nowrap">Outsider No More</h4>
+                    <span class="text-[10px] text-white/30 leading-tight">✦</span>
+                    
+                    <h4 aria-hidden="true" class="text-sm font-bold text-white leading-tight whitespace-nowrap">Outsider No More</h4>
+                    <span aria-hidden="true" class="text-[10px] text-white/30 leading-tight">✦</span>
+                    <h4 aria-hidden="true" class="text-sm font-bold text-white leading-tight whitespace-nowrap">Outsider No More</h4>
+                    <span aria-hidden="true" class="text-[10px] text-white/30 leading-tight">✦</span>
+                </div>
+            </div>
+            <p class="text-xs text-gray-400 truncate mt-0.5">P.T. Adamczyk</p>
+        </div>
+
+        <div class="hidden md:flex items-center gap-2 relative z-10">
+            <i class="fa-solid fa-volume-low text-xs text-gray-400"></i>
+            <input id="volume-slider" max="1" min="0" step="0.01" type="range" value="0.3"/>
+        </div>
+    </div>
+</div>
+
 <!-- Контейнер для кинематографичных частиц -->
 <div class="fixed inset-0 pointer-events-none overflow-hidden" id="particles-bg" style="z-index: 1;"></div>
 
-<div class="relative z-10 flex flex-col items-center pt-20 pb-20 px-4 w-full gap-16">
-<div class="relative w-full max-w-md mx-auto fade-in-up z-20">
-<div class="player-panel" id="player-panel">
-<div class="flex items-center gap-3 w-64 overflow-hidden">
-<div class="w-10 h-10 rounded overflow-hidden flex-shrink-0 bg-[var(--color-accent)] flex items-center justify-center text-white">
-<img alt="Cover" class="w-full h-full object-cover" onerror="this.style.display='none'" src="https://cdn-image.zvuk.com/pic?hash=90b321de-52a5-4f53-8a6d-bfe0cb66b3b5&id=38128316&size=medium&type=release"/>
-</div>
-<div class="flex-1 min-w-0 overflow-hidden">
-<div class="w-full overflow-hidden mask-gradient flex">
-<div class="animate-marquee hover:[animation-play-state:paused]">
-<h4 class="text-sm font-bold text-white leading-tight pr-6 shrink-0">Outsider No More</h4>
-<h4 aria-hidden="true" class="text-sm font-bold text-white leading-tight pr-6 shrink-0">Outsider No More</h4>
-<h4 aria-hidden="true" class="text-sm font-bold text-white leading-tight pr-6 shrink-0">Outsider No More</h4>
-</div>
-</div>
-<p class="text-xs text-gray-400 truncate mt-0.5">P.T. Adamczyk</p>
-</div>
-</div>
-<div class="flex items-center gap-2 ml-2">
-<i class="fa-solid fa-volume-low text-xs text-gray-400"></i>
-<input id="volume-slider" max="1" min="0" step="0.01" type="range" value="0.3"/>
-</div>
-</div>
-<div class="glass-card spotlight-border rounded-3xl relative p-8 text-center z-10 group/card" id="main-card">
-<button aria-label="Play music" class="music-btn" id="music-toggle">
-<i class="fa-solid fa-play ml-1" id="music-icon"></i>
-<div class="music-pulse"></div>
-</button>
-<div class="relative w-28 h-28 mx-auto mb-5 group/avatar">
-<div class="absolute inset-0 bg-[var(--color-accent)] rounded-full blur-[20px] opacity-40 group-hover/card:opacity-70 transition-opacity duration-500 pointer-events-none"></div>
-<img alt="Profile" class="relative w-full h-full object-cover rounded-full border-2 border-white/10 z-10 cursor-pointer select-none" id="avatar-img" src="https://s.fotora.ru/855e832a165681a6.png" draggable="false"/>
-<div class="absolute -top-12 left-1/2 -translate-x-1/2 bg-[#0a021c]/90 backdrop-blur-md border border-[var(--color-accent)] text-white text-xs px-3 py-1.5 rounded-lg opacity-0 group-hover/avatar:opacity-100 group-hover/avatar:-translate-y-1 transition-all duration-300 pointer-events-none whitespace-nowrap z-20 shadow-[0_0_15px_color-mix(in_srgb,var(--color-accent)_40%,transparent)]">
-                        Нажми 3 раза 🤫
+<!-- Обертка основного контента -->
+<div id="main-content-wrapper" class="relative z-10 flex flex-col items-center pt-20 pb-20 px-4 w-full gap-16">
+    <div class="relative w-full max-w-md mx-auto fade-in-up z-20 mb-12 md:mb-0">
+        <div class="glass-card spotlight-border rounded-3xl relative p-8 text-center z-10 group/card" id="main-card">
+            <button aria-label="Play music" class="music-btn" id="music-toggle">
+                <i class="fa-solid fa-play ml-1" id="music-icon"></i>
+                <div class="music-pulse"></div>
+            </button>
+            <div class="relative w-28 h-28 mx-auto mb-5 group/avatar">
+                <div class="absolute inset-0 bg-[var(--color-accent)] rounded-full blur-[20px] opacity-40 group-hover/card:opacity-70 transition-opacity duration-500 pointer-events-none"></div>
+                <img alt="Profile" class="relative w-full h-full object-cover rounded-full border-2 border-white/10 z-10 cursor-pointer select-none" id="avatar-img" src="https://s.fotora.ru/855e832a165681a6.png" draggable="false"/>
+                <div class="absolute -top-12 left-1/2 -translate-x-1/2 bg-[#0a021c]/90 backdrop-blur-md border border-[var(--color-accent)] text-white text-xs px-3 py-1.5 rounded-lg opacity-0 group-hover/avatar:opacity-100 group-hover/avatar:-translate-y-1 transition-all duration-300 pointer-events-none whitespace-nowrap z-20 shadow-[0_0_15px_color-mix(in_srgb,var(--color-accent)_40%,transparent)]">
+                    Нажми 3 раза 🤫
+                </div>
+            </div>
+            <h1 class="text-3xl font-bold text-white mb-0 tracking-tight">Герман</h1>
+            <h2 class="text-[11px] text-white/30 font-semibold uppercase tracking-[0.35em] mb-2 ml-0">delmyname</h2>
+            <p class="text-[var(--color-accent)] font-semibold text-sm tracking-widest uppercase mb-4">Video editor & creator</p>
+            <p class="text-gray-300 text-sm mb-6 leading-relaxed">
+                Создаю динамичные видео, Reels, Shorts и рекламные креативы.
+                <span class="text-white font-semibold">Воплощаю ваши идеи в кадре. 🎬</span>
+            </p>
+            <div class="flex flex-wrap justify-center gap-2 mb-8">
+                <span class="skill-badge px-3 py-1 text-xs font-medium bg-white/5 border border-white/10 rounded-full text-gray-300 cursor-default">Premiere Pro</span>
+                <span class="skill-badge px-3 py-1 text-xs font-medium bg-white/5 border border-white/10 rounded-full text-gray-300 cursor-default">After Effects</span>
+                <span class="skill-badge px-3 py-1 text-xs font-medium bg-white/5 border border-white/10 rounded-full text-gray-300 cursor-default">Google AI</span>
+            </div>
+            <div class="flex flex-col gap-3">
+                <a class="glass-btn btn-primary spotlight-border shadow-[0_8px_25px_rgba(139,92,246,0.5)]" href="#portfolio">
+                    <i class="fa-solid fa-circle-play mr-3"></i>
+                    Портфолио ↓
+                </a>
+                
+                <button class="glass-btn spotlight-border shadow-[0_0_15px_rgba(34,197,94,0.15)] hover:shadow-[0_0_25px_rgba(34,197,94,0.4)] group cursor-pointer border-[rgba(34,197,94,0.3)]" id="open-snake-btn">
+                    <i class="fa-solid fa-gamepad text-[#22c55e] group-hover:text-[#4ade80] text-lg mr-3 w-5 text-center transition-colors duration-300"></i>
+                    Сыграть в змейку
+                </button>
+
+                <a class="glass-btn spotlight-border group" href="https://telegram.me/fulestor" target="_blank">
+                    <i class="fa-brands fa-telegram text-[var(--color-accent)] group-hover:text-[#24A1DE] text-lg mr-3 w-5 text-center transition-colors duration-300"></i>
+                    Связаться со мной
+                </a>
+                <a class="glass-btn spotlight-border group" href="https://www.youtube.com/@delik_kryt/videos" target="_blank">
+                    <i class="fa-brands fa-youtube text-[var(--color-accent)] group-hover:text-[#FF0000] text-lg mr-3 w-5 text-center transition-colors duration-300"></i>
+                    Мой канал
+                </a>
+                <hr style="border: none; height: 1px; opacity: 60%; background: linear-gradient(to right, transparent, var(--color-accent), transparent); margin: 15px 0;"/>
+                <a class="glass-btn spotlight-border" href="https://disk.yandex.ru/d/dMs1UxgfMstpSA" target="_blank">
+                    <i class="fa-solid fa-compact-disc text-[var(--color-accent)] text-lg mr-3 w-5 text-center"></i>
+                    Диск
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ДОБАВЛЕН КЛАСС scroll-reveal -->
+    <section class="w-full max-w-4xl 2xl:max-w-6xl mx-auto flex flex-col items-center scroll-reveal z-10" id="portfolio">
+        <h2 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+            <i class="fa-solid fa-film no-jello text-[var(--color-accent)]"></i> Мои работы
+        </h2>
+        <div class="flex flex-wrap justify-center gap-3 mb-10 w-full px-4 relative">
+            <button class="filter-btn active px-4 py-2 text-sm font-medium rounded-full bg-[var(--color-accent)] text-white border border-[var(--color-accent)] transition-all hover:bg-[var(--color-accent-hover)]" data-filter="all">Все работы</button>
+            <button class="filter-btn px-4 py-2 text-sm font-medium rounded-full bg-white/5 text-gray-300 border border-white/10 transition-all hover:bg-white/10 hover:text-white" data-filter="irl">IRL / Шоу</button>
+            <button class="filter-btn px-4 py-2 text-sm font-medium rounded-full bg-white/5 text-gray-300 border border-white/10 transition-all hover:bg-white/10 hover:text-white" data-filter="gaming">Игровые</button>
+            <button class="filter-btn px-4 py-2 text-sm font-medium rounded-full bg-white/5 text-gray-300 border border-white/10 transition-all hover:bg-white/10 hover:text-white" data-filter="shorts">Shorts / Reels</button>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 2xl:grid-cols-4 auto-rows-[300px] grid-flow-row-dense gap-6 w-full px-4 place-content-center justify-items-center md:justify-items-stretch" id="portfolio-grid">
+            <a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-3 2xl:col-span-4 md:row-span-1" data-category="irl" draggable="false" href="https://www.youtube.com/@bratdvaa" target="_blank">
+                <div class="relative flex-1 flex items-center justify-center overflow-hidden skeleton bg-white/5">
+                    <div class="absolute top-3 left-3 z-20 bg-black/40 backdrop-blur-md w-6 h-6 flex items-center justify-center rounded-md border border-[var(--color-accent)] text-xs text-white/70" title="Закреплено">
+                        <i class="fa-solid fa-thumbtack no-jello" style="animation: none; transform: rotate(45deg);"></i>
                     </div>
+                    <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Авг. 2025</div>
+                    <img alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110 opacity-0 transition-opacity duration-500" onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('skeleton', 'bg-white/5');" draggable="false" loading="lazy" src="https://yt3.googleusercontent.com/y5qWqaRO5SiWLYrBKqHBACwXWbiXLAF7mcBu6sGuj4n7RBDHFxKRqHwCDz0zk_EmyBb4G-xQ=s1080-c-k-c0x00ffffff-no-rj"/>
+                    <div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
+                    <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
+                        <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg transition-colors duration-200"></i>
+                    </div>
+                </div>
+                <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
+                    <h3 class="font-bold text-white mb-1">Братдваа</h3>
+                    <p class="text-sm text-gray-200 line-clamp-1">Мой крупный проект — Динамичный IRL контент в формате шоу.</p>
+                </div>
+            </a>
+            <a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2" data-category="irl, shorts" href="https://disk.yandex.ru/i/qrLRHdzb-r2EPg" target="_blank">
+                <div class="relative flex-1 flex items-center justify-center overflow-hidden min-h-[240px] skeleton bg-white/5">
+                    <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Авг. 2026</div>
+                    <img alt="Авиация" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110 opacity-0 transition-opacity duration-500" onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('skeleton', 'bg-white/5');" loading="lazy" src="https://s.fotora.ru/86f9f8d03605cb7f.png"/>
+                    <div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
+                    <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
+                        <i class="fa-solid fa-compact-disc text-4xl text-white/80 group-hover:text-[#FFCC00] drop-shadow-lg transition-colors duration-200"></i>
+                    </div>
+                </div>
+                <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
+                    <h3 class="font-bold text-white mb-1">Авиация</h3>
+                    <p class="text-sm text-gray-200 line-clamp-1">Склейка, саунд, color</p>
+                </div>
+            </a>
+            <a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1" data-category="irl" draggable="false" href="https://disk.yandex.ru/i/1-1H46zRa50SBQ" target="_blank">
+                <div class="relative flex-1 flex items-center justify-center overflow-hidden skeleton bg-white/5">
+                    <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Фев. 2026</div>
+                    <img alt="Работа по биологии" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110 opacity-0 transition-opacity duration-500" onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('skeleton', 'bg-white/5');" draggable="false" loading="lazy" src="https://s.fotora.ru/e01f54d170b02fb6.jpeg"/>
+                    <div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
+                    <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
+                        <i class="fa-solid fa-compact-disc text-4xl text-white/80 group-hover:text-yellow-400 drop-shadow-lg transition-colors duration-200"></i>
+                    </div>
+                </div>
+                <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
+                    <h3 class="font-bold text-white mb-1">Работа по биологии</h3>
+                    <p class="text-sm text-gray-200 line-clamp-1">Работа с нейросетями, цветокорреция.</p>
+                </div>
+            </a>
+            <a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2" data-category="irl, shorts" draggable="false" href="https://www.instagram.com/prodajnie" target="_blank">
+                <div class="relative flex-1 flex items-center justify-center overflow-hidden skeleton bg-white/5">
+                    <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Авг. 2025</div>
+                    <img alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110 opacity-0 transition-opacity duration-500" onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('skeleton', 'bg-white/5');" draggable="false" loading="lazy" src="https://s.fotora.ru/62e6649f87f8ed75.jpeg"/>
+                    <div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
+                    <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
+                        <i class="fa-brands fa-instagram text-4xl text-white/80 group-hover:text-pink-500 drop-shadow-lg transition-colors duration-200"></i>
+                    </div>
+                </div>
+                <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
+                    <h3 class="font-bold text-white mb-1">Продажные блоггеры</h3>
+                    <p class="text-sm text-gray-200 line-clamp-1">Рекламные ролики для разных брендов.</p>
+                </div>
+            </a>
+            <a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2" data-category="irl, shorts" href="https://disk.yandex.ru/i/HLhs7LcHXgLbbQ" target="_blank">
+                <div class="relative flex-1 flex items-center justify-center overflow-hidden skeleton bg-white/5">
+                    <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Нояб. 2025</div>
+                    <img alt="Переходники | Продажные" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110 opacity-0 transition-opacity duration-500" onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('skeleton', 'bg-white/5');" loading="lazy" src="https://s.fotora.ru/9d5dd16efd650621.png"/>
+                    <div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
+                    <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
+                        <i class="fa-solid fa-compact-disc text-4xl text-white/80 group-hover:text-[#FFCC00] drop-shadow-lg transition-colors duration-200"></i>
+                    </div>
+                </div>
+                <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
+                    <h3 class="font-bold text-white mb-1">Переходники | Продажные</h3>
+                    <p class="text-sm text-gray-200 line-clamp-1">Монтаж готовой склейки</p>
+                </div>
+            </a>
+            <a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2" data-category="irl, shorts" href="https://disk.yandex.ru/i/YjBJA_Bq4iBvJg" target="_blank">
+                <div class="relative flex-1 flex items-center justify-center overflow-hidden skeleton bg-white/5">
+                    <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Дек. 2025</div>
+                    <img alt="День 4 | Продажные" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110 opacity-0 transition-opacity duration-500" onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('skeleton', 'bg-white/5');" loading="lazy" src="https://s.fotora.ru/33fabac0404f7088.png"/>
+                    <div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
+                    <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
+                        <i class="fa-solid fa-compact-disc text-4xl text-white/80 group-hover:text-[#FFCC00] drop-shadow-lg transition-colors duration-200"></i>
+                    </div>
+                </div>
+                <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
+                    <h3 class="font-bold text-white mb-1">День 4 | Продажные</h3>
+                    <p class="text-sm text-gray-200 line-clamp-1">Монтаж готовой склейки</p>
+                </div>
+            </a>
+            <a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2" data-category="irl, shorts" draggable="false" href="https://disk.yandex.ru/i/XSNDFEKIv8c0Pw" target="_blank">
+                <div class="relative flex-1 flex items-center justify-center overflow-hidden skeleton bg-white/5">
+                    <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Дек. 2025</div>
+                    <img alt="Сказка | Продажные" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110 opacity-0 transition-opacity duration-500" onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('skeleton', 'bg-white/5');" draggable="false" loading="lazy" src="https://s.fotora.ru/36b18de29c3d5e78.png"/>
+                    <div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
+                    <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
+                        <i class="fa-solid fa-compact-disc text-4xl text-white/80 group-hover:text-[#FFCC00] drop-shadow-lg transition-colors duration-200"></i>
+                    </div>
+                </div>
+                <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
+                    <h3 class="font-bold text-white mb-1">Сказка | Продажные</h3>
+                    <p class="text-sm text-gray-200 line-clamp-1">Съёмка, сборка, эффекты</p>
+                </div>
+            </a>
+            <a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1" data-category="gaming" href="https://www.youtube.com/watch?v=9mKflJB1Gmo" target="_blank">
+                <div class="relative flex-1 flex items-center justify-center overflow-hidden skeleton bg-white/5">
+                    <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Янв. 2025</div>
+                    <img alt="Rainbow GG Minecraft" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110 opacity-0 transition-opacity duration-500" onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('skeleton', 'bg-white/5');" loading="lazy" src="https://i.ytimg.com/vi/9mKflJB1Gmo/maxresdefault.jpg"/>
+                    <div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
+                    <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
+                        <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg transition-colors duration-200"></i>
+                    </div>
+                </div>
+                <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
+                    <h3 class="font-bold text-white mb-1">Rainbow GG Minecraft</h3>
+                    <p class="text-sm text-gray-200 line-clamp-1">485к, монтаж англоязычных роликов.</p>
+                </div>
+            </a>
+            <a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1" data-category="gaming" href="https://www.youtube.com/watch?v=DiR2Cl5KF-Y" target="_blank">
+                <div class="relative flex-1 flex items-center justify-center overflow-hidden skeleton bg-white/5">
+                    <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Нояб. 2024</div>
+                    <img alt="Rainbow GG Minecraft" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110 opacity-0 transition-opacity duration-500" onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('skeleton', 'bg-white/5');" loading="lazy" src="https://i.ytimg.com/vi/DiR2Cl5KF-Y/maxresdefault.jpg"/>
+                    <div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
+                    <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
+                        <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg transition-colors duration-200"></i>
+                    </div>
+                </div>
+                <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
+                    <h3 class="font-bold text-white mb-1">Rainbow GG Minecraft</h3>
+                    <p class="text-sm text-gray-200 line-clamp-1">188к, монтаж англоязычных роликов</p>
+                </div>
+            </a>
+            <a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2" data-category="gaming, shorts" draggable="false" href="https://www.youtube.com/shorts/F8kd9Q-64VM" target="_blank">
+                <div class="relative flex-1 flex items-center justify-center overflow-hidden skeleton bg-white/5">
+                    <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Дек. 2024</div>
+                    <img alt="YT Shorts для Делика" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110 opacity-0 transition-opacity duration-500" onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('skeleton', 'bg-white/5');" draggable="false" loading="lazy" src="https://i.ytimg.com/vi/F8kd9Q-64VM/oar2.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLAYEOIUNvQIbfHXuw0XMInc9n4Gxw&usqp=CCk"/>
+                    <div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
+                    <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
+                        <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg transition-colors duration-200"></i>
+                    </div>
+                </div>
+                <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
+                    <h3 class="font-bold text-white mb-1">YT Shorts для Делика</h3>
+                    <p class="text-sm text-gray-200 line-clamp-1">Динамичный монтаж с добавлением эффектов</p>
+                </div>
+            </a>
+            <a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-1" data-category="gaming" href="https://www.youtube.com/watch?v=zf-iC5QRgCA&" target="_blank">
+                <div class="relative flex-1 flex items-center justify-center overflow-hidden skeleton bg-white/5">
+                    <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Окт. 2024</div>
+                    <img alt="Rainbow GG Minecraft" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110 opacity-0 transition-opacity duration-500" onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('skeleton', 'bg-white/5');" loading="lazy" src="https://i.ytimg.com/vi/zf-iC5QRgCA/maxresdefault.jpg"/>
+                    <div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
+                    <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
+                        <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg transition-colors duration-200"></i>
+                    </div>
+                </div>
+                <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
+                    <h3 class="font-bold text-white mb-1">Rainbow GG Minecraft</h3>
+                    <p class="text-sm text-gray-200 line-clamp-1">Монтаж англоязычных роликов</p>
+                </div>
+            </a>
+            <a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-1" data-category="gaming" href="https://www.youtube.com/@mc_resolver" target="_blank">
+                <div class="relative flex-1 flex items-center justify-center overflow-hidden skeleton bg-white/5">
+                    <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Июль 2024</div>
+                    <img alt="Трейлеры Resolver" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110 opacity-0 transition-opacity duration-500" onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('skeleton', 'bg-white/5');" loading="lazy" src="https://yt3.googleusercontent.com/jXudDnrVzU91mcKOam60VYvOLx9QJm8UjxJK12dYU2aXTNkTTDI3qWnywgiPusACrKtmu1v8hQ=s1080-c-k-c0x00ffffff-no-rj"/>
+                    <div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
+                    <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
+                        <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg transition-colors duration-200"></i>
+                    </div>
+                </div>
+                <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
+                    <h3 class="font-bold text-white mb-1">Трейлеры Resolver</h3>
+                    <p class="text-sm text-gray-200 line-clamp-1">Короткометражки к обновлениям сервера</p>
+                </div>
+            </a>
+            <a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1" data-category="irl" href="https://www.youtube.com/@ashleymccuen" target="_blank">
+                <div class="relative flex-1 flex items-center justify-center overflow-hidden skeleton bg-white/5">
+                    <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Фев. 2025</div>
+                    <img alt="Green Agriculture" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110 opacity-0 transition-opacity duration-500" onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('skeleton', 'bg-white/5');" loading="lazy" src="https://i.ytimg.com/vi/tedMCl3rgio/maxresdefault.jpg"/>
+                    <div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
+                    <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
+                        <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg transition-colors duration-200"></i>
+                    </div>
+                </div>
+                <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
+                    <h3 class="font-bold text-white mb-1">Green Agriculture</h3>
+                    <p class="text-sm text-gray-200 line-clamp-1">Создание англоязычных видео с использованием ИИ</p>
+                </div>
+            </a>
+            <a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1" data-category="gaming" href="https://www.youtube.com/watch?v=gtErHwRld1o" target="_blank">
+                <div class="relative flex-1 flex items-center justify-center overflow-hidden skeleton bg-white/5">
+                    <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Авг. 2025</div>
+                    <img alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110 opacity-0 transition-opacity duration-500" onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('skeleton', 'bg-white/5');" loading="lazy" src="https://i.ytimg.com/vi/gtErHwRld1o/hqdefault.jpg"/>
+                    <div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
+                    <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
+                        <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg transition-colors duration-200"></i>
+                    </div>
+                </div>
+                <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
+                    <h3 class="font-bold text-white mb-1">Фимайн — 
+                    Я Сделал БЕСКОНЕЧНЫЙ Источник Денег на АНАРХИИ ФанТайм</h3>
+                    <p class="text-sm text-gray-200 line-clamp-1">Динамичный летсплей с добавлением эффектов.</p>
+                </div>
+            </a>
+            <a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1" data-category="gaming" href="https://www.youtube.com/watch?v=JyMkIKBMSFY" target="_blank">
+                <div class="relative flex-1 flex items-center justify-center overflow-hidden skeleton bg-white/5">
+                    <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Март 2025</div>
+                    <img alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110 opacity-0 transition-opacity duration-500" onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('skeleton', 'bg-white/5');" loading="lazy" src="https://i.ytimg.com/vi/JyMkIKBMSFY/hqdefault.jpg"/>
+                    <div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
+                    <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
+                        <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg transition-colors duration-200"></i>
+                    </div>
+                </div>
+                <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
+                    <h3 class="font-bold text-white mb-1">Фимайн — 
+                    Я стал МИЛЛИАРДЕРОМ В ПЕРВЫЙ ДЕНЬ ВАЙПА На Анархии ФанТайм</h3>
+                    <p class="text-sm text-gray-200 line-clamp-1">Динамичный летсплей с добавлением эффектов.</p>
+                </div>
+            </a>
+            <a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:row-span-1 md:col-span-1" data-category="gaming" href="https://www.youtube.com/watch?v=p-t8exzF_d0" target="_blank">
+                <div class="relative flex-1 flex items-center justify-center overflow-hidden skeleton bg-white/5">
+                    <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Нояб. 2024</div>
+                    <img alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110 opacity-0 transition-opacity duration-500" onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('skeleton', 'bg-white/5');" loading="lazy" src="https://i.ytimg.com/vi/p-t8exzF_d0/hqdefault.jpg"/>
+                    <div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
+                    <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
+                        <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg transition-colors duration-200"></i>
+                    </div>
+                </div>
+                <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
+                    <h3 class="font-bold text-white mb-1">Фимайн — 
+                    Получил КНЯЗЯ ЗА 24 ЧАСА ИГРЫ НА АНАРХИИ ФАНТАЙМ</h3>
+                    <p class="text-sm text-gray-200 line-clamp-1">Динамичный летсплей с добавлением эффектов.</p>
+                </div>
+            </a>
+            <a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-1" data-category="gaming" href="https://www.youtube.com/@delik_kryt" target="_blank">
+                <div class="relative flex-1 flex items-center justify-center overflow-hidden skeleton bg-white/5">
+                    <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Авг. 2024</div>
+                    <img alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110 opacity-0 transition-opacity duration-500" onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('skeleton', 'bg-white/5');" loading="lazy" src="https://yt3.googleusercontent.com/QhxcGch86Xv3dmjjE5sMGupkcNPRabhlqGSqMq7GJEwhouCpUmY8udRWMluVaXdFIEo2LeTx0g=s1080-c-k-c0x00000000-no-rj"/>
+                    <div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
+                    <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
+                        <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg transition-colors duration-200"></i>
+                    </div>
+                </div>
+                <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
+                    <h3 class="font-bold text-white mb-1">Монтаж для Делика</h3>
+                    <p class="text-sm text-gray-200 line-clamp-1">Мой канал, динамичный монтаж.</p>
+                </div>
+            </a>
+        </div>
+        <p class="text-gray-500 text-xs mt-10">© 2026. Все права защищены.</p>
+    </section>
 </div>
-<h1 class="text-3xl font-bold text-white mb-0 tracking-tight">Герман</h1>
-<h2 class="text-[11px] text-white/30 font-semibold uppercase tracking-[0.35em] mb-2 ml-0">delmyname</h2>
-<p class="text-[var(--color-accent)] font-semibold text-sm tracking-widest uppercase mb-4">Video editor & creator</p>
-<p class="text-gray-300 text-sm mb-6 leading-relaxed">
-                    Создаю динамичные видео, Reels, Shorts и рекламные креативы.
-                    <span class="text-white font-semibold">Воплощаю ваши идеи в кадре. 🎬</span>
-</p>
-<div class="flex flex-wrap justify-center gap-2 mb-8">
-<span class="skill-badge px-3 py-1 text-xs font-medium bg-white/5 border border-white/10 rounded-full text-gray-300 cursor-default">Premiere Pro</span>
-<span class="skill-badge px-3 py-1 text-xs font-medium bg-white/5 border border-white/10 rounded-full text-gray-300 cursor-default">After Effects</span>
-<span class="skill-badge px-3 py-1 text-xs font-medium bg-white/5 border border-white/10 rounded-full text-gray-300 cursor-default">Google AI</span>
+
+<!-- ОВЕРЛЕЙ ИГРЫ ЗМЕЙКА -->
+<div id="snake-overlay" class="fixed inset-0 z-[300] bg-black/80 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300 flex-col items-center justify-center p-4">
+    <div class="w-full max-w-[400px] flex justify-between items-end mb-4">
+        <div>
+            <div class="text-white text-xl font-bold font-mono">СЧЁТ: <span id="snake-score" class="text-[#22c55e]">0</span></div>
+            <div class="text-white/50 text-xs font-mono mt-1">РЕКОРД: <span id="snake-best-score">0</span></div>
+        </div>
+        <div class="flex gap-4 items-center">
+            <button id="leaderboard-btn" class="text-white/60 hover:text-[var(--color-accent)] transition-colors text-sm font-bold flex items-center gap-2">
+                <i class="fa-solid fa-trophy"></i> Лидеры
+            </button>
+            <button id="close-snake-btn" class="text-white/60 hover:text-red-500 transition-colors">
+                <i class="fa-solid fa-xmark text-3xl"></i>
+            </button>
+        </div>
+    </div>
+    
+    <div class="relative w-full max-w-[400px] aspect-square rounded-xl overflow-hidden border-2 border-white/10 shadow-[0_0_30px_rgba(34,197,94,0.15)] bg-[#0a021c] flex-shrink-0">
+        <canvas id="snake-canvas" class="block w-full h-full"></canvas>
+        
+        <!-- ЭКРАН ПРОИГРЫША -->
+        <div id="snake-game-over" class="absolute inset-0 bg-black/80 hidden flex-col items-center justify-center z-10">
+            <h2 class="text-4xl font-black text-white mb-2 tracking-widest uppercase text-center">GAME OVER</h2>
+            <p class="text-gray-400 mb-6">Итоговый счет: <span id="snake-final-score" class="text-[#22c55e] font-bold">0</span></p>
+            <button id="restart-snake-btn" class="px-6 py-3 bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white rounded-xl font-bold transition-all hover:scale-105 shadow-[0_0_15px_var(--color-accent)]">
+                ПОПРОБОВАТЬ СНОВА
+            </button>
+        </div>
+
+        <!-- ТАБЛИЦА ЛИДЕРОВ (Заглушки + локальный юзер) -->
+        <div id="snake-leaderboard" class="absolute inset-0 bg-[#0a021c] hidden flex-col z-20 p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold text-white"><i class="fa-solid fa-trophy text-[var(--color-accent)] mr-2"></i>ТОП ИГРОКОВ</h2>
+                <button id="close-leaderboard-btn" class="text-white/50 hover:text-white"><i class="fa-solid fa-arrow-left"></i> Назад</button>
+            </div>
+            <div class="flex-1 overflow-y-auto pr-2" id="leaderboard-list">
+                <!-- Сюда вставятся данные через JS -->
+            </div>
+            <div class="mt-4 pt-4 border-t border-white/10 text-center text-xs text-white/40">
+                Твой никнейм: <span id="snake-username-display" class="text-[var(--color-accent)] font-bold"></span>
+            </div>
+        </div>
+    </div>
+    
+    <p class="text-gray-500 text-sm mt-6 text-center md:hidden"><i class="fa-solid fa-hand-pointer mr-2"></i>Свайпай по экрану для управления</p>
+    <p class="text-gray-500 text-sm mt-6 text-center hidden md:block"><i class="fa-solid fa-keyboard mr-2"></i>WASD или Стрелочки для управления</p>
 </div>
-<div class="flex flex-col gap-3">
-<a class="glass-btn btn-primary spotlight-border shadow-[0_8px_25px_rgba(139,92,246,0.5)]" href="#portfolio">
-<i class="fa-solid fa-circle-play mr-3"></i>
-                        Портфолио ↓
-                    </a>
-<a class="glass-btn spotlight-border group" href="https://telegram.me/fulestor" target="_blank">
-<i class="fa-brands fa-telegram text-[var(--color-accent)] group-hover:text-[#24A1DE] text-lg mr-3 w-5 text-center transition-colors duration-300"></i>
-                        Связаться со мной
-                    </a>
-<a class="glass-btn spotlight-border group" href="https://www.youtube.com/@delik_kryt/videos" target="_blank">
-<i class="fa-brands fa-youtube text-[var(--color-accent)] group-hover:text-[#FF0000] text-lg mr-3 w-5 text-center transition-colors duration-300"></i>
-                        Мой канал
-                    </a>
-<hr style="border: none; height: 1px; opacity: 60%; background: linear-gradient(to right, transparent, var(--color-accent), transparent); margin: 15px 0;"/>
-<a class="glass-btn spotlight-border" href="https://disk.yandex.ru/d/dMs1UxgfMstpSA" target="_blank">
-<i class="fa-solid fa-compact-disc text-[var(--color-accent)] text-lg mr-3 w-5 text-center"></i>
-                        Диск
-                    </a>
-</div>
-</div>
-</div>
-<section class="w-full max-w-4xl 2xl:max-w-6xl mx-auto flex flex-col items-center fade-in-up z-10" id="portfolio" style="animation-delay: 0.2s;">
-<h2 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
-<i class="fa-solid fa-film no-jello text-[var(--color-accent)]"></i> Мои работы
-            </h2>
-<div class="flex flex-wrap justify-center gap-3 mb-10 w-full px-4">
-<button class="filter-btn active px-4 py-2 text-sm font-medium rounded-full bg-[var(--color-accent)] text-white border border-[var(--color-accent)] transition-all hover:bg-[var(--color-accent-hover)]" data-filter="all">Все работы</button>
-<button class="filter-btn px-4 py-2 text-sm font-medium rounded-full bg-white/5 text-gray-300 border border-white/10 transition-all hover:bg-white/10 hover:text-white" data-filter="irl">IRL / Шоу</button>
-<button class="filter-btn px-4 py-2 text-sm font-medium rounded-full bg-white/5 text-gray-300 border border-white/10 transition-all hover:bg-white/10 hover:text-white" data-filter="gaming">Игровые</button>
-<button class="filter-btn px-4 py-2 text-sm font-medium rounded-full bg-white/5 text-gray-300 border border-white/10 transition-all hover:bg-white/10 hover:text-white" data-filter="shorts">Shorts / Reels</button>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-3 2xl:grid-cols-4 auto-rows-[300px] grid-flow-row-dense gap-6 w-full px-4 place-content-center justify-items-center md:justify-items-stretch" id="portfolio-grid">
-<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-3 2xl:col-span-4 md:row-span-1" data-category="irl" draggable="false" href="https://www.youtube.com/@bratdvaa" target="_blank">
-<div class="relative flex-1 flex items-center justify-center overflow-hidden">
-<div class="absolute top-3 left-3 z-20 bg-black/40 backdrop-blur-md w-6 h-6 flex items-center justify-center rounded-md border border-[var(--color-accent)] text-xs text-white/70" title="Закреплено">
-<i class="fa-solid fa-thumbtack no-jello" style="animation: none; transform: rotate(45deg);"></i>
-</div>
-<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Авг. 2025</div>
-<img alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" draggable="false" loading="lazy" src="https://yt3.googleusercontent.com/y5qWqaRO5SiWLYrBKqHBACwXWbiXLAF7mcBu6sGuj4n7RBDHFxKRqHwCDz0zk_EmyBb4G-xQ=s1080-c-k-c0x00ffffff-no-rj"/>
-<div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
-<div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
-<i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg transition-colors duration-200"></i>
-</div>
-</div>
-<div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
-<h3 class="font-bold text-white mb-1">Братдваа</h3>
-<p class="text-sm text-gray-200 line-clamp-1">Мой крупный проект — Динамичный IRL контент в формате шоу.</p>
-</div>
-</a>
-<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2" data-category="irl, shorts" href="https://disk.yandex.ru/i/qrLRHdzb-r2EPg" target="_blank">
-<div class="relative flex-1 flex items-center justify-center overflow-hidden min-h-[240px]">
-<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Авг. 2026</div>
-<img alt="Авиация" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://s.fotora.ru/86f9f8d03605cb7f.png"/>
-<div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
-<div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
-<i class="fa-solid fa-compact-disc text-4xl text-white/80 group-hover:text-[#FFCC00] drop-shadow-lg transition-colors duration-200"></i>
-</div>
-</div>
-<div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
-<h3 class="font-bold text-white mb-1">Авиация</h3>
-<p class="text-sm text-gray-200 line-clamp-1">Склейка, саунд, color</p>
-</div>
-</a>
-<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1" data-category="irl" draggable="false" href="https://disk.yandex.ru/i/1-1H46zRa50SBQ" target="_blank">
-<div class="relative flex-1 flex items-center justify-center overflow-hidden">
-<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Фев. 2026</div>
-<img alt="Работа по биологии" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" draggable="false" loading="lazy" src="https://s.fotora.ru/e01f54d170b02fb6.jpeg"/>
-<div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
-<div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
-<i class="fa-solid fa-compact-disc text-4xl text-white/80 group-hover:text-yellow-400 drop-shadow-lg transition-colors duration-200"></i>
-</div>
-</div>
-<div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
-<h3 class="font-bold text-white mb-1">Работа по биологии</h3>
-<p class="text-sm text-gray-200 line-clamp-1">Работа с нейросетями, цветокорреция.</p>
-</div>
-</a>
-<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2" data-category="irl, shorts" draggable="false" href="https://www.instagram.com/prodajnie" target="_blank">
-<div class="relative flex-1 flex items-center justify-center overflow-hidden">
-<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Авг. 2025</div>
-<img alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" draggable="false" loading="lazy" src="https://s.fotora.ru/62e6649f87f8ed75.jpeg"/>
-<div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
-<div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
-<i class="fa-brands fa-instagram text-4xl text-white/80 group-hover:text-pink-500 drop-shadow-lg transition-colors duration-200"></i>
-</div>
-</div>
-<div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
-<h3 class="font-bold text-white mb-1">Продажные блоггеры</h3>
-<p class="text-sm text-gray-200 line-clamp-1">Рекламные ролики для разных брендов.</p>
-</div>
-</a>
-<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2" data-category="irl, shorts" href="https://disk.yandex.ru/i/HLhs7LcHXgLbbQ" target="_blank">
-<div class="relative flex-1 flex items-center justify-center overflow-hidden">
-<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Нояб. 2025</div>
-<img alt="Переходники | Продажные" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://s.fotora.ru/9d5dd16efd650621.png"/>
-<div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
-<div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
-<i class="fa-solid fa-compact-disc text-4xl text-white/80 group-hover:text-[#FFCC00] drop-shadow-lg transition-colors duration-200"></i>
-</div>
-</div>
-<div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
-<h3 class="font-bold text-white mb-1">Переходники | Продажные</h3>
-<p class="text-sm text-gray-200 line-clamp-1">Монтаж готовой склейки</p>
-</div>
-</a>
-<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2" data-category="irl, shorts" href="https://disk.yandex.ru/i/YjBJA_Bq4iBvJg" target="_blank">
-<div class="relative flex-1 flex items-center justify-center overflow-hidden">
-<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Дек. 2025</div>
-<img alt="День 4 | Продажные" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://s.fotora.ru/33fabac0404f7088.png"/>
-<div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
-<div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
-<i class="fa-solid fa-compact-disc text-4xl text-white/80 group-hover:text-[#FFCC00] drop-shadow-lg transition-colors duration-200"></i>
-</div>
-</div>
-<div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
-<h3 class="font-bold text-white mb-1">День 4 | Продажные</h3>
-<p class="text-sm text-gray-200 line-clamp-1">Монтаж готовой склейки</p>
-</div>
-</a>
-<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2" data-category="irl, shorts" draggable="false" href="https://disk.yandex.ru/i/XSNDFEKIv8c0Pw" target="_blank">
-<div class="relative flex-1 flex items-center justify-center overflow-hidden">
-<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Дек. 2025</div>
-<img alt="Сказка | Продажные" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" draggable="false" loading="lazy" src="https://s.fotora.ru/36b18de29c3d5e78.png"/>
-<div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
-<div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
-<i class="fa-solid fa-compact-disc text-4xl text-white/80 group-hover:text-[#FFCC00] drop-shadow-lg transition-colors duration-200"></i>
-</div>
-</div>
-<div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
-<h3 class="font-bold text-white mb-1">Сказка | Продажные</h3>
-<p class="text-sm text-gray-200 line-clamp-1">Съёмка, сборка, эффекты</p>
-</div>
-</a>
-<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1" data-category="gaming" href="https://www.youtube.com/watch?v=9mKflJB1Gmo" target="_blank">
-<div class="relative flex-1 flex items-center justify-center overflow-hidden">
-<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Янв. 2025</div>
-<img alt="Rainbow GG Minecraft" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://i.ytimg.com/vi/9mKflJB1Gmo/maxresdefault.jpg"/>
-<div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
-<div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
-<i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg transition-colors duration-200"></i>
-</div>
-</div>
-<div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
-<h3 class="font-bold text-white mb-1">Rainbow GG Minecraft</h3>
-<p class="text-sm text-gray-200 line-clamp-1">485к, монтаж англоязычных роликов.</p>
-</div>
-</a>
-<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1" data-category="gaming" href="https://www.youtube.com/watch?v=DiR2Cl5KF-Y" target="_blank">
-<div class="relative flex-1 flex items-center justify-center overflow-hidden">
-<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Нояб. 2024</div>
-<img alt="Rainbow GG Minecraft" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://i.ytimg.com/vi/DiR2Cl5KF-Y/maxresdefault.jpg"/>
-<div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
-<div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
-<i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg transition-colors duration-200"></i>
-</div>
-</div>
-<div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
-<h3 class="font-bold text-white mb-1">Rainbow GG Minecraft</h3>
-<p class="text-sm text-gray-200 line-clamp-1">188к, монтаж англоязычных роликов</p>
-</div>
-</a>
-<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2" data-category="gaming, shorts" draggable="false" href="https://www.youtube.com/shorts/F8kd9Q-64VM" target="_blank">
-<div class="relative flex-1 flex items-center justify-center overflow-hidden">
-<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Дек. 2024</div>
-<img alt="YT Shorts для Делика" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" draggable="false" loading="lazy" src="https://i.ytimg.com/vi/F8kd9Q-64VM/oar2.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLAYEOIUNvQIbfHXuw0XMInc9n4Gxw&usqp=CCk"/>
-<div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
-<div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
-<i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg transition-colors duration-200"></i>
-</div>
-</div>
-<div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
-<h3 class="font-bold text-white mb-1">YT Shorts для Делика</h3>
-<p class="text-sm text-gray-200 line-clamp-1">Динамичный монтаж с добавлением эффектов</p>
-</div>
-</a>
-<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-1" data-category="gaming" href="https://www.youtube.com/watch?v=zf-iC5QRgCA&" target="_blank">
-<div class="relative flex-1 flex items-center justify-center overflow-hidden">
-<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Окт. 2024</div>
-<img alt="Rainbow GG Minecraft" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://i.ytimg.com/vi/zf-iC5QRgCA/maxresdefault.jpg"/>
-<div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
-<div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
-<i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg transition-colors duration-200"></i>
-</div>
-</div>
-<div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
-<h3 class="font-bold text-white mb-1">Rainbow GG Minecraft</h3>
-<p class="text-sm text-gray-200 line-clamp-1">Монтаж англоязычных роликов</p>
-</div>
-</a>
-<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-1" data-category="gaming" href="https://www.youtube.com/@mc_resolver" target="_blank">
-<div class="relative flex-1 flex items-center justify-center overflow-hidden">
-<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Июль 2024</div>
-<img alt="Трейлеры Resolver" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://yt3.googleusercontent.com/jXudDnrVzU91mcKOam60VYvOLx9QJm8UjxJK12dYU2aXTNkTTDI3qWnywgiPusACrKtmu1v8hQ=s1080-c-k-c0x00ffffff-no-rj"/>
-<div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
-<div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
-<i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg transition-colors duration-200"></i>
-</div>
-</div>
-<div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
-<h3 class="font-bold text-white mb-1">Трейлеры Resolver</h3>
-<p class="text-sm text-gray-200 line-clamp-1">Короткометражки к обновлениям сервера</p>
-</div>
-</a>
-<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1" data-category="irl" href="https://www.youtube.com/@ashleymccuen" target="_blank">
-<div class="relative flex-1 flex items-center justify-center overflow-hidden">
-<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Фев. 2025</div>
-<img alt="Green Agriculture" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://i.ytimg.com/vi/tedMCl3rgio/maxresdefault.jpg"/>
-<div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
-<div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
-<i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg transition-colors duration-200"></i>
-</div>
-</div>
-<div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
-<h3 class="font-bold text-white mb-1">Green Agriculture</h3>
-<p class="text-sm text-gray-200 line-clamp-1">Создание англоязычных видео с использованием ИИ</p>
-</div>
-</a>
-<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1" data-category="gaming" href="https://www.youtube.com/watch?v=gtErHwRld1o" target="_blank">
-<div class="relative flex-1 flex items-center justify-center overflow-hidden">
-<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Авг. 2025</div>
-<img alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://i.ytimg.com/vi/gtErHwRld1o/hqdefault.jpg"/>
-<div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
-<div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
-<i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg transition-colors duration-200"></i>
-</div>
-</div>
-<div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
-<h3 class="font-bold text-white mb-1">Фимайн — 
-Я Сделал БЕСКОНЕЧНЫЙ Источник Денег на АНАРХИИ ФанТайм</h3>
-<p class="text-sm text-gray-200 line-clamp-1">Динамичный летсплей с добавлением эффектов.</p>
-</div>
-</a>
-<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1" data-category="gaming" href="https://www.youtube.com/watch?v=JyMkIKBMSFY" target="_blank">
-<div class="relative flex-1 flex items-center justify-center overflow-hidden">
-<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Март 2025</div>
-<img alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://i.ytimg.com/vi/JyMkIKBMSFY/hqdefault.jpg"/>
-<div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
-<div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
-<i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg transition-colors duration-200"></i>
-</div>
-</div>
-<div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
-<h3 class="font-bold text-white mb-1">Фимайн — 
-Я стал МИЛЛИАРДЕРОМ В ПЕРВЫЙ ДЕНЬ ВАЙПА На Анархии ФанТайм</h3>
-<p class="text-sm text-gray-200 line-clamp-1">Динамичный летсплей с добавлением эффектов.</p>
-</div>
-</a>
-<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:row-span-1 md:col-span-1" data-category="gaming" href="https://www.youtube.com/watch?v=p-t8exzF_d0" target="_blank">
-<div class="relative flex-1 flex items-center justify-center overflow-hidden">
-<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Нояб. 2024</div>
-<img alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://i.ytimg.com/vi/p-t8exzF_d0/hqdefault.jpg"/>
-<div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
-<div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
-<i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg transition-colors duration-200"></i>
-</div>
-</div>
-<div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
-<h3 class="font-bold text-white mb-1">Фимайн — 
-Получил КНЯЗЯ ЗА 24 ЧАСА ИГРЫ НА АНАРХИИ ФАНТАЙМ</h3>
-<p class="text-sm text-gray-200 line-clamp-1">Динамичный летсплей с добавлением эффектов.</p>
-</div>
-</a>
-<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-1" data-category="gaming" href="https://www.youtube.com/@delik_kryt" target="_blank">
-<div class="relative flex-1 flex items-center justify-center overflow-hidden">
-<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Авг. 2024</div>
-<img alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://yt3.googleusercontent.com/QhxcGch86Xv3dmjjE5sMGupkcNPRabhlqGSqMq7GJEwhouCpUmY8udRWMluVaXdFIEo2LeTx0g=s1080-c-k-c0x00000000-no-rj"/>
-<div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
-<div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
-<i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg transition-colors duration-200"></i>
-</div>
-</div>
-<div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
-<h3 class="font-bold text-white mb-1">Монтаж для Делика</h3>
-<p class="text-sm text-gray-200 line-clamp-1">Мой канал, динамичный монтаж.</p>
-</div>
-</a>
-</div>
-<p class="text-gray-500 text-xs mt-10">© 2026. Все права защищены.</p>
-</section>
-</div>
+
 <audio id="bg-audio" loop="" preload="none">
 <source src="outsider-no-more.mp3" type="audio/mpeg"/>
 </audio>
+
 <script>
+        const UI_VOLUME = 0.15; 
+        
+        const uiSounds = {
+            hover: new Audio('ui-hover.mp3'),
+            click: new Audio('ui-click.mp3')
+        };
+        
+        uiSounds.hover.volume = UI_VOLUME;
+        uiSounds.click.volume = UI_VOLUME;
+
+        function playUiSound(type) {
+            const s = uiSounds[type];
+            if (s) {
+                s.currentTime = 0;
+                s.play().catch(() => {}); 
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
 
-            /* --- Оптимизированная интерактивная сетка (Дыхание + Скролл) --- */
+            document.querySelectorAll('.glass-btn, .portfolio-item, .filter-btn, .music-btn, #avatar-img').forEach(el => {
+                el.addEventListener('mouseenter', () => playUiSound('hover'));
+            });
+            document.querySelectorAll('.filter-btn, .glass-btn, .music-btn, #avatar-img, #close-snake-btn, #restart-snake-btn, #leaderboard-btn, #close-leaderboard-btn').forEach(el => {
+                el.addEventListener('click', () => playUiSound('click'));
+            });
+
+            /* --- Intersection Observer для анимации по скроллу --- */
+            const scrollObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        // Если раскомментить строчку ниже, анимация сработает только 1 раз
+                        // scrollObserver.unobserve(entry.target); 
+                    }
+                });
+            }, { 
+                threshold: 0.1, // Срабатывает когда 10% блока видно на экране
+                rootMargin: "0px 0px -50px 0px" // Небольшой отступ снизу
+            });
+            
+            const portfolioSection = document.getElementById('portfolio');
+            if (portfolioSection) {
+                scrollObserver.observe(portfolioSection);
+            }
+
+            /* --- СЕТКА --- */
             const gridPattern = document.querySelector('.workspace-grid-pattern');
             if (gridPattern) {
                 let scrollY = 0;
                 window.addEventListener('scroll', () => {
                     scrollY = window.scrollY;
-                }, { passive: true }); // passive: true делает скролл максимально плавным на смартфонах
+                }, { passive: true }); 
 
-                // Безопасный остаток от деления для JS (чтобы не было проблем с отрицательными числами)
                 const mod = (n, m) => ((n % m) + m) % m;
 
                 function animateGrid(time) {
-                    // Скорость "дыхания/дрейфа": 0.003 - медленно и ненавязчиво
                     const drift = time * 0.008; 
-                    
-                    // x двигается только по времени
-                    // y двигается по времени МИНУС скролл (умножаем на 0.5 для эффекта глубины)
-                    // Используем % 60, так как размер ячейки сетки 60px.
-                    // Когда сетка сдвигается на 60px, она возвращается в 0, и этот скачок невидим!
                     const x = mod(drift, 60);
                     const y = mod(drift - (scrollY * 0.5), 60); 
 
-                    // Двигаем сетку через GPU с помощью translate3d
                     gridPattern.style.transform = `translate3d(${x}px, ${y}px, 0)`;
                     requestAnimationFrame(animateGrid);
                 }
                 requestAnimationFrame(animateGrid);
             }
 
-            /* --- Логика Плеера --- */
+            /* --- ЛОГИКА ПЛЕЕРА --- */
             const audio = document.getElementById('bg-audio');
             const toggleBtn = document.getElementById('music-toggle');
             const icon = document.getElementById('music-icon');
@@ -800,19 +972,27 @@
                 });
             }
 
-            /* --- 3D Наклон Карточки --- */
+            /* --- ХОВЕР И 3D --- */
             const mainCard = document.getElementById('main-card');
-            if (mainCard && window.matchMedia("(hover: hover)").matches) {
-                let rafId;
+            const spotlightElements = document.querySelectorAll('.spotlight-border');
+            let rafId;
+
+            function handlePointerMove(e, el) {
+                if (rafId) cancelAnimationFrame(rafId);
                 
-                mainCard.addEventListener('mousemove', (e) => {
-                    if (rafId) cancelAnimationFrame(rafId);
+                rafId = requestAnimationFrame(() => {
+                    const rect = el.getBoundingClientRect();
+                    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
                     
-                    rafId = requestAnimationFrame(() => {
-                        const rect = mainCard.getBoundingClientRect();
-                        const x = e.clientX - rect.left;
-                        const y = e.clientY - rect.top;
-                        
+                    const x = clientX - rect.left;
+                    const y = clientY - rect.top;
+                    
+                    el.style.setProperty('--mouse-x', `${x}px`);
+                    el.style.setProperty('--mouse-y', `${y}px`);
+                    el.style.setProperty('--spotlight-opacity', `1`);
+
+                    if (el === mainCard) {
                         const centerX = rect.width / 2;
                         const centerY = rect.height / 2;
                         
@@ -820,42 +1000,35 @@
                         const rotateY = ((x - centerX) / centerX) * 3.5;
                         
                         mainCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-                    });
+                    }
                 });
+            }
 
-                mainCard.addEventListener('mouseleave', () => {
-                    if (rafId) cancelAnimationFrame(rafId);
+            function handlePointerLeave(el) {
+                if (rafId) cancelAnimationFrame(rafId);
+                el.style.setProperty('--spotlight-opacity', `0`);
+                if (el === mainCard) {
                     mainCard.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
-                });
+                }
             }
 
-            /* --- Spotlight (Свечение рамки) --- */
-            const spotlightElements = document.querySelectorAll('.spotlight-border');
-            if (window.matchMedia("(hover: hover)").matches) {
-                spotlightElements.forEach(el => {
-                    let rafId;
-                    el.addEventListener('mousemove', (e) => {
-                        if (rafId) cancelAnimationFrame(rafId);
-                        
-                        rafId = requestAnimationFrame(() => {
-                            const rect = el.getBoundingClientRect();
-                            const x = e.clientX - rect.left;
-                            const y = e.clientY - rect.top;
-                            
-                            el.style.setProperty('--mouse-x', `${x}px`);
-                            el.style.setProperty('--mouse-y', `${y}px`);
-                            el.style.setProperty('--spotlight-opacity', `1`);
-                        });
-                    });
-
-                    el.addEventListener('mouseleave', () => {
-                        if (rafId) cancelAnimationFrame(rafId);
-                        el.style.setProperty('--spotlight-opacity', `0`);
-                    });
-                });
+            if (mainCard) {
+                mainCard.addEventListener('mousemove', (e) => handlePointerMove(e, mainCard));
+                mainCard.addEventListener('touchmove', (e) => handlePointerMove(e, mainCard), { passive: true });
+                mainCard.addEventListener('mouseleave', () => handlePointerLeave(mainCard));
+                mainCard.addEventListener('touchend', () => handlePointerLeave(mainCard));
             }
 
-            /* --- Плавный скролл --- */
+            spotlightElements.forEach(el => {
+                if (el !== mainCard) {
+                    el.addEventListener('mousemove', (e) => handlePointerMove(e, el));
+                    el.addEventListener('touchmove', (e) => handlePointerMove(e, el), { passive: true });
+                    el.addEventListener('mouseleave', () => handlePointerLeave(el));
+                    el.addEventListener('touchend', () => handlePointerLeave(el));
+                }
+            });
+
+            /* --- ПЛАВНЫЙ СКРОЛЛ --- */
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     const targetId = this.getAttribute('href');
@@ -871,12 +1044,42 @@
                 });
             }); 
 
-            /* --- Логика Фильтрации Портфолио --- */
+            /* --- DISCORD ПАСХАЛКА + ФИЛЬТРЫ --- */
             const filterBtns = document.querySelectorAll('.filter-btn');
             const portfolioItems = document.querySelectorAll('.portfolio-item');
+            const portfolioGrid = document.getElementById('portfolio-grid');
+            
+            const shakeElements = [
+                document.getElementById('main-content-wrapper'),
+                document.getElementById('player-inner')
+            ];
+            
+            let glitchTimeout;
+            let filterTimeout;
+            let filterClickCount = 0;
+            let filterShakeTimeout;
+            let filterResetTimeout;
+            
+            const easterEggMessages = [
+                "Ай!", "Эй!", "Хватит", "Остановись", "Зачем?", "Тебе заняться нечем?", 
+                "Прекрати", "Мне больно!", "ОСТАНОВИСЬ", "Сайт сломается!", 
+                "10", "9", "8", "7", "Это не шутка!", "ПОЩАДИ", "ААААААА"
+            ];
 
             filterBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
+                btn.addEventListener('click', function(e) {
+                    
+                    if (glitchTimeout) clearTimeout(glitchTimeout);
+                    if (filterTimeout) clearTimeout(filterTimeout);
+
+                    portfolioGrid.classList.remove('glitch-active');
+                    void portfolioGrid.offsetWidth; 
+                    portfolioGrid.classList.add('glitch-active');
+                    
+                    glitchTimeout = setTimeout(() => {
+                        portfolioGrid.classList.remove('glitch-active');
+                    }, 250);
+
                     filterBtns.forEach(b => {
                         b.classList.remove('active', 'bg-[var(--color-accent)]', 'text-white', 'border-[var(--color-accent)]');
                         b.classList.add('bg-white/5', 'text-gray-300', 'border-white/10');
@@ -887,98 +1090,88 @@
 
                     const filterValue = this.getAttribute('data-filter');
 
-                    portfolioItems.forEach(item => {
-                        const rawCategories = item.getAttribute('data-category');
-                        if (!rawCategories) return; 
+                    filterTimeout = setTimeout(() => {
+                        portfolioItems.forEach(item => {
+                            const rawCategories = item.getAttribute('data-category');
+                            if (!rawCategories) return; 
 
-                        const itemCategoriesArray = rawCategories.split(',').map(cat => cat.trim());
+                            const itemCategoriesArray = rawCategories.split(',').map(cat => cat.trim());
+                            
+                            if (filterValue === 'all' || itemCategoriesArray.includes(filterValue)) {
+                                item.classList.remove('hide');
+                            } else {
+                                item.classList.add('hide');
+                            }
+                        });
+                    }, 125); 
+
+                    // ТРЯСКА ПО КЛИКАМ (КОМБО)
+                    filterClickCount++;
+                    clearTimeout(filterResetTimeout);
+                    
+                    filterResetTimeout = setTimeout(() => { 
+                        filterClickCount = 0; 
+                    }, 400);
+
+                    if (filterClickCount > 3) {
+                        clearTimeout(filterShakeTimeout);
                         
-                        if (filterValue === 'all' || itemCategoriesArray.includes(filterValue)) {
-                            item.classList.remove('hide');
-                        } else {
-                            item.classList.add('hide');
-                        }
-                    });
+                        let intensity = Math.min(filterClickCount, 30);
+                        
+                        shakeElements.forEach(el => {
+                            el.classList.add('is-shaking');
+                            el.style.setProperty('--shake-x', `${Math.random() * (intensity * 0.3)}px`);
+                            el.style.setProperty('--shake-y', `${Math.random() * (intensity * 0.3)}px`);
+                            el.style.setProperty('--shake-r', `${(Math.random() - 0.5) * (intensity * 0.05)}deg`);
+                        });
+
+                        filterShakeTimeout = setTimeout(() => {
+                            shakeElements.forEach(el => el.classList.remove('is-shaking'));
+                        }, 150);
+
+                        const toast = document.createElement('div');
+                        let msgIndex = Math.min(filterClickCount - 4, easterEggMessages.length - 1);
+                        toast.textContent = easterEggMessages[msgIndex];
+                        
+                        toast.className = 'absolute text-[#ff0055] font-black text-base md:text-lg pointer-events-none z-[200] whitespace-nowrap drop-shadow-[0_0_12px_rgba(255,0,85,1)] select-none';
+                        toast.style.position = 'fixed';
+                        toast.style.left = `${e.clientX}px`;
+                        toast.style.top = `${e.clientY}px`;
+                        toast.style.transform = `translate(-50%, -50%) scale(0.5)`;
+                        toast.style.opacity = '1';
+                        toast.style.transition = 'all 3s cubic-bezier(0.16, 1, 0.3, 1)'; 
+                        
+                        document.body.appendChild(toast);
+
+                        requestAnimationFrame(() => {
+                            requestAnimationFrame(() => {
+                                const randomX = (Math.random() - 0.5) * 120;
+                                const flyY = 60 + Math.random() * 40; 
+                                toast.style.transform = `translate(calc(-50% + ${randomX}px), calc(-50% - ${flyY}px)) scale(1.3)`;
+                                toast.style.opacity = '0';
+                            });
+                        });
+                        
+                        setTimeout(() => toast.remove(), 3000);
+                    }
                 });
             });
 
-            /* --- Фоновые частицы (Кинематографичное боке) --- */
-            const particlesContainer = document.getElementById('particles-bg');
-            let activeParticles = 0;
-            const maxParticles = window.innerWidth < 768 ? 15 : 60; // Fewer particles on mobile
-
-            if (particlesContainer) {
-                for(let i = 0; i < maxParticles; i++) {
-                    createCinematicParticle();
-                }
-
-                function createCinematicParticle() {
-                    if (activeParticles >= maxParticles) return;
-                    activeParticles++;
-                    
-                    const p = document.createElement('div');
-                    const size = Math.random() * 8 + 2; 
-                    const isBlurry = Math.random() > 0.5;
-                    
-                    p.style.cssText = `
-                        position: absolute;
-                        top: ${Math.random() * 100}vh;
-                        left: ${Math.random() * 100}vw;
-                        width: ${size}px;
-                        height: ${size}px;
-                        background: ${Math.random() > 0.3 ? 'var(--color-accent)' : '#ffffff'};
-                        border-radius: 50%;
-                        opacity: ${Math.random() * 0.3 + 0.1};
-                        filter: blur(${isBlurry ? Math.random() * 4 + 2 : 0}px);
-                        transition: transform ${Math.random() * 20 + 15}s linear, opacity 5s ease-in-out;
-                        will-change: transform, opacity;
-                        transform: translateZ(0);
-                    `;
-                    particlesContainer.appendChild(p);
-
-                    setTimeout(() => {
-                        p.style.transform = `translate3d(${ (Math.random() - 0.5) * 200 }px, ${ (Math.random() - 0.5) * 200 - 150 }px, 0)`;
-                    }, 50);
-
-                    setTimeout(() => {
-                        p.style.opacity = '0';
-                        setTimeout(() => {
-                            p.remove();
-                            activeParticles--;
-                            // Recreate particle only if tab is active to save resources
-                            if (!document.hidden) {
-                                requestAnimationFrame(createCinematicParticle);
-                            }
-                        }, 5000);
-                    }, (Math.random() * 15000) + 10000);
-                }
-                
-                // Resume particle creation when tab becomes visible
-                document.addEventListener("visibilitychange", () => {
-                    if (!document.hidden) {
-                        while (activeParticles < maxParticles) {
-                             createCinematicParticle();
-                        }
-                    }
-                });
-            }
-
-            /* --- ПАСХАЛКА (Тройной клик по аватарке) --- */
+            /* --- ПАСХАЛКА 2: MINECRAFT КРИПЕР --- */
             const profileImg = document.getElementById('avatar-img');
-            let clickCount = 0;
-            let clickTimer;
-            let easterEggActive = false;
+            let mcClickCount = 0;
+            let mcClickTimer;
+            let mcEasterEggActive = false;
 
             profileImg.addEventListener('click', (e) => {
-                // Prevent selection behavior on mobile/desktop
                 e.preventDefault();
                 
-                clickCount++;
-                clearTimeout(clickTimer);
+                mcClickCount++;
+                clearTimeout(mcClickTimer);
                 
-                if (clickCount === 3 && !easterEggActive) {
-                    easterEggActive = true;
-                    clickCount = 0;
+                if (mcClickCount === 3 && !mcEasterEggActive) {
+                    mcEasterEggActive = true;
+                    mcClickCount = 0;
                     
                     document.documentElement.style.setProperty('--color-accent', '#22c55e'); 
                     document.documentElement.style.setProperty('--color-accent-hover', '#16a34a');
@@ -990,7 +1183,6 @@
                     document.body.appendChild(creeperContainer);
                     
                     let creeperInterval = setInterval(() => {
-                        // Stop if tab is hidden
                         if (document.hidden) return;
                         
                         const creeper = document.createElement('div');
@@ -1000,7 +1192,6 @@
                         creeper.style.cssText = `position:absolute; bottom:-50px; left:${startPos}vw; opacity: 0.6; transition: transform 6s linear, opacity 6s ease-in; filter: drop-shadow(0 0 10px #22c55e); will-change: transform, opacity;`;
                         creeperContainer.appendChild(creeper);
                         
-                        // Use requestAnimationFrame for smoother start
                         requestAnimationFrame(() => {
                             requestAnimationFrame(() => {
                                 creeper.style.transform = `translate3d(0, -110vh, 0) rotate(${(Math.random() - 0.5) * 90}deg)`;
@@ -1011,12 +1202,340 @@
                         setTimeout(() => creeper.remove(), 6000);
                     }, 600);
                     
-                    // Cleanup interval if user leaves the page
                     window.addEventListener('unload', () => clearInterval(creeperInterval));
                 } else {
-                    clickTimer = setTimeout(() => { clickCount = 0; }, 400);
+                    mcClickTimer = setTimeout(() => { mcClickCount = 0; }, 400);
                 }
             });
+
+            /* --- ГЕНЕРАЦИЯ ЮЗЕРНЕЙМА И ЛОКАЛЬНЫЕ РЕКОРДЫ --- */
+const adjs = [
+    'Redstone', 'Iron', 'Quantum', 'Blox', 'Epic', 'Brave', 
+    'Gamer', 'Golden', 'Dark', 'Cosmic', 'Marvelous', 'Fabric'
+];
+const nouns = [
+    'Creeper', 'Batman', 'Shinobi', 'Avenger', 'Jedi', 'Noob', 
+    'Titan', 'Hokage', 'ChickenFarmer', 'Spider', 'Witcher', 'Miner'
+];
+
+let localUsername = localStorage.getItem('delmyname_snakeUser');
+if (!localUsername) {
+    // Без цифр и нижних подчеркиваний (например: RedstoneCreeper или FabricChickenFarmer)
+    localUsername = adjs[Math.floor(Math.random() * adjs.length)] + nouns[Math.floor(Math.random() * nouns.length)];
+    localStorage.setItem('delmyname_snakeUser', localUsername);
+}
+document.getElementById('snake-username-display').innerText = localUsername;
+
+let localBestScore = parseInt(localStorage.getItem('delmyname_snakeBestScore')) || 0;
+document.getElementById('snake-best-score').innerText = localBestScore;
+
+            /* --- ИГРА: ПЛАВНАЯ ЗМЕЙКА (LERP РЕНДЕРИНГ) --- */
+            const snakeOverlay = document.getElementById('snake-overlay');
+            const openSnakeBtn = document.getElementById('open-snake-btn');
+            const closeSnakeBtn = document.getElementById('close-snake-btn');
+            const canvas = document.getElementById('snake-canvas');
+            const ctx = canvas.getContext('2d');
+            const scoreEl = document.getElementById('snake-score');
+            const finalScoreEl = document.getElementById('snake-final-score');
+            const gameOverScreen = document.getElementById('snake-game-over');
+            const restartBtn = document.getElementById('restart-snake-btn');
+            const leaderboardBtn = document.getElementById('leaderboard-btn');
+            const closeLeaderboardBtn = document.getElementById('close-leaderboard-btn');
+            const leaderboardScreen = document.getElementById('snake-leaderboard');
+
+            canvas.width = 400;
+            canvas.height = 400;
+
+            const gridSize = 20;
+            const tileCount = canvas.width / gridSize;
+
+            let snake = [];
+            let dx = 0;
+            let dy = 0;
+            let foodX;
+            let foodY;
+            let score = 0;
+            
+            let gameActive = false;
+            let changingDirection = false; 
+            
+            let lastLogicUpdate = 0;
+            let currentSpeed = 150; 
+            let animationFrameId;
+
+            function initGame() {
+                // Структура сегмента: {текущая X, текущая Y, старая X, старая Y} для плавной интерполяции
+                snake = [
+                    {x: 10, y: 10, oldX: 10, oldY: 10},
+                    {x: 10, y: 11, oldX: 10, oldY: 11},
+                    {x: 10, y: 12, oldX: 10, oldY: 12}
+                ];
+                dx = 0;
+                dy = -1; 
+                score = 0;
+                currentSpeed = 150;
+                scoreEl.innerText = score;
+                gameOverScreen.classList.add('hidden');
+                gameOverScreen.classList.remove('flex');
+                gameActive = true;
+                changingDirection = false;
+                placeFood();
+                
+                cancelAnimationFrame(animationFrameId);
+                lastLogicUpdate = performance.now();
+                requestAnimationFrame(gameLoop);
+            }
+
+            function placeFood() {
+                foodX = Math.floor(Math.random() * tileCount);
+                foodY = Math.floor(Math.random() * tileCount);
+                for (let part of snake) {
+                    if (part.x === foodX && part.y === foodY) return placeFood();
+                }
+            }
+
+            function updateSnakeLogic() {
+                changingDirection = false;
+                
+                // Запоминаем старые позиции для анимации
+                snake.forEach(part => {
+                    part.oldX = part.x;
+                    part.oldY = part.y;
+                });
+
+                const nx = snake[0].x + dx;
+                const ny = snake[0].y + dy;
+
+                // Проверка столкновений
+                if (nx < 0 || nx >= tileCount || ny < 0 || ny >= tileCount) return gameOver();
+                for (let i = 0; i < snake.length; i++) {
+                    if (nx === snake[i].x && ny === snake[i].y) return gameOver();
+                }
+
+                // Проверка еды
+                if (nx === foodX && ny === foodY) {
+                    score += 10;
+                    scoreEl.innerText = score;
+                    playUiSound('hover'); 
+                    placeFood();
+                    currentSpeed = Math.max(50, 150 - (score * 0.5));
+                    
+                    // Добавляем новую голову, хвост не трогаем (рост)
+                    snake.unshift({ x: nx, y: ny, oldX: snake[0].x, oldY: snake[0].y });
+                } else {
+                    // Перемещаем хвост на место новой головы
+                    let tail = snake.pop();
+                    tail.x = nx;
+                    tail.y = ny;
+                    tail.oldX = snake[0].x; // Он анимируется ОТ старой головы
+                    tail.oldY = snake[0].y;
+                    snake.unshift(tail);
+                }
+            }
+
+            function drawSmoothSnake(progress) {
+                ctx.fillStyle = '#0a021c';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Отрисовка еды
+                ctx.fillStyle = '#22c55e';
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = '#22c55e';
+                ctx.fillRect(foodX * gridSize + 2, foodY * gridSize + 2, gridSize - 4, gridSize - 4);
+                ctx.shadowBlur = 0;
+                
+                // Отрисовка змейки с интерполяцией
+                snake.forEach((part, index) => {
+                    ctx.fillStyle = index === 0 ? '#a78bfa' : '#8b5cf6'; 
+                    if(index === 0) {
+                        ctx.shadowBlur = 15;
+                        ctx.shadowColor = '#8b5cf6';
+                    } else {
+                        ctx.shadowBlur = 0;
+                    }
+                    
+                    // Формула линейной интерполяции: start + (end - start) * progress
+                    let renderX = part.oldX + (part.x - part.oldX) * progress;
+                    let renderY = part.oldY + (part.y - part.oldY) * progress;
+                    
+                    ctx.fillRect(renderX * gridSize + 1, renderY * gridSize + 1, gridSize - 2, gridSize - 2);
+                });
+                ctx.shadowBlur = 0;
+            }
+
+            function gameLoop(time) {
+                if (!gameActive) return;
+
+                let elapsed = time - lastLogicUpdate;
+                
+                if (elapsed >= currentSpeed) {
+                    updateSnakeLogic();
+                    lastLogicUpdate = time;
+                    elapsed = 0;
+                }
+
+                if (gameActive) {
+                    // Прогресс от 0.0 до 1.0 между логическими тиками
+                    let progress = Math.min(elapsed / currentSpeed, 1);
+                    drawSmoothSnake(progress);
+                    animationFrameId = requestAnimationFrame(gameLoop);
+                }
+            }
+
+            function gameOver() {
+    gameActive = false;
+    finalScoreEl.innerText = score;
+    gameOverScreen.classList.remove('hidden');
+    gameOverScreen.classList.add('flex');
+    playUiSound('click');
+    
+    // Обновление локального рекорда и отправка в базу
+    if (score > localBestScore) {
+        localBestScore = score;
+        localStorage.setItem('delmyname_snakeBestScore', localBestScore);
+        document.getElementById('snake-best-score').innerText = localBestScore;
+        
+        // Отправляем данные на наш сервер в фоне
+        fetch('/api/leaderboard', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: localUsername, score: localBestScore })
+        }).catch(err => console.error('Не удалось сохранить рекорд', err));
+    }
+    
+    updateLeaderboardUI();
+}
+
+            // Управление клавиатурой
+            document.addEventListener('keydown', (e) => {
+                if (!gameActive) return;
+                if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight","w","a","s","d"].includes(e.key)) {
+                    e.preventDefault();
+                }
+                
+                if (changingDirection) return;
+                
+                if ( (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') && dy === 0) { dx = 0; dy = -1; changingDirection = true; }
+                if ( (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') && dy === 0) { dx = 0; dy = 1; changingDirection = true; }
+                if ( (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') && dx === 0) { dx = -1; dy = 0; changingDirection = true; }
+                if ( (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') && dx === 0) { dx = 1; dy = 0; changingDirection = true; }
+            }, {passive: false});
+
+            // Управление свайпами
+            let touchStartX = 0;
+            let touchStartY = 0;
+
+            snakeOverlay.addEventListener('touchstart', (e) => {
+                if (!gameActive) return;
+                touchStartX = e.changedTouches[0].screenX;
+                touchStartY = e.changedTouches[0].screenY;
+            }, {passive: false});
+
+            snakeOverlay.addEventListener('touchmove', (e) => {
+                if (!gameActive) return;
+                e.preventDefault(); 
+            }, {passive: false});
+
+            snakeOverlay.addEventListener('touchend', (e) => {
+                if (!gameActive || changingDirection) return;
+                let touchEndX = e.changedTouches[0].screenX;
+                let touchEndY = e.changedTouches[0].screenY;
+                
+                let deltaX = touchEndX - touchStartX;
+                let deltaY = touchEndY - touchStartY;
+
+                if (Math.abs(deltaX) < 30 && Math.abs(deltaY) < 30) return;
+
+                if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                    if (deltaX > 0 && dx === 0) { dx = 1; dy = 0; changingDirection = true; } 
+                    else if (deltaX < 0 && dx === 0) { dx = -1; dy = 0; changingDirection = true; } 
+                } else {
+                    if (deltaY > 0 && dy === 0) { dx = 0; dy = 1; changingDirection = true; } 
+                    else if (deltaY < 0 && dy === 0) { dx = 0; dy = -1; changingDirection = true; }
+                }
+            });
+
+            // Открытие / Закрытие игры
+            openSnakeBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                snakeOverlay.classList.remove('hidden');
+                snakeOverlay.classList.add('flex');
+                
+                requestAnimationFrame(() => {
+                    snakeOverlay.style.opacity = '1';
+                });
+                
+                setTimeout(initGame, 300);
+            });
+
+            closeSnakeBtn.addEventListener('click', () => {
+                gameActive = false;
+                cancelAnimationFrame(animationFrameId);
+                snakeOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    snakeOverlay.classList.remove('flex');
+                    snakeOverlay.classList.add('hidden');
+                }, 300);
+            });
+
+            restartBtn.addEventListener('click', initGame);
+            
+            // ЛИДЕРБОРД UI (Теперь работает с реальной базой)
+async function updateLeaderboardUI() {
+    const listEl = document.getElementById('leaderboard-list');
+    listEl.innerHTML = '<div class="text-center text-gray-400 mt-10">Загрузка данных...</div>';
+
+    try {
+        const response = await fetch('/api/leaderboard');
+        const leaders = await response.json();
+        
+        listEl.innerHTML = '';
+        
+        if (leaders.length === 0) {
+            listEl.innerHTML = '<div class="text-center text-gray-400 mt-10">Пока никого нет. Стань первым!</div>';
+            return;
+        }
+
+        leaders.forEach((player, index) => {
+            const row = document.createElement('div');
+            row.className = 'leaderboard-row';
+            
+            // Если это имя текущего пользователя - подсвечиваем
+            const isMe = player.name === localUsername;
+            if (isMe) row.style.backgroundColor = 'rgba(139, 92, 246, 0.1)'; 
+            
+            let rankClass = '';
+            if (index === 0) rankClass = 'leaderboard-rank-1';
+            if (index === 1) rankClass = 'leaderboard-rank-2';
+            if (index === 2) rankClass = 'leaderboard-rank-3';
+            
+            row.innerHTML = `
+                <div class="flex items-center gap-3">
+                    <span class="w-4 text-left ${rankClass}">${index + 1}</span>
+                    <span class="${isMe ? 'text-[var(--color-accent)] font-bold' : 'text-gray-300'}">${player.name}</span>
+                </div>
+                <span class="${isMe ? 'text-[#22c55e]' : 'text-white'} font-bold">${player.score}</span>
+            `;
+            listEl.appendChild(row);
+        });
+    } catch (err) {
+        listEl.innerHTML = '<div class="text-center text-red-400 mt-10">Ошибка загрузки таблицы</div>';
+    }
+}
+
+            leaderboardBtn.addEventListener('click', () => {
+                updateLeaderboardUI();
+                leaderboardScreen.classList.remove('hidden');
+                leaderboardScreen.classList.add('flex');
+            });
+
+            closeLeaderboardBtn.addEventListener('click', () => {
+                leaderboardScreen.classList.add('hidden');
+                leaderboardScreen.classList.remove('flex');
+            });
+
+            /* --- Инициализация интерфейса при стар --- */
+            updateLeaderboardUI();
 
         }); 
     </script>
