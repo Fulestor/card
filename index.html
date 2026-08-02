@@ -2,14 +2,14 @@
 
 <html lang="ru">
 <head>
-<meta property="og:title" content="delmyname | Video Editor & Creator" />
-<meta property="og:description" content="Создаю динамичные видео, Reels, Shorts." />
-<meta property="og:image" content="https://delmyname.vercel.app/og-image.png" />
-<meta property="og:url" content="https://delmyname.vercel.app" />
-<meta property="og:type" content="website" />
-<meta name="twitter:card" content="summary_large_image" />
+<meta content="delmyname | Video Editor & Creator" property="og:title"/>
+<meta content="Создаю динамичные видео, Reels, Shorts." property="og:description"/>
+<meta content="https://delmyname.vercel.app/og-image.png" property="og:image"/>
+<meta content="https://delmyname.vercel.app" property="og:url"/>
+<meta content="website" property="og:type"/>
+<meta content="summary_large_image" name="twitter:card"/>
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>delmyname | Визитка</title>
 <link href="https://s.fotora.ru/0e59c2750971d9b6.png" rel="icon" type="image/jpeg"/>
 <script src="https://cdn.tailwindcss.com"></script>
@@ -99,20 +99,41 @@
             100% { transform: translate(-10%, 5%) scale(0.9); }
         }
 
-/* --- Базовая сетка --- */
-        .workspace-grid {
-            position: absolute; /* Заменили fixed на absolute, теперь она скроллится! */
-            inset: 0;
-            z-index: 1; 
-            pointer-events: none;
-            /* Снизили прозрачность в два раза (с 0.08 до 0.04) */
-            background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.085) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.085) 1px, transparent 1px);
-            background-size: 40px 40px;
-            /* Маску убрали, чтобы сетка равномерно покрывала всю высоту страницы */
-        }
+/* --- Базовая сетка с анимированной маской --- */
+.workspace-grid {
+    position: fixed; /* Оставляем fixed, чтобы маска не растягивалась на 5 км вниз */
+    inset: 0;
+    z-index: 1; 
+    pointer-events: none;
+    
+    /* Сама сетка */
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-position: 0px 0px; /* Важно для работы скрипта */
 
+    /* Диагональная градиентная маска */
+    -webkit-mask-image: linear-gradient(115deg, transparent 15%, black 50%, transparent 85%);
+    mask-image: linear-gradient(115deg, transparent 15%, black 50%, transparent 85%);
+
+    -webkit-mask-size: 200% 200%;
+    mask-size: 200% 200%;
+
+    /* Анимация переливания/дыхания маски */
+    animation: grid-flow 12s ease-in-out infinite alternate;
+}
+
+@keyframes grid-flow {
+    0% {
+        -webkit-mask-position: 0% 50%;
+        mask-position: 0% 50%;
+    }
+    100% {
+        -webkit-mask-position: 100% 50%;
+        mask-position: 100% 50%;
+    }
+}
         /* --- Стили карточек --- */
         .glass-card {
             background: var(--color-card-bg);
@@ -368,7 +389,7 @@
 <div class="player-panel" id="player-panel">
 <div class="flex items-center gap-3 w-64 overflow-hidden">
 <div class="w-10 h-10 rounded overflow-hidden flex-shrink-0 bg-[var(--color-accent)] flex items-center justify-center text-white">
-<img alt="Cover" class="w-full h-full object-cover onError='this.style.display=\" none\"'"="" src="https://cdn-image.zvuk.com/pic?hash=90b321de-52a5-4f53-8a6d-bfe0cb66b3b5&amp;id=38128316&amp;size=medium&amp;type=release"/>
+<img alt="Cover" class="w-full h-full object-cover onError='this.style.display=\" none\"'"="" src="https://cdn-image.zvuk.com/pic?hash=90b321de-52a5-4f53-8a6d-bfe0cb66b3b5&id=38128316&size=medium&type=release"/>
 </div>
 <div class="flex-1 min-w-0 overflow-hidden">
 <div class="w-full overflow-hidden mask-gradient flex">
@@ -395,15 +416,15 @@
 <div class="absolute inset-0 bg-[var(--color-accent)] rounded-full blur-[20px] opacity-40 group-hover/card:opacity-70 transition-opacity duration-500 pointer-events-none"></div>
 <img alt="Profile" class="relative w-full h-full object-cover rounded-full border-2 border-white/10 z-10 cursor-pointer" id="avatar-img" src="https://s.fotora.ru/855e832a165681a6.png"/>
 <div class="absolute -top-12 left-1/2 -translate-x-1/2 bg-[#0a021c]/90 backdrop-blur-md border border-[var(--color-accent)] text-white text-xs px-3 py-1.5 rounded-lg opacity-0 group-hover/avatar:opacity-100 group-hover/avatar:-translate-y-1 transition-all duration-300 pointer-events-none whitespace-nowrap z-20 shadow-[0_0_15px_color-mix(in_srgb,var(--color-accent)_40%,transparent)]">
-                        &Ncy;&acy;&zhcy;&mcy;&icy; 3 &rcy;&acy;&zcy;&acy; 🤫
+                        Нажми 3 раза 🤫
                     </div>
 </div>
-<h1 class="text-3xl font-bold text-white mb-0 tracking-tight">&Gcy;&iecy;&rcy;&mcy;&acy;&ncy;</h1>
+<h1 class="text-3xl font-bold text-white mb-0 tracking-tight">Герман</h1>
 <h2 class="text-[11px] text-white/30 font-semibold uppercase tracking-[0.35em] mb-2 ml-0">delmyname</h2>
-<p class="text-[var(--color-accent)] font-semibold text-sm tracking-widest uppercase mb-4">Video editor &amp; creator</p>
+<p class="text-[var(--color-accent)] font-semibold text-sm tracking-widest uppercase mb-4">Video editor & creator</p>
 <p class="text-gray-300 text-sm mb-6 leading-relaxed">
-                    &Scy;&ocy;&zcy;&dcy;&acy;&yucy; &dcy;&icy;&ncy;&acy;&mcy;&icy;&chcy;&ncy;&ycy;&iecy; &vcy;&icy;&dcy;&iecy;&ocy;, Reels, Shorts &icy; &rcy;&iecy;&kcy;&lcy;&acy;&mcy;&ncy;&ycy;&iecy; &kcy;&rcy;&iecy;&acy;&tcy;&icy;&vcy;&ycy;.
-                    <span class="text-white font-semibold">&Vcy;&ocy;&pcy;&lcy;&ocy;&shchcy;&acy;&yucy; &vcy;&acy;&shcy;&icy; &icy;&dcy;&iecy;&icy; &vcy; &kcy;&acy;&dcy;&rcy;&iecy;. 🎬</span>
+                    Создаю динамичные видео, Reels, Shorts и рекламные креативы.
+                    <span class="text-white font-semibold">Воплощаю ваши идеи в кадре. 🎬</span>
 </p>
 <div class="flex flex-wrap justify-center gap-2 mb-8">
 <span class="skill-badge px-3 py-1 text-xs font-medium bg-white/5 border border-white/10 rounded-full text-gray-300 cursor-default">Premiere Pro</span>
@@ -413,41 +434,41 @@
 <div class="flex flex-col gap-3">
 <a class="glass-btn btn-primary spotlight-border shadow-[0_8px_25px_rgba(139,92,246,0.5)]" href="#portfolio">
 <i class="fa-solid fa-circle-play mr-3"></i>
-                        &Pcy;&ocy;&rcy;&tcy;&fcy;&ocy;&lcy;&icy;&ocy; &darr;
+                        Портфолио ↓
                     </a>
 <a class="glass-btn spotlight-border group" href="https://telegram.me/fulestor" target="_blank">
 <i class="fa-brands fa-telegram text-[var(--color-accent)] group-hover:text-[#24A1DE] text-lg mr-3 w-5 text-center transition-colors duration-300"></i>
-                        &Scy;&vcy;&yacy;&zcy;&acy;&tcy;&softcy;&scy;&yacy; &scy;&ocy; &mcy;&ncy;&ocy;&jcy;
+                        Связаться со мной
                     </a>
 <a class="glass-btn spotlight-border group" href="https://www.youtube.com/@delik_kryt/videos" target="_blank">
 <i class="fa-brands fa-youtube text-[var(--color-accent)] group-hover:text-[#FF0000] text-lg mr-3 w-5 text-center transition-colors duration-300"></i>
-                        &Mcy;&ocy;&jcy; &kcy;&acy;&ncy;&acy;&lcy;
+                        Мой канал
                     </a>
 <hr style="border: none; height: 1px; opacity: 60%; background: linear-gradient(to right, transparent, var(--color-accent), transparent); margin: 15px 0;"/>
 <a class="glass-btn spotlight-border" href="https://disk.yandex.ru/d/dMs1UxgfMstpSA" target="_blank">
-<i class="fa-solid fa-cloud text-[var(--color-accent)] text-lg mr-3 w-5 text-center"></i>
-                        &Dcy;&icy;&scy;&kcy;
+<i class="fa-solid fa-compact-disc text-[var(--color-accent)] text-lg mr-3 w-5 text-center"></i>
+                        Диск
                     </a>
 </div>
 </div>
 </div>
 <section class="w-full max-w-4xl 2xl:max-w-6xl mx-auto flex flex-col items-center fade-in-up z-10" id="portfolio" style="animation-delay: 0.2s;">
 <h2 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
-<i class="fa-solid fa-film no-jello text-[var(--color-accent)]"></i> &Mcy;&ocy;&icy; &rcy;&acy;&bcy;&ocy;&tcy;&ycy;
+<i class="fa-solid fa-film no-jello text-[var(--color-accent)]"></i> Мои работы
             </h2>
 <div class="flex flex-wrap justify-center gap-3 mb-10 w-full px-4">
-<button class="filter-btn active px-4 py-2 text-sm font-medium rounded-full bg-[var(--color-accent)] text-white border border-[var(--color-accent)] transition-all hover:bg-[var(--color-accent-hover)]" data-filter="all">&Vcy;&scy;&iecy; &rcy;&acy;&bcy;&ocy;&tcy;&ycy;</button>
-<button class="filter-btn px-4 py-2 text-sm font-medium rounded-full bg-white/5 text-gray-300 border border-white/10 transition-all hover:bg-white/10 hover:text-white" data-filter="irl">IRL / &SHcy;&ocy;&ucy;</button>
-<button class="filter-btn px-4 py-2 text-sm font-medium rounded-full bg-white/5 text-gray-300 border border-white/10 transition-all hover:bg-white/10 hover:text-white" data-filter="gaming">&Icy;&gcy;&rcy;&ocy;&vcy;&ycy;&iecy;</button>
+<button class="filter-btn active px-4 py-2 text-sm font-medium rounded-full bg-[var(--color-accent)] text-white border border-[var(--color-accent)] transition-all hover:bg-[var(--color-accent-hover)]" data-filter="all">Все работы</button>
+<button class="filter-btn px-4 py-2 text-sm font-medium rounded-full bg-white/5 text-gray-300 border border-white/10 transition-all hover:bg-white/10 hover:text-white" data-filter="irl">IRL / Шоу</button>
+<button class="filter-btn px-4 py-2 text-sm font-medium rounded-full bg-white/5 text-gray-300 border border-white/10 transition-all hover:bg-white/10 hover:text-white" data-filter="gaming">Игровые</button>
 <button class="filter-btn px-4 py-2 text-sm font-medium rounded-full bg-white/5 text-gray-300 border border-white/10 transition-all hover:bg-white/10 hover:text-white" data-filter="shorts">Shorts / Reels</button>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-3 2xl:grid-cols-4 auto-rows-[300px] grid-flow-row-dense gap-6 w-full px-4 place-content-center justify-items-center md:justify-items-stretch" id="portfolio-grid">
 <a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-3 2xl:col-span-4 md:row-span-1" data-category="irl" draggable="false" href="https://www.youtube.com/@bratdvaa" style="" target="_blank">
 <div class="relative flex-1 flex items-center justify-center overflow-hidden">
-<div class="absolute top-3 left-3 z-20 bg-black/40 backdrop-blur-md w-6 h-6 flex items-center justify-center rounded-md border border-[var(--color-accent)] text-xs text-white/70" title="&Zcy;&acy;&kcy;&rcy;&iecy;&pcy;&lcy;&iecy;&ncy;&ocy;">
+<div class="absolute top-3 left-3 z-20 bg-black/40 backdrop-blur-md w-6 h-6 flex items-center justify-center rounded-md border border-[var(--color-accent)] text-xs text-white/70" title="Закреплено">
 <i class="fa-solid fa-thumbtack no-jello" style="animation: none; transform: rotate(45deg);"></i>
 </div>
-<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">&Acy;&vcy;&gcy;. 2025</div>
+<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Авг. 2025</div>
 <img alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" draggable="false" loading="lazy" src="https://yt3.googleusercontent.com/y5qWqaRO5SiWLYrBKqHBACwXWbiXLAF7mcBu6sGuj4n7RBDHFxKRqHwCDz0zk_EmyBb4G-xQ=s1080-c-k-c0x00ffffff-no-rj"/>
 <div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
 <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
@@ -455,41 +476,41 @@
 </div>
 </div>
 <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
-<h3 class="font-bold text-white mb-1">&Bcy;&rcy;&acy;&tcy;&dcy;&vcy;&acy;&acy;</h3>
-<p class="text-sm text-gray-200 line-clamp-1">&Mcy;&ocy;&jcy; &kcy;&rcy;&ucy;&pcy;&ncy;&ycy;&jcy; &pcy;&rcy;&ocy;&iecy;&kcy;&tcy; &mdash; &Dcy;&icy;&ncy;&acy;&mcy;&icy;&chcy;&ncy;&ycy;&jcy; IRL &kcy;&ocy;&ncy;&tcy;&iecy;&ncy;&tcy; &vcy; &fcy;&ocy;&rcy;&mcy;&acy;&tcy;&iecy; &shcy;&ocy;&ucy;.</p>
+<h3 class="font-bold text-white mb-1">Братдваа</h3>
+<p class="text-sm text-gray-200 line-clamp-1">Мой крупный проект — Динамичный IRL контент в формате шоу.</p>
 </div>
 </a>
 <a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2" data-category="irl, shorts" href="https://disk.yandex.ru/i/qrLRHdzb-r2EPg" style="" target="_blank">
 <div class="relative flex-1 flex items-center justify-center overflow-hidden min-h-[240px]">
-<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">&Acy;&vcy;&gcy;. 2026</div>
-<img alt="&Acy;&vcy;&icy;&acy;&tscy;&icy;&yacy;" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://s.fotora.ru/86f9f8d03605cb7f.png"/>
+<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Авг. 2026</div>
+<img alt="Авиация" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://s.fotora.ru/86f9f8d03605cb7f.png"/>
 <div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
 <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
 <i class="fa-solid fa-compact-disc text-4xl text-white/80 group-hover:text-[#FFCC00] drop-shadow-lg transition-colors duration-200"></i>
 </div>
 </div>
 <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
-<h3 class="font-bold text-white mb-1">&Acy;&vcy;&icy;&acy;&tscy;&icy;&yacy;</h3>
-<p class="text-sm text-gray-200 line-clamp-1">&Scy;&kcy;&lcy;&iecy;&jcy;&kcy;&acy;, &scy;&acy;&ucy;&ncy;&dcy;, color</p>
+<h3 class="font-bold text-white mb-1">Авиация</h3>
+<p class="text-sm text-gray-200 line-clamp-1">Склейка, саунд, color</p>
 </div>
 </a>
 <a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1" data-category="irl" draggable="false" href="https://disk.yandex.ru/i/1-1H46zRa50SBQ" style="" target="_blank">
 <div class="relative flex-1 flex items-center justify-center overflow-hidden">
-<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">&Fcy;&iecy;&vcy;. 2026</div>
-<img alt="&Rcy;&acy;&bcy;&ocy;&tcy;&acy; &pcy;&ocy; &bcy;&icy;&ocy;&lcy;&ocy;&gcy;&icy;&icy;" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" draggable="false" loading="lazy" src="https://s.fotora.ru/e01f54d170b02fb6.jpeg"/>
+<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Фев. 2026</div>
+<img alt="Работа по биологии" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" draggable="false" loading="lazy" src="https://s.fotora.ru/e01f54d170b02fb6.jpeg"/>
 <div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
 <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
-<i class="fa-solid fa-bolt text-4xl text-white/80 group-hover:text-yellow-400 drop-shadow-lg transition-colors duration-200"></i>
+<i class="fa-solid fa-compact-disc text-4xl text-white/80 group-hover:text-yellow-400 drop-shadow-lg transition-colors duration-200"></i>
 </div>
 </div>
 <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
-<h3 class="font-bold text-white mb-1">&Rcy;&acy;&bcy;&ocy;&tcy;&acy; &pcy;&ocy; &bcy;&icy;&ocy;&lcy;&ocy;&gcy;&icy;&icy;</h3>
-<p class="text-sm text-gray-200 line-clamp-1">&Rcy;&acy;&bcy;&ocy;&tcy;&acy; &scy; &ncy;&iecy;&jcy;&rcy;&ocy;&scy;&iecy;&tcy;&yacy;&mcy;&icy;, &tscy;&vcy;&iecy;&tcy;&ocy;&kcy;&ocy;&rcy;&rcy;&iecy;&tscy;&icy;&yacy;.</p>
+<h3 class="font-bold text-white mb-1">Работа по биологии</h3>
+<p class="text-sm text-gray-200 line-clamp-1">Работа с нейросетями, цветокорреция.</p>
 </div>
 </a>
 <a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2" data-category="irl, shorts" draggable="false" href="https://www.instagram.com/prodajnie" style="" target="_blank">
 <div class="relative flex-1 flex items-center justify-center overflow-hidden">
-<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">&Acy;&vcy;&gcy;. 2025</div>
+<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Авг. 2025</div>
 <img alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" draggable="false" loading="lazy" src="https://s.fotora.ru/62e6649f87f8ed75.jpeg"/>
 <div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
 <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
@@ -497,55 +518,55 @@
 </div>
 </div>
 <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
-<h3 class="font-bold text-white mb-1">&Pcy;&rcy;&ocy;&dcy;&acy;&zhcy;&ncy;&ycy;&iecy; &bcy;&lcy;&ocy;&gcy;&gcy;&iecy;&rcy;&ycy;</h3>
-<p class="text-sm text-gray-200 line-clamp-1">&Rcy;&iecy;&kcy;&lcy;&acy;&mcy;&ncy;&ycy;&iecy; &rcy;&ocy;&lcy;&icy;&kcy;&icy; &dcy;&lcy;&yacy; &rcy;&acy;&zcy;&ncy;&ycy;&khcy; &bcy;&rcy;&iecy;&ncy;&dcy;&ocy;&vcy;.</p>
+<h3 class="font-bold text-white mb-1">Продажные блоггеры</h3>
+<p class="text-sm text-gray-200 line-clamp-1">Рекламные ролики для разных брендов.</p>
 </div>
 </a>
 <a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2" data-category="irl, shorts" href="https://disk.yandex.ru/i/HLhs7LcHXgLbbQ" style="" target="_blank">
 <div class="relative flex-1 flex items-center justify-center overflow-hidden">
-<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">&Ncy;&ocy;&yacy;&bcy;. 2025</div>
-<img alt="&Pcy;&iecy;&rcy;&iecy;&khcy;&ocy;&dcy;&ncy;&icy;&kcy;&icy; | &Pcy;&rcy;&ocy;&dcy;&acy;&zhcy;&ncy;&ycy;&iecy;" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://s.fotora.ru/9d5dd16efd650621.png"/>
+<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Нояб. 2025</div>
+<img alt="Переходники | Продажные" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://s.fotora.ru/9d5dd16efd650621.png"/>
 <div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
 <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
-<i class="fa-solid fa-cloud text-4xl text-white/80 group-hover:text-[#FFCC00] drop-shadow-lg transition-colors duration-200"></i>
+<i class="fa-solid fa-compact-disc text-4xl text-white/80 group-hover:text-[#FFCC00] drop-shadow-lg transition-colors duration-200"></i>
 </div>
 </div>
 <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
-<h3 class="font-bold text-white mb-1">&Pcy;&iecy;&rcy;&iecy;&khcy;&ocy;&dcy;&ncy;&icy;&kcy;&icy; | &Pcy;&rcy;&ocy;&dcy;&acy;&zhcy;&ncy;&ycy;&iecy;</h3>
-<p class="text-sm text-gray-200 line-clamp-1">&Mcy;&ocy;&ncy;&tcy;&acy;&zhcy; &gcy;&ocy;&tcy;&ocy;&vcy;&ocy;&jcy; &scy;&kcy;&lcy;&iecy;&jcy;&kcy;&icy;</p>
+<h3 class="font-bold text-white mb-1">Переходники | Продажные</h3>
+<p class="text-sm text-gray-200 line-clamp-1">Монтаж готовой склейки</p>
 </div>
 </a>
 <a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2" data-category="irl, shorts" href="https://disk.yandex.ru/i/YjBJA_Bq4iBvJg" style="" target="_blank">
 <div class="relative flex-1 flex items-center justify-center overflow-hidden">
-<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">&Dcy;&iecy;&kcy;. 2025</div>
-<img alt="&Dcy;&iecy;&ncy;&softcy; 4 | &Pcy;&rcy;&ocy;&dcy;&acy;&zhcy;&ncy;&ycy;&iecy;" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://s.fotora.ru/33fabac0404f7088.png"/>
+<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Дек. 2025</div>
+<img alt="День 4 | Продажные" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://s.fotora.ru/33fabac0404f7088.png"/>
 <div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
 <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
-<i class="fa-solid fa-cloud text-4xl text-white/80 group-hover:text-[#FFCC00] drop-shadow-lg transition-colors duration-200"></i>
+<i class="fa-solid fa-compact-disc text-4xl text-white/80 group-hover:text-[#FFCC00] drop-shadow-lg transition-colors duration-200"></i>
 </div>
 </div>
 <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
-<h3 class="font-bold text-white mb-1">&Dcy;&iecy;&ncy;&softcy; 4 | &Pcy;&rcy;&ocy;&dcy;&acy;&zhcy;&ncy;&ycy;&iecy;</h3>
-<p class="text-sm text-gray-200 line-clamp-1">&Mcy;&ocy;&ncy;&tcy;&acy;&zhcy; &gcy;&ocy;&tcy;&ocy;&vcy;&ocy;&jcy; &scy;&kcy;&lcy;&iecy;&jcy;&kcy;&icy;</p>
+<h3 class="font-bold text-white mb-1">День 4 | Продажные</h3>
+<p class="text-sm text-gray-200 line-clamp-1">Монтаж готовой склейки</p>
 </div>
 </a>
 <a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2" data-category="irl, shorts" draggable="false" href="https://disk.yandex.ru/i/XSNDFEKIv8c0Pw" style="" target="_blank">
 <div class="relative flex-1 flex items-center justify-center overflow-hidden">
-<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">&Dcy;&iecy;&kcy;. 2025</div>
-<img alt="&Scy;&kcy;&acy;&zcy;&kcy;&acy; | &Pcy;&rcy;&ocy;&dcy;&acy;&zhcy;&ncy;&ycy;&iecy;" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" draggable="false" loading="lazy" src="https://s.fotora.ru/36b18de29c3d5e78.png"/>
+<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Дек. 2025</div>
+<img alt="Сказка | Продажные" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" draggable="false" loading="lazy" src="https://s.fotora.ru/36b18de29c3d5e78.png"/>
 <div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
 <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
-<i class="fa-solid fa-cloud text-4xl text-white/80 group-hover:text-[#FFCC00] drop-shadow-lg transition-colors duration-200"></i>
+<i class="fa-solid fa-compact-disc text-4xl text-white/80 group-hover:text-[#FFCC00] drop-shadow-lg transition-colors duration-200"></i>
 </div>
 </div>
 <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
-<h3 class="font-bold text-white mb-1">&Scy;&kcy;&acy;&zcy;&kcy;&acy; | &Pcy;&rcy;&ocy;&dcy;&acy;&zhcy;&ncy;&ycy;&iecy;</h3>
-<p class="text-sm text-gray-200 line-clamp-1">&Scy;&hardcy;&iocy;&mcy;&kcy;&acy;, &scy;&bcy;&ocy;&rcy;&kcy;&acy;, &ecy;&fcy;&fcy;&iecy;&kcy;&tcy;&ycy;</p>
+<h3 class="font-bold text-white mb-1">Сказка | Продажные</h3>
+<p class="text-sm text-gray-200 line-clamp-1">Съёмка, сборка, эффекты</p>
 </div>
 </a>
 <a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1" data-category="gaming" href="https://www.youtube.com/watch?v=9mKflJB1Gmo" style="" target="_blank">
 <div class="relative flex-1 flex items-center justify-center overflow-hidden">
-<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">&YAcy;&ncy;&vcy;. 2025</div>
+<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Янв. 2025</div>
 <img alt="Rainbow GG Minecraft" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://i.ytimg.com/vi/9mKflJB1Gmo/maxresdefault.jpg"/>
 <div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
 <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
@@ -554,12 +575,12 @@
 </div>
 <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
 <h3 class="font-bold text-white mb-1">Rainbow GG Minecraft</h3>
-<p class="text-sm text-gray-200 line-clamp-1">485&kcy;, &mcy;&ocy;&ncy;&tcy;&acy;&zhcy; &acy;&ncy;&gcy;&lcy;&ocy;&yacy;&zcy;&ycy;&chcy;&ncy;&ycy;&khcy; &rcy;&ocy;&lcy;&icy;&kcy;&ocy;&vcy;.</p>
+<p class="text-sm text-gray-200 line-clamp-1">485к, монтаж англоязычных роликов.</p>
 </div>
 </a>
 <a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1" data-category="gaming" href="https://www.youtube.com/watch?v=DiR2Cl5KF-Y" style="" target="_blank">
 <div class="relative flex-1 flex items-center justify-center overflow-hidden">
-<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">&Ncy;&ocy;&yacy;&bcy;. 2024</div>
+<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Нояб. 2024</div>
 <img alt="Rainbow GG Minecraft" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://i.ytimg.com/vi/DiR2Cl5KF-Y/maxresdefault.jpg"/>
 <div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
 <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
@@ -568,26 +589,26 @@
 </div>
 <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
 <h3 class="font-bold text-white mb-1">Rainbow GG Minecraft</h3>
-<p class="text-sm text-gray-200 line-clamp-1">188&kcy;, &mcy;&ocy;&ncy;&tcy;&acy;&zhcy; &acy;&ncy;&gcy;&lcy;&ocy;&yacy;&zcy;&ycy;&chcy;&ncy;&ycy;&khcy; &rcy;&ocy;&lcy;&icy;&kcy;&ocy;&vcy;</p>
+<p class="text-sm text-gray-200 line-clamp-1">188к, монтаж англоязычных роликов</p>
 </div>
 </a>
 <a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2" data-category="gaming, shorts" draggable="false" href="https://www.youtube.com/shorts/F8kd9Q-64VM" style="" target="_blank">
 <div class="relative flex-1 flex items-center justify-center overflow-hidden">
-<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">&Dcy;&iecy;&kcy;. 2024</div>
-<img alt="YT Shorts &dcy;&lcy;&yacy; &Dcy;&iecy;&lcy;&icy;&kcy;&acy;" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" draggable="false" loading="lazy" src="https://i.ytimg.com/vi/F8kd9Q-64VM/oar2.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&amp;rs=AOn4CLAYEOIUNvQIbfHXuw0XMInc9n4Gxw&amp;usqp=CCk"/>
+<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Дек. 2024</div>
+<img alt="YT Shorts для Делика" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" draggable="false" loading="lazy" src="https://i.ytimg.com/vi/F8kd9Q-64VM/oar2.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLAYEOIUNvQIbfHXuw0XMInc9n4Gxw&usqp=CCk"/>
 <div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
 <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
 <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg transition-colors duration-200"></i>
 </div>
 </div>
 <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
-<h3 class="font-bold text-white mb-1">YT Shorts &dcy;&lcy;&yacy; &Dcy;&iecy;&lcy;&icy;&kcy;&acy;</h3>
-<p class="text-sm text-gray-200 line-clamp-1">&Dcy;&icy;&ncy;&acy;&mcy;&icy;&chcy;&ncy;&ycy;&jcy; &mcy;&ocy;&ncy;&tcy;&acy;&zhcy; &scy; &dcy;&ocy;&bcy;&acy;&vcy;&lcy;&iecy;&ncy;&icy;&iecy;&mcy; &ecy;&fcy;&fcy;&iecy;&kcy;&tcy;&ocy;&vcy;</p>
+<h3 class="font-bold text-white mb-1">YT Shorts для Делика</h3>
+<p class="text-sm text-gray-200 line-clamp-1">Динамичный монтаж с добавлением эффектов</p>
 </div>
 </a>
-<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-1" data-category="gaming" href="https://www.youtube.com/watch?v=zf-iC5QRgCA&amp;" style="" target="_blank">
+<a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-1" data-category="gaming" href="https://www.youtube.com/watch?v=zf-iC5QRgCA&" style="" target="_blank">
 <div class="relative flex-1 flex items-center justify-center overflow-hidden">
-<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">&Ocy;&kcy;&tcy;. 2024</div>
+<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Окт. 2024</div>
 <img alt="Rainbow GG Minecraft" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://i.ytimg.com/vi/zf-iC5QRgCA/maxresdefault.jpg"/>
 <div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
 <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
@@ -596,26 +617,26 @@
 </div>
 <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
 <h3 class="font-bold text-white mb-1">Rainbow GG Minecraft</h3>
-<p class="text-sm text-gray-200 line-clamp-1">&Mcy;&ocy;&ncy;&tcy;&acy;&zhcy; &acy;&ncy;&gcy;&lcy;&ocy;&yacy;&zcy;&ycy;&chcy;&ncy;&ycy;&khcy; &rcy;&ocy;&lcy;&icy;&kcy;&ocy;&vcy;</p>
+<p class="text-sm text-gray-200 line-clamp-1">Монтаж англоязычных роликов</p>
 </div>
 </a>
 <a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-1" data-category="gaming" href="https://www.youtube.com/@mc_resolver" style="" target="_blank">
 <div class="relative flex-1 flex items-center justify-center overflow-hidden">
-<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">&Icy;&yucy;&lcy;&softcy; 2024</div>
-<img alt="&Tcy;&rcy;&iecy;&jcy;&lcy;&iecy;&rcy;&ycy; Resolver" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://yt3.googleusercontent.com/jXudDnrVzU91mcKOam60VYvOLx9QJm8UjxJK12dYU2aXTNkTTDI3qWnywgiPusACrKtmu1v8hQ=s1080-c-k-c0x00ffffff-no-rj"/>
+<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Июль 2024</div>
+<img alt="Трейлеры Resolver" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://yt3.googleusercontent.com/jXudDnrVzU91mcKOam60VYvOLx9QJm8UjxJK12dYU2aXTNkTTDI3qWnywgiPusACrKtmu1v8hQ=s1080-c-k-c0x00ffffff-no-rj"/>
 <div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
 <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
 <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg transition-colors duration-200"></i>
 </div>
 </div>
 <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
-<h3 class="font-bold text-white mb-1">&Tcy;&rcy;&iecy;&jcy;&lcy;&iecy;&rcy;&ycy; Resolver</h3>
-<p class="text-sm text-gray-200 line-clamp-1">&Kcy;&ocy;&rcy;&ocy;&tcy;&kcy;&ocy;&mcy;&iecy;&tcy;&rcy;&acy;&zhcy;&kcy;&icy; &kcy; &ocy;&bcy;&ncy;&ocy;&vcy;&lcy;&iecy;&ncy;&icy;&yacy;&mcy; &scy;&iecy;&rcy;&vcy;&iecy;&rcy;&acy;</p>
+<h3 class="font-bold text-white mb-1">Трейлеры Resolver</h3>
+<p class="text-sm text-gray-200 line-clamp-1">Короткометражки к обновлениям сервера</p>
 </div>
 </a>
 <a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1" data-category="irl" href="https://www.youtube.com/@ashleymccuen" style="" target="_blank">
 <div class="relative flex-1 flex items-center justify-center overflow-hidden">
-<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">&Fcy;&iecy;&vcy;. 2025</div>
+<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Фев. 2025</div>
 <img alt="Green Agriculture" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://i.ytimg.com/vi/tedMCl3rgio/maxresdefault.jpg"/>
 <div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
 <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
@@ -624,12 +645,12 @@
 </div>
 <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
 <h3 class="font-bold text-white mb-1">Green Agriculture</h3>
-<p class="text-sm text-gray-200 line-clamp-1">&Scy;&ocy;&zcy;&dcy;&acy;&ncy;&icy;&iecy; &acy;&ncy;&gcy;&lcy;&ocy;&yacy;&zcy;&ycy;&chcy;&ncy;&ycy;&khcy; &vcy;&icy;&dcy;&iecy;&ocy; &scy; &icy;&scy;&pcy;&ocy;&lcy;&softcy;&zcy;&ocy;&vcy;&acy;&ncy;&icy;&iecy;&mcy; &Icy;&Icy;</p>
+<p class="text-sm text-gray-200 line-clamp-1">Создание англоязычных видео с использованием ИИ</p>
 </div>
 </a>
 <a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1" data-category="gaming" href="https://www.youtube.com/watch?v=gtErHwRld1o" style="" target="_blank">
 <div class="relative flex-1 flex items-center justify-center overflow-hidden">
-<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">&Acy;&vcy;&gcy;. 2025</div>
+<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Авг. 2025</div>
 <img alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://i.ytimg.com/vi/gtErHwRld1o/hqdefault.jpg"/>
 <div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
 <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
@@ -637,14 +658,14 @@
 </div>
 </div>
 <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
-<h3 class="font-bold text-white mb-1">&Fcy;&icy;&mcy;&acy;&jcy;&ncy; &mdash; 
-&YAcy; &Scy;&dcy;&iecy;&lcy;&acy;&lcy; &Bcy;&IEcy;&Scy;&Kcy;&Ocy;&Ncy;&IEcy;&CHcy;&Ncy;&Ycy;&Jcy; &Icy;&scy;&tcy;&ocy;&chcy;&ncy;&icy;&kcy; &Dcy;&iecy;&ncy;&iecy;&gcy; &ncy;&acy; &Acy;&Ncy;&Acy;&Rcy;&KHcy;&Icy;&Icy; &Fcy;&acy;&ncy;&Tcy;&acy;&jcy;&mcy;</h3>
-<p class="text-sm text-gray-200 line-clamp-1">&Dcy;&icy;&ncy;&acy;&mcy;&icy;&chcy;&ncy;&ycy;&jcy; &lcy;&iecy;&tcy;&scy;&pcy;&lcy;&iecy;&jcy; &scy; &dcy;&ocy;&bcy;&acy;&vcy;&lcy;&iecy;&ncy;&icy;&iecy;&mcy; &ecy;&fcy;&fcy;&iecy;&kcy;&tcy;&ocy;&vcy;.</p>
+<h3 class="font-bold text-white mb-1">Фимайн — 
+Я Сделал БЕСКОНЕЧНЫЙ Источник Денег на АНАРХИИ ФанТайм</h3>
+<p class="text-sm text-gray-200 line-clamp-1">Динамичный летсплей с добавлением эффектов.</p>
 </div>
 </a>
 <a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1" data-category="gaming" href="https://www.youtube.com/watch?v=JyMkIKBMSFY" style="" target="_blank">
 <div class="relative flex-1 flex items-center justify-center overflow-hidden">
-<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">&Mcy;&acy;&rcy;&tcy; 2025</div>
+<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Март 2025</div>
 <img alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://i.ytimg.com/vi/JyMkIKBMSFY/hqdefault.jpg"/>
 <div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
 <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
@@ -652,14 +673,14 @@
 </div>
 </div>
 <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
-<h3 class="font-bold text-white mb-1">&Fcy;&icy;&mcy;&acy;&jcy;&ncy; &mdash; 
-&YAcy; &scy;&tcy;&acy;&lcy; &Mcy;&Icy;&Lcy;&Lcy;&Icy;&Acy;&Rcy;&Dcy;&IEcy;&Rcy;&Ocy;&Mcy; &Vcy; &Pcy;&IEcy;&Rcy;&Vcy;&Ycy;&Jcy; &Dcy;&IEcy;&Ncy;&SOFTcy; &Vcy;&Acy;&Jcy;&Pcy;&Acy; &Ncy;&acy; &Acy;&ncy;&acy;&rcy;&khcy;&icy;&icy; &Fcy;&acy;&ncy;&Tcy;&acy;&jcy;&mcy;</h3>
-<p class="text-sm text-gray-200 line-clamp-1">&Dcy;&icy;&ncy;&acy;&mcy;&icy;&chcy;&ncy;&ycy;&jcy; &lcy;&iecy;&tcy;&scy;&pcy;&lcy;&iecy;&jcy; &scy; &dcy;&ocy;&bcy;&acy;&vcy;&lcy;&iecy;&ncy;&icy;&iecy;&mcy; &ecy;&fcy;&fcy;&iecy;&kcy;&tcy;&ocy;&vcy;.</p>
+<h3 class="font-bold text-white mb-1">Фимайн — 
+Я стал МИЛЛИАРДЕРОМ В ПЕРВЫЙ ДЕНЬ ВАЙПА На Анархии ФанТайм</h3>
+<p class="text-sm text-gray-200 line-clamp-1">Динамичный летсплей с добавлением эффектов.</p>
 </div>
 </a>
 <a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:row-span-1 md:col-span-1" data-category="gaming" href="https://www.youtube.com/watch?v=p-t8exzF_d0" style="" target="_blank">
 <div class="relative flex-1 flex items-center justify-center overflow-hidden">
-<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">&Ncy;&ocy;&yacy;&bcy;. 2024</div>
+<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Нояб. 2024</div>
 <img alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://i.ytimg.com/vi/p-t8exzF_d0/hqdefault.jpg"/>
 <div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
 <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
@@ -667,14 +688,14 @@
 </div>
 </div>
 <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
-<h3 class="font-bold text-white mb-1">&Fcy;&icy;&mcy;&acy;&jcy;&ncy; &mdash; 
-&Pcy;&ocy;&lcy;&ucy;&chcy;&icy;&lcy; &Kcy;&Ncy;&YAcy;&Zcy;&YAcy; &Zcy;&Acy; 24 &CHcy;&Acy;&Scy;&Acy; &Icy;&Gcy;&Rcy;&Ycy; &Ncy;&Acy; &Acy;&Ncy;&Acy;&Rcy;&KHcy;&Icy;&Icy; &Fcy;&Acy;&Ncy;&Tcy;&Acy;&Jcy;&Mcy;</h3>
-<p class="text-sm text-gray-200 line-clamp-1">&Dcy;&icy;&ncy;&acy;&mcy;&icy;&chcy;&ncy;&ycy;&jcy; &lcy;&iecy;&tcy;&scy;&pcy;&lcy;&iecy;&jcy; &scy; &dcy;&ocy;&bcy;&acy;&vcy;&lcy;&iecy;&ncy;&icy;&iecy;&mcy; &ecy;&fcy;&fcy;&iecy;&kcy;&tcy;&ocy;&vcy;.</p>
+<h3 class="font-bold text-white mb-1">Фимайн — 
+Получил КНЯЗЯ ЗА 24 ЧАСА ИГРЫ НА АНАРХИИ ФАНТАЙМ</h3>
+<p class="text-sm text-gray-200 line-clamp-1">Динамичный летсплей с добавлением эффектов.</p>
 </div>
 </a>
 <a class="portfolio-item glass-card spotlight-border rounded-2xl overflow-hidden group flex flex-col hover:-translate-y-2 transition-transform duration-200 w-full max-w-md md:max-w-none md:col-span-1 md:row-span-1" data-category="gaming" href="https://www.youtube.com/@delik_kryt" style="" target="_blank">
 <div class="relative flex-1 flex items-center justify-center overflow-hidden">
-<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">&Acy;&vcy;&gcy;. 2024</div>
+<div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Авг. 2024</div>
 <img alt="YouTube" class="absolute inset-0 w-full h-full object-cover transition-transform duration-200 group-hover:scale-110" loading="lazy" src="https://yt3.googleusercontent.com/QhxcGch86Xv3dmjjE5sMGupkcNPRabhlqGSqMq7GJEwhouCpUmY8udRWMluVaXdFIEo2LeTx0g=s1080-c-k-c0x00000000-no-rj"/>
 <div class="absolute inset-0 bg-[#0a021c]/30 group-hover:bg-[#0a021c]/70 transition-colors duration-200"></div>
 <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 transition-all duration-200 z-10 flex items-center justify-center">
@@ -682,12 +703,12 @@
 </div>
 </div>
 <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
-<h3 class="font-bold text-white mb-1">&Mcy;&ocy;&ncy;&tcy;&acy;&zhcy; &dcy;&lcy;&yacy; &Dcy;&iecy;&lcy;&icy;&kcy;&acy;</h3>
-<p class="text-sm text-gray-200 line-clamp-1">&Mcy;&ocy;&jcy; &kcy;&acy;&ncy;&acy;&lcy;, &dcy;&icy;&ncy;&acy;&mcy;&icy;&chcy;&ncy;&ycy;&jcy; &mcy;&ocy;&ncy;&tcy;&acy;&zhcy;.</p>
+<h3 class="font-bold text-white mb-1">Монтаж для Делика</h3>
+<p class="text-sm text-gray-200 line-clamp-1">Мой канал, динамичный монтаж.</p>
 </div>
 </a>
 </div>
-<p class="text-gray-500 text-xs mt-10">&copy; 2026. &Vcy;&scy;&iecy; &pcy;&rcy;&acy;&vcy;&acy; &zcy;&acy;&shchcy;&icy;&shchcy;&iecy;&ncy;&ycy;.</p>
+<p class="text-gray-500 text-xs mt-10">© 2026. Все права защищены.</p>
 </section>
 </div>
 <audio id="bg-audio" loop="">
@@ -696,6 +717,18 @@
 <script>
         document.addEventListener('DOMContentLoaded', () => {
             
+	    /* --- Скролл сетки вместе со страницей --- */
+            const gridBg = document.querySelector('.workspace-grid');
+            if (gridBg) {
+                window.addEventListener('scroll', () => {
+                    // Сдвигаем узор сетки вверх синхронно со скроллом вниз
+                    gridBg.style.backgroundPosition = `0px -${window.scrollY}px`;
+                    
+                    // P.S. Если хочешь эффект глубины (параллакс), 
+                    // умножь scrollY на 0.5 вот так: -${window.scrollY * 0.5}px
+                });
+            }
+
             /* --- Логика Плеера --- */
             const audio = document.getElementById('bg-audio');
             const toggleBtn = document.getElementById('music-toggle');
