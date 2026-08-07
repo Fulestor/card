@@ -11,31 +11,22 @@
 <meta content="https://delmyname.vercel.app" property="og:url"/>
 <meta content="website" property="og:type"/>
 <meta content="summary_large_image" name="twitter:card"/>
-
 <link href="https://s.fotora.ru/0e59c2750971d9b6.png" rel="icon" type="image/jpeg"/>
-
-<!-- Preload Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" media="print" onload="this.media='all'"/>
-
-<!-- Tailwind CSS via CDN -->
 <script src="https://cdn.tailwindcss.com"></script>
-
 <style>
         :root {
             --color-bg: #0a021c; 
             --color-accent: #8b5cf6; 
             --color-accent-hover: #7c3aed;
-            
             --color-card-bg: rgba(20, 20, 25, 0.6);
             --color-card-border: rgba(255, 255, 255, 0.08);
-            
             --blob-1: #7f00fb;
             --blob-2: #0008ff;
             --blob-3: #4f81ff;
-            
             --color-text-main: #ffffff;
         }
 
@@ -49,19 +40,9 @@
             transition: background-color 1s ease;
         }
 
-        .portfolio-item {
-            transition: opacity 0.25s ease-out, transform 0.25s ease-out;
-        }
-        
-        .portfolio-item.hide {
-            display: none;
-        }
-
-        .filter-btn.active {
-            background-color: var(--color-accent);
-            border-color: var(--color-accent);
-            color: #ffffff;
-        }
+        .portfolio-item { transition: opacity 0.25s ease-out, transform 0.25s ease-out; }
+        .portfolio-item.hide { display: none; }
+        .filter-btn.active { background-color: var(--color-accent); border-color: var(--color-accent); color: #ffffff; }
     
         @keyframes icon-jello {
             0%, 11.1%, 100% { transform: none; }
@@ -74,35 +55,22 @@
             88.8% { transform: skewX(-0.1953125deg) skewY(-0.1953125deg); }
         }
 
-        a:hover i:not(.no-jello), 
-        button:hover i:not(.no-jello), 
-        .glass-btn:hover i:not(.no-jello), 
-        h2:hover i:not(.no-jello), 
+        a:hover i:not(.no-jello), button:hover i:not(.no-jello), 
+        .glass-btn:hover i:not(.no-jello), h2:hover i:not(.no-jello), 
         i:hover:not(.no-jello) {
             animation: icon-jello 0.9s both;
             transform-origin: center;
         }
 
-        /* --- Фон и Блобы --- */
         .mesh-bg {
-            position: fixed;
-            inset: -50px; 
-            z-index: 0;
-            overflow: hidden;
-            background: var(--color-bg);
-            transition: background-color 1s ease;
-            pointer-events: none;
+            position: fixed; inset: -50px; z-index: 0; overflow: hidden;
+            background: var(--color-bg); transition: background-color 1s ease; pointer-events: none;
         }
 
         .blob {
-            position: absolute;
-            opacity: 0.3;
-            animation: moveBlob 10s infinite alternate ease-in-out;
-            border-radius: 40%;
-            transition: background 1s ease;
-            filter: blur(30px);
-            will-change: transform, background;
-            transform: translateZ(0); 
+            position: absolute; opacity: 0.3; animation: moveBlob 10s infinite alternate ease-in-out;
+            border-radius: 40%; transition: background 1s ease; filter: blur(30px);
+            will-change: transform, background; transform: translateZ(0); 
         }
 
         .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--blob-1); }
@@ -115,287 +83,129 @@
             100% { transform: translate3d(-10%, 5%, 0) scale(0.9); }
         }
 
-        /* --- СЕТКА --- */
         .workspace-grid-mask {
-            position: fixed; 
-            inset: -50px; 
-            z-index: 1; 
-            pointer-events: none;
+            position: fixed; inset: -50px; z-index: 1; pointer-events: none;
             -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 70%);
             mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 70%);
         }
 
         .workspace-grid-pattern {
-            position: absolute;
-            inset: -60px; 
-            background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.085) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.085) 1px, transparent 1px);
-            background-size: 60px 60px;
-            will-change: transform; 
+            position: absolute; inset: -60px; 
+            background-image: linear-gradient(rgba(255, 255, 255, 0.085) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.085) 1px, transparent 1px);
+            background-size: 60px 60px; will-change: transform; 
         }
         
-        /* --- Стили карточек --- */
         .glass-card {
-            background: var(--color-card-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--color-card-border);
+            background: var(--color-card-bg); backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px); border: 1px solid var(--color-card-border);
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            transition: transform 0.2s ease-out; 
-            transform-style: preserve-3d;
-            will-change: transform;
+            transition: transform 0.2s ease-out; transform-style: preserve-3d; will-change: transform;
         }
 
         .spotlight-border {
-            position: relative;
-            --spotlight-opacity: 0;
-            --mouse-x: -100px;
-            --mouse-y: -100px;
+            position: relative; --spotlight-opacity: 0; --mouse-x: -100px; --mouse-y: -100px;
         }
 
         .spotlight-border::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            padding: 1px;
-            background: radial-gradient(
-                400px circle at var(--mouse-x, -100px) var(--mouse-y, -100px),
-                var(--color-accent),
-                transparent 40%
-            );
+            content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px;
+            background: radial-gradient(400px circle at var(--mouse-x, -100px) var(--mouse-y, -100px), var(--color-accent), transparent 40%);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            pointer-events: none;
-            z-index: 5;
-            opacity: var(--spotlight-opacity, 0);
-            transition: opacity 0.3s ease;
+            -webkit-mask-composite: xor; mask-composite: exclude;
+            pointer-events: none; z-index: 5; opacity: var(--spotlight-opacity, 0); transition: opacity 0.3s ease;
         }
 
-        .skill-badge {
-            transition: all 0.3s ease;
-        }
+        .skill-badge { transition: all 0.3s ease; }
         .skill-badge:hover {
-            background-color: rgba(139, 92, 246, 0.2);
-            border-color: var(--color-accent);
-            box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
-            color: #fff;
-            transform: translateY(-2px);
+            background-color: rgba(139, 92, 246, 0.2); border-color: var(--color-accent);
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.4); color: #fff; transform: translateY(-2px);
         }
         
         .glass-btn {
-            display: flex;
-            align-items: center;
-            width: 100%;
-            padding: 1rem 1.25rem;
-            background: rgba(255, 255, 255, 0.015); 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            backdrop-filter: blur(8px);
-            border-radius: 0.75rem;
-            color: #ffffff;
-            font-weight: 500;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            will-change: transform;
+            display: flex; align-items: center; width: 100%; padding: 1rem 1.25rem;
+            background: rgba(255, 255, 255, 0.015); border: 1px solid rgba(255, 255, 255, 0.1); 
+            backdrop-filter: blur(8px); border-radius: 0.75rem; color: #ffffff;
+            font-weight: 500; text-decoration: none; transition: all 0.3s ease; will-change: transform;
         }
-
         .glass-btn:hover {
-            background: rgba(255, 255, 255, 0.08); 
-            border-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.2); transform: translateY(-4px);
         }
 
-        .btn-primary {
-            background: var(--color-accent) !important;
-            border: none !important;
-            justify-content: center;
-            transition: background 0.3s ease;
-        }
-
-        .btn-primary:hover {
-            background: var(--color-accent-hover) !important;
-        }
+        .btn-primary { background: var(--color-accent) !important; border: none !important; justify-content: center; transition: background 0.3s ease; }
+        .btn-primary:hover { background: var(--color-accent-hover) !important; }
         
         .mask-gradient {
             -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
             mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
         }
 
-        /* --- БЕСШОВНАЯ БЕГУЩАЯ СТРОКА --- */
         .marquee-track {
-            display: inline-flex;
-            align-items: center;
-            gap: 1.5rem;
-            padding-right: 1.5rem; 
-            width: max-content;
-            animation: scroll-left 10s linear infinite;
-            will-change: transform;
+            display: inline-flex; align-items: center; gap: 1.5rem; padding-right: 1.5rem; 
+            width: max-content; animation: scroll-left 10s linear infinite; will-change: transform;
         }
-        
-        @keyframes scroll-left {
-            0% { transform: translate3d(0, 0, 0); }
-            100% { transform: translate3d(-50%, 0, 0); } 
-        }
+        @keyframes scroll-left { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-50%, 0, 0); } }
 
-        /* --- ФИКСИРОВАННЫЙ ПЛЕЕР --- */
         .player-panel {
-            position: fixed;
-            z-index: 100;
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            background: var(--color-card-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--color-card-border);
-            border-radius: 1rem;
-            padding: 1rem;
-            display: inline-flex; 
-            align-items: center;
-            gap: 1rem;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            will-change: transform, opacity;
-            width: max-content; 
+            position: fixed; z-index: 100; opacity: 0; pointer-events: none;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); background: var(--color-card-bg);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--color-card-border); border-radius: 1rem;
+            padding: 1rem; display: inline-flex; align-items: center; gap: 1rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5); will-change: transform, opacity; width: max-content; 
         }
 
         @media (max-width: 768px) {
-            .player-panel {
-                bottom: 2rem;
-                left: 50%;
-                transform: translate3d(-50%, 20px, 0) scale(0.95);
-            }
-            .player-panel.active {
-                opacity: 1;
-                transform: translate3d(-50%, 0, 0) scale(1);
-                pointer-events: auto;
-            }
+            .player-panel { bottom: 2rem; left: 50%; transform: translate3d(-50%, 20px, 0) scale(0.95); }
+            .player-panel.active { opacity: 1; transform: translate3d(-50%, 0, 0) scale(1); pointer-events: auto; }
         }
         
         @media (min-width: 769px) {
-            .player-panel {
-                bottom: 2rem;
-                left: 75%; 
-                transform: translate3d(-50%, 20px, 0) scale(0.95);
-            }
-            .player-panel.active {
-                opacity: 1;
-                transform: translate3d(-50%, 0, 0) scale(1);
-                pointer-events: auto;
-            }
+            .player-panel { bottom: 2rem; left: 75%; transform: translate3d(-50%, 20px, 0) scale(0.95); }
+            .player-panel.active { opacity: 1; transform: translate3d(-50%, 0, 0) scale(1); pointer-events: auto; }
         }
 
         .music-btn {
-            position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            z-index: 10; 
-            width: 3rem;
-            height: 3rem;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            color: white;
-            will-change: transform;
+            position: absolute; top: 1.5rem; right: 1.5rem; z-index: 10; width: 3rem; height: 3rem;
+            border-radius: 50%; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s;
+            color: white; will-change: transform;
         }
+        .music-btn:hover { background: var(--color-accent); transform: scale(1.05); }
 
-        .music-btn:hover {
-            background: var(--color-accent);
-            transform: scale(1.05);
-        }
+        .music-pulse { position: absolute; inset: 0; border-radius: 50%; background: var(--color-accent); z-index: -1; opacity: 0; }
+        .playing .music-pulse { animation: pulse 1.2s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); opacity: 0.4; } 100% { transform: scale(1.5); opacity: 0; } }
 
-        .music-pulse {
-            position: absolute;
-            inset: 0;
-            border-radius: 50%;
-            background: var(--color-accent);
-            z-index: -1;
-            opacity: 0;
-        }
-
-        .playing .music-pulse {
-            animation: pulse 1.2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.4; }
-            100% { transform: scale(1.5); opacity: 0; }
-        }
-
-        input[type=range] {
-            -webkit-appearance: none;
-            width: 100px;
-            background: transparent;
-        }
+        input[type=range] { -webkit-appearance: none; width: 100px; background: transparent; }
         input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            height: 12px;
-            width: 12px;
-            border-radius: 50%;
-            background: var(--color-accent);
-            cursor: pointer;
-            margin-top: -4px;
+            -webkit-appearance: none; height: 12px; width: 12px; border-radius: 50%; background: var(--color-accent);
+            cursor: pointer; margin-top: -4px;
         }
-        input[type=range]::-webkit-slider-runnable-track {
-            width: 100%;
-            height: 4px;
-            cursor: pointer;
-            background: rgba(255,255,255,0.2);
-            border-radius: 2px;
-        }
+        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; cursor: pointer; background: rgba(255,255,255,0.2); border-radius: 2px; }
 
-        /* --- АНИМАЦИЯ ПОЯВЛЕНИЯ (ЗАГРУЗКА И СКРОЛЛ) --- */
-        .fade-in-up {
-            animation: fadeInUp 0.8s forwards ease-out;
-            opacity: 0;
-            transform: translate3d(0, 20px, 0);
-        }
-
-        @keyframes fadeInUp {
-            to { opacity: 1; transform: translate3d(0, 0, 0); }
-        }
+        .fade-in-up { animation: fadeInUp 0.8s forwards ease-out; opacity: 0; transform: translate3d(0, 20px, 0); }
+        @keyframes fadeInUp { to { opacity: 1; transform: translate3d(0, 0, 0); } }
         
         .scroll-reveal {
-            opacity: 0;
-            transform: translate3d(0, 40px, 0);
+            opacity: 0; transform: translate3d(0, 40px, 0);
             transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             will-change: opacity, transform;
         }
-        
-        .scroll-reveal.is-visible {
-            opacity: 1;
-            transform: translate3d(0, 0, 0);
-        }
+        .scroll-reveal.is-visible { opacity: 1; transform: translate3d(0, 0, 0); }
 
         ::-webkit-scrollbar { width: 2px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(139, 92, 246, 0.3); border-radius: 2px; }
         ::-webkit-scrollbar-thumb:hover { background: rgba(139, 92, 246, 0.6); }
 
-        .select-none {
-            user-select: none;
-            -webkit-user-select: none;
-        }
+        .select-none { user-select: none; -webkit-user-select: none; }
 
-        /* --- SKELETON LOADER --- */
         .skeleton {
             background: linear-gradient(90deg, rgba(255,255,255,0.02) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.02) 75%);
-            background-size: 200% 100%;
-            animation: loadingSkeleton 1.5s infinite;
+            background-size: 200% 100%; animation: loadingSkeleton 1.5s infinite;
         }
-        @keyframes loadingSkeleton {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
+        @keyframes loadingSkeleton { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
-        /* --- GLITCH TRANSITION --- */
         @keyframes coolGlitch {
             0% { transform: translate(0) skew(0); filter: none; }
             10% { transform: translate(-4px, 2px) skew(-1deg); filter: drop-shadow(-4px 0 rgba(255,0,85,0.8)) drop-shadow(4px 0 rgba(0,255,255,0.8)); opacity: 0.9; }
@@ -408,60 +218,42 @@
             80% { transform: translate(-2px, -2px); }
             100% { transform: translate(0) skew(0); filter: none; }
         }
-        .glitch-active {
-            animation: coolGlitch 0.25s cubic-bezier(.25, .46, .45, .94) both;
-            will-change: transform, filter, opacity;
-        }
+        .glitch-active { animation: coolGlitch 0.25s cubic-bezier(.25, .46, .45, .94) both; will-change: transform, filter, opacity; }
 
-        /* --- БЕЗОПАСНАЯ ТРЯСКА --- */
         @keyframes safe-shake {
             0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
             25% { transform: translate3d(var(--shake-x, -1px), var(--shake-y, 1px), 0) rotate(var(--shake-r, -0.2deg)); }
             50% { transform: translate3d(calc(var(--shake-x, -1px) * -1), calc(var(--shake-y, 1px) * -1), 0) rotate(calc(var(--shake-r, -0.2deg) * -1)); }
             75% { transform: translate3d(var(--shake-x, -1px), calc(var(--shake-y, 1px) * -1), 0) rotate(var(--shake-r, -0.2deg)); }
         }
-        .is-shaking {
-            animation: safe-shake 0.08s ease-in-out infinite;
-        }
+        .is-shaking { animation: safe-shake 0.08s ease-in-out infinite; }
         
-        /* --- СТИЛИ ДЛЯ ЛИДЕРБОРДА --- */
         .leaderboard-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.5rem;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            font-family: monospace;
-            font-size: 0.875rem;
+            display: flex; justify-content: space-between; padding: 0.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05); font-family: monospace; font-size: 0.875rem;
         }
-        .leaderboard-row:last-child {
-            border-bottom: none;
-        }
+        .leaderboard-row:last-child { border-bottom: none; }
         .leaderboard-rank-1 { color: #facc15; font-weight: bold; }
         .leaderboard-rank-2 { color: #94a3b8; font-weight: bold; }
         .leaderboard-rank-3 { color: #b45309; font-weight: bold; }
-
     </style>
 </head>
 <body class="bg-[#0a021c] text-white relative selection:bg-purple-500/30">
 
-<!-- Блобы на фоне -->
 <div class="mesh-bg">
 <div class="blob blob-1"></div>
 <div class="blob blob-2"></div>
 <div class="blob blob-3"></div>
 </div>
 
-<!-- Оптимизированная сетка -->
 <div class="workspace-grid-mask">
     <div class="workspace-grid-pattern"></div>
 </div>
 
-<!-- Плеер -->
 <div class="player-panel" id="player-panel">
     <div id="player-inner" class="flex items-center gap-3 w-full">
         <div class="relative w-10 h-10 flex-shrink-0 z-10">
             <div class="absolute inset-0 z-[-1] opacity-70 blur-[15px] scale-[1.6] rounded-full pointer-events-none transition-all duration-700" style="background-image: url('https://cdn-image.zvuk.com/pic?hash=90b321de-52a5-4f53-8a6d-bfe0cb66b3b5&id=38128316&size=medium&type=release'); background-size: cover; background-position: center;"></div>
-            
             <div class="w-full h-full rounded overflow-hidden bg-[var(--color-accent)] flex items-center justify-center text-white relative z-10">
                 <img alt="Cover" class="w-full h-full object-cover" onerror="this.style.display='none'" src="https://cdn-image.zvuk.com/pic?hash=90b321de-52a5-4f53-8a6d-bfe0cb66b3b5&id=38128316&size=medium&type=release"/>
             </div>
@@ -474,7 +266,6 @@
                     <span class="text-[10px] text-white/30 leading-tight">✦</span>
                     <h4 class="text-sm font-bold text-white leading-tight whitespace-nowrap">Outsider No More</h4>
                     <span class="text-[10px] text-white/30 leading-tight">✦</span>
-                    
                     <h4 aria-hidden="true" class="text-sm font-bold text-white leading-tight whitespace-nowrap">Outsider No More</h4>
                     <span aria-hidden="true" class="text-[10px] text-white/30 leading-tight">✦</span>
                     <h4 aria-hidden="true" class="text-sm font-bold text-white leading-tight whitespace-nowrap">Outsider No More</h4>
@@ -491,10 +282,8 @@
     </div>
 </div>
 
-<!-- Контейнер для кинематографичных частиц -->
 <div class="fixed inset-0 pointer-events-none overflow-hidden" id="particles-bg" style="z-index: 1;"></div>
 
-<!-- Обертка основного контента -->
 <div id="main-content-wrapper" class="relative z-10 flex flex-col items-center pt-20 pb-20 px-4 w-full gap-16">
     <div class="relative w-full max-w-md mx-auto fade-in-up z-20 mb-12 md:mb-0">
         <div class="glass-card spotlight-border rounded-3xl relative p-8 text-center z-10 group/card" id="main-card">
@@ -526,12 +315,10 @@
                     <i class="fa-solid fa-circle-play mr-3"></i>
                     Портфолио ↓
                 </a>
-                
                 <button class="glass-btn spotlight-border shadow-[0_0_15px_rgba(34,197,94,0.15)] hover:shadow-[0_0_25px_rgba(34,197,94,0.4)] group cursor-pointer border-[rgba(34,197,94,0.3)]" id="open-snake-btn">
                     <i class="fa-solid fa-gamepad text-[#22c55e] group-hover:text-[#4ade80] text-lg mr-3 w-5 text-center transition-colors duration-300"></i>
                     Сыграть в змейку
                 </button>
-
                 <a class="glass-btn spotlight-border group" href="https://telegram.me/fulestor" target="_blank">
                     <i class="fa-brands fa-telegram text-[var(--color-accent)] group-hover:text-[#24A1DE] text-lg mr-3 w-5 text-center transition-colors duration-300"></i>
                     Связаться со мной
@@ -549,7 +336,6 @@
         </div>
     </div>
 
-    <!-- Портфолио -->
     <section class="w-full max-w-4xl 2xl:max-w-6xl mx-auto flex flex-col items-center scroll-reveal z-10" id="portfolio">
         <h2 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
             <i class="fa-solid fa-film no-jello text-[var(--color-accent)]"></i> Мои работы
@@ -807,9 +593,8 @@
     </section>
 </div>
 
-<!-- ОВЕРЛЕЙ ИГРЫ ЗМЕЙКА -->
-<div id="snake-overlay" class="fixed inset-0 z-[300] bg-black/80 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300 flex-col items-center justify-center p-4">
-    <div class="w-full max-w-[400px] flex justify-between items-end mb-4">
+<div id="snake-overlay" style="touch-action: none;" class="fixed inset-0 z-[300] bg-black/80 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300 flex-col items-center justify-center p-4">
+    <div class="w-full max-w-[400px] flex justify-between items-end mb-4 relative">
         <div>
             <div class="text-white text-xl font-bold font-mono">СЧЁТ: <span id="snake-score" class="text-[#22c55e]">0</span></div>
             <div class="text-white/50 text-xs font-mono mt-1">РЕКОРД: <span id="snake-best-score">0</span></div>
@@ -818,6 +603,9 @@
             <button id="leaderboard-btn" class="text-white/60 hover:text-[var(--color-accent)] transition-colors text-sm font-bold flex items-center gap-2">
                 <i class="fa-solid fa-trophy"></i> Лидеры
             </button>
+            <button id="pause-snake-btn" class="text-white/60 hover:text-yellow-400 transition-colors text-sm font-bold flex items-center gap-2">
+                <i class="fa-solid fa-pause text-xl"></i>
+            </button>
             <button id="close-snake-btn" class="text-white/60 hover:text-red-500 transition-colors">
                 <i class="fa-solid fa-xmark text-3xl"></i>
             </button>
@@ -825,9 +613,26 @@
     </div>
     
     <div class="relative w-full max-w-[400px] aspect-square rounded-xl overflow-hidden border-2 border-white/10 shadow-[0_0_30px_rgba(34,197,94,0.15)] bg-[#0a021c] flex-shrink-0">
+        
+        <div id="active-buff-ui" class="absolute top-4 left-1/2 -translate-x-1/2 text-[10px] tracking-widest font-bold px-3 py-2 rounded hidden z-30 shadow-lg backdrop-blur-md overflow-hidden border">
+            <div class="relative z-10 flex items-center gap-2"><i id="buff-icon" class=""></i><span id="buff-name"></span></div>
+            <div id="buff-timer-bar" class="absolute bottom-0 left-0 h-[2px] transition-none" style="width: 100%;"></div>
+        </div>
+        
         <canvas id="snake-canvas" class="block w-full h-full"></canvas>
         
-        <!-- ЭКРАН ПРОИГРЫША -->
+        <div id="snake-start-screen" class="absolute inset-0 bg-black/80 flex flex-col items-center justify-center z-20">
+            <h2 class="text-4xl font-black text-white mb-6 tracking-widest text-center">ЗМЕЙКА</h2>
+            <button id="start-snake-btn" class="px-6 py-3 bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white rounded-xl font-bold transition-all hover:scale-105 shadow-[0_0_15px_var(--color-accent)]">
+                ИГРАТЬ
+            </button>
+        </div>
+
+        <div id="snake-pause-screen" class="absolute inset-0 bg-black/60 hidden flex-col items-center justify-center z-20 backdrop-blur-sm">
+            <h2 class="text-4xl font-black text-white tracking-widest mb-2">ПАУЗА</h2>
+            <p class="text-gray-400 text-sm text-center px-4">Нажми Пробел или кнопку паузы,<br>чтобы продолжить</p>
+        </div>
+
         <div id="snake-game-over" class="absolute inset-0 bg-black/80 hidden flex-col items-center justify-center z-10">
             <h2 class="text-4xl font-black text-white mb-2 tracking-widest uppercase text-center">GAME OVER</h2>
             <p class="text-gray-400 mb-6">Итоговый счет: <span id="snake-final-score" class="text-[#22c55e] font-bold">0</span></p>
@@ -836,14 +641,12 @@
             </button>
         </div>
 
-        <!-- ТАБЛИЦА ЛИДЕРОВ -->
         <div id="snake-leaderboard" class="absolute inset-0 bg-[#0a021c] hidden flex-col z-20 p-6">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-xl font-bold text-white"><i class="fa-solid fa-trophy text-[var(--color-accent)] mr-2"></i>ТОП ИГРОКОВ</h2>
                 <button id="close-leaderboard-btn" class="text-white/50 hover:text-white"><i class="fa-solid fa-arrow-left"></i> Назад</button>
             </div>
             <div class="flex-1 overflow-y-auto pr-2" id="leaderboard-list">
-                <!-- Сюда вставятся данные через JS -->
             </div>
             <div class="mt-4 pt-4 border-t border-white/10 text-center text-xs text-white/40">
                 Твой никнейм: <span id="snake-username-display" class="text-[var(--color-accent)] font-bold"></span>
@@ -859,14 +662,10 @@
 <source src="outsider-no-more.mp3" type="audio/mpeg"/>
 </audio>
 
-<!-- Скрипт игры и Firebase -->
 <script type="module">
-    // ИМПОРТЫ БАЗЫ ДАННЫХ ЧЕРЕЗ CDN (чтобы работало без сборщиков типа Webpack/Vite)
-    // ОБНОВЛЕНИЕ: добавили импорты doc и setDoc
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getFirestore, collection, doc, setDoc, getDocs, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    // КОНФИГУРАЦИЯ FIREBASE С ТВОИМИ КЛЮЧАМИ
     const firebaseConfig = {
         apiKey: "AIzaSyBqEHY1U4JZAohw7cJNhPciJGrh6mgIHVk",
         authDomain: "delmysnakeleader.firebaseapp.com",
@@ -877,7 +676,6 @@
         measurementId: "G-RXTZ4504M0"
     };
 
-    // Инициализация Firebase
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
@@ -904,49 +702,39 @@
         document.querySelectorAll('.glass-btn, .portfolio-item, .filter-btn, .music-btn, #avatar-img').forEach(el => {
             el.addEventListener('mouseenter', () => playUiSound('hover'));
         });
-        document.querySelectorAll('.filter-btn, .glass-btn, .music-btn, #avatar-img, #close-snake-btn, #restart-snake-btn, #leaderboard-btn, #close-leaderboard-btn').forEach(el => {
+        document.querySelectorAll('.filter-btn, .glass-btn, .music-btn, #avatar-img, #close-snake-btn, #restart-snake-btn, #leaderboard-btn, #close-leaderboard-btn, #start-snake-btn, #pause-snake-btn').forEach(el => {
             el.addEventListener('click', () => playUiSound('click'));
         });
 
-        /* --- Intersection Observer для анимации по скроллу --- */
         const scrollObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('is-visible');
                 }
             });
-        }, { 
-            threshold: 0.1, 
-            rootMargin: "0px 0px -50px 0px" 
-        });
+        }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
         
         const portfolioSection = document.getElementById('portfolio');
         if (portfolioSection) {
             scrollObserver.observe(portfolioSection);
         }
 
-        /* --- СЕТКА --- */
         const gridPattern = document.querySelector('.workspace-grid-pattern');
         if (gridPattern) {
             let scrollY = 0;
-            window.addEventListener('scroll', () => {
-                scrollY = window.scrollY;
-            }, { passive: true }); 
-
+            window.addEventListener('scroll', () => { scrollY = window.scrollY; }, { passive: true }); 
             const mod = (n, m) => ((n % m) + m) % m;
 
             function animateGrid(time) {
                 const drift = time * 0.008; 
                 const x = mod(drift, 60);
                 const y = mod(drift - (scrollY * 0.5), 60); 
-
                 gridPattern.style.transform = `translate3d(${x}px, ${y}px, 0)`;
                 requestAnimationFrame(animateGrid);
             }
             requestAnimationFrame(animateGrid);
         }
 
-        /* --- ЛОГИКА ПЛЕЕРА --- */
         const audio = document.getElementById('bg-audio');
         const toggleBtn = document.getElementById('music-toggle');
         const icon = document.getElementById('music-icon');
@@ -954,11 +742,11 @@
         const volumeSlider = document.getElementById('volume-slider');
         
         let isPlaying = false;
-        audio.volume = 0.3;
+        let lastUserVolume = 0.3;
+        audio.volume = lastUserVolume;
 
         toggleBtn.addEventListener('click', async (e) => {
             e.stopPropagation(); 
-            
             if (isPlaying) {
                 audio.pause();
                 icon.classList.replace('fa-pause', 'fa-play');
@@ -970,11 +758,9 @@
                 toggleBtn.classList.add('playing');
                 playerPanel.classList.add('active');
                 isPlaying = true;
-                
                 try {
                     await audio.play();
                 } catch (error) {
-                    console.error("Ошибка аудио:", error);
                     icon.classList.replace('fa-pause', 'fa-play');
                     toggleBtn.classList.remove('playing');
                     isPlaying = false;
@@ -984,23 +770,21 @@
 
         if (volumeSlider) {
             volumeSlider.addEventListener('input', (e) => {
-                audio.volume = e.target.value;
+                lastUserVolume = e.target.value;
+                audio.volume = lastUserVolume;
             });
         }
 
-        /* --- ХОВЕР И 3D --- */
         const mainCard = document.getElementById('main-card');
         const spotlightElements = document.querySelectorAll('.spotlight-border');
         let rafId;
 
         function handlePointerMove(e, el) {
             if (rafId) cancelAnimationFrame(rafId);
-            
             rafId = requestAnimationFrame(() => {
                 const rect = el.getBoundingClientRect();
                 const clientX = e.touches ? e.touches[0].clientX : e.clientX;
                 const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-                
                 const x = clientX - rect.left;
                 const y = clientY - rect.top;
                 
@@ -1011,10 +795,8 @@
                 if (el === mainCard) {
                     const centerX = rect.width / 2;
                     const centerY = rect.height / 2;
-                    
                     const rotateX = ((y - centerY) / centerY) * -3.5; 
                     const rotateY = ((x - centerX) / centerX) * 3.5;
-                    
                     mainCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
                 }
             });
@@ -1044,47 +826,28 @@
             }
         });
 
-        /* --- ПЛАВНЫЙ СКРОЛЛ --- */
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 const targetId = this.getAttribute('href');
                 if(targetId === '#') return;
-                
                 const targetElement = document.querySelector(targetId);
                 if(targetElement) {
                     e.preventDefault();
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth'
-                    });
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
                 }
             });
         }); 
 
-        /* --- DISCORD ПАСХАЛКА + ФИЛЬТРЫ --- */
         const filterBtns = document.querySelectorAll('.filter-btn');
         const portfolioItems = document.querySelectorAll('.portfolio-item');
         const portfolioGrid = document.getElementById('portfolio-grid');
+        const shakeElements = [document.getElementById('main-content-wrapper'), document.getElementById('player-inner')];
         
-        const shakeElements = [
-            document.getElementById('main-content-wrapper'),
-            document.getElementById('player-inner')
-        ];
-        
-        let glitchTimeout;
-        let filterTimeout;
-        let filterClickCount = 0;
-        let filterShakeTimeout;
-        let filterResetTimeout;
-        
-        const easterEggMessages = [
-            "Ай!", "Эй!", "Хватит", "Остановись", "Зачем?", "Тебе заняться нечем?", 
-            "Прекрати", "Мне больно!", "ОСТАНОВИСЬ", "Сайт сломается!", 
-            "10", "9", "8", "7", "Это не шутка!", "ПОЩАДИ", "ААААААА"
-        ];
+        let glitchTimeout, filterTimeout, filterClickCount = 0, filterShakeTimeout, filterResetTimeout;
+        const easterEggMessages = ["Ай!", "Эй!", "Хватит", "Остановись", "Зачем?", "Тебе заняться нечем?", "Прекрати", "Мне больно!", "ОСТАНОВИСЬ", "Сайт сломается!", "10", "9", "8", "7", "Это не шутка!", "ПОЩАДИ", "ААААААА"];
 
         filterBtns.forEach(btn => {
             btn.addEventListener('click', function(e) {
-                
                 if (glitchTimeout) clearTimeout(glitchTimeout);
                 if (filterTimeout) clearTimeout(filterTimeout);
 
@@ -1092,9 +855,7 @@
                 void portfolioGrid.offsetWidth; 
                 portfolioGrid.classList.add('glitch-active');
                 
-                glitchTimeout = setTimeout(() => {
-                    portfolioGrid.classList.remove('glitch-active');
-                }, 250);
+                glitchTimeout = setTimeout(() => { portfolioGrid.classList.remove('glitch-active'); }, 250);
 
                 filterBtns.forEach(b => {
                     b.classList.remove('active', 'bg-[var(--color-accent)]', 'text-white', 'border-[var(--color-accent)]');
@@ -1110,7 +871,6 @@
                     portfolioItems.forEach(item => {
                         const rawCategories = item.getAttribute('data-category');
                         if (!rawCategories) return; 
-
                         const itemCategoriesArray = rawCategories.split(',').map(cat => cat.trim());
                         
                         if (filterValue === 'all' || itemCategoriesArray.includes(filterValue)) {
@@ -1123,14 +883,10 @@
 
                 filterClickCount++;
                 clearTimeout(filterResetTimeout);
-                
-                filterResetTimeout = setTimeout(() => { 
-                    filterClickCount = 0; 
-                }, 400);
+                filterResetTimeout = setTimeout(() => { filterClickCount = 0; }, 400);
 
                 if (filterClickCount > 3) {
                     clearTimeout(filterShakeTimeout);
-                    
                     let intensity = Math.min(filterClickCount, 30);
                     
                     shakeElements.forEach(el => {
@@ -1166,13 +922,11 @@
                             toast.style.opacity = '0';
                         });
                     });
-                    
                     setTimeout(() => toast.remove(), 3000);
                 }
             });
         });
 
-        /* --- ПАСХАЛКА 2: MINECRAFT КРИПЕР --- */
         const profileImg = document.getElementById('avatar-img');
         let mcClickCount = 0;
         let mcClickTimer;
@@ -1180,7 +934,6 @@
 
         profileImg.addEventListener('click', (e) => {
             e.preventDefault();
-            
             mcClickCount++;
             clearTimeout(mcClickTimer);
             
@@ -1213,25 +966,16 @@
                             creeper.style.opacity = '0';
                         });
                     });
-                    
                     setTimeout(() => creeper.remove(), 6000);
                 }, 600);
-                
                 window.addEventListener('unload', () => clearInterval(creeperInterval));
             } else {
                 mcClickTimer = setTimeout(() => { mcClickCount = 0; }, 400);
             }
         });
 
-        /* --- ГЕНЕРАЦИЯ ЮЗЕРНЕЙМА И ЛОКАЛЬНЫЕ РЕКОРДЫ --- */
-        const adjs = [
-            'Redstone', 'Iron', 'Quantum', 'Blox', 'Epic', 'Brave', 
-            'Gamer', 'Golden', 'Dark', 'Cosmic', 'Marvelous', 'Fabric', 'Spider', 'delmy', 'Rock', 'beautiful', 'BIG_', 'Gay', 'Фармацевт', 'Uzbek'
-        ];
-        const nouns = [
-            'Creeper', 'Batman', 'Shinobi', 'Avenger', 'Jedi', 'Noob', 
-            'Titan', 'Hokage', 'ChickenFarmer', 'Spider', 'Witcher', 'Miner', 'doggie', 'man', '_Chpoker', 'Operator', 'Vandal', 'Узбек'
-        ];
+        const adjs = ['Redstone', 'Iron', 'Quantum', 'Blox', 'Epic', 'Brave', 'Gamer', 'Golden', 'Dark', 'Cosmic', 'Marvelous', 'Fabric', 'Spider', 'delmy', 'Rock', 'beautiful', 'BIG_', 'Gay', 'Фармацевт', 'Uzbek'];
+        const nouns = ['Creeper', 'Batman', 'Shinobi', 'Avenger', 'Jedi', 'Noob', 'Titan', 'Hokage', 'ChickenFarmer', 'Spider', 'Witcher', 'Miner', 'doggie', 'man', '_Chpoker', 'Operator', 'Vandal', 'Узбек'];
 
         let localUsername = localStorage.getItem('delmyname_snakeUser');
         if (!localUsername) {
@@ -1243,7 +987,6 @@
         let localBestScore = parseInt(localStorage.getItem('delmyname_snakeBestScore')) || 0;
         document.getElementById('snake-best-score').innerText = localBestScore;
 
-        /* --- ИГРА: ПЛАВНАЯ ЗМЕЙКА (LERP РЕНДЕРИНГ) --- */
         const snakeOverlay = document.getElementById('snake-overlay');
         const openSnakeBtn = document.getElementById('open-snake-btn');
         const closeSnakeBtn = document.getElementById('close-snake-btn');
@@ -1251,11 +994,19 @@
         const ctx = canvas.getContext('2d');
         const scoreEl = document.getElementById('snake-score');
         const finalScoreEl = document.getElementById('snake-final-score');
+        
+        const startScreen = document.getElementById('snake-start-screen');
+        const startGameBtn = document.getElementById('start-snake-btn');
+        const pauseScreen = document.getElementById('snake-pause-screen');
+        const pauseBtn = document.getElementById('pause-snake-btn');
         const gameOverScreen = document.getElementById('snake-game-over');
+        
         const restartBtn = document.getElementById('restart-snake-btn');
         const leaderboardBtn = document.getElementById('leaderboard-btn');
         const closeLeaderboardBtn = document.getElementById('close-leaderboard-btn');
         const leaderboardScreen = document.getElementById('snake-leaderboard');
+        const activeBuffUI = document.getElementById('active-buff-ui');
+        const buffTimerBar = document.getElementById('buff-timer-bar');
 
         canvas.width = 400;
         canvas.height = 400;
@@ -1271,13 +1022,28 @@
         let score = 0;
         
         let gameActive = false;
-        let changingDirection = false; 
+        let isPaused = false;
+        let inputQueue = []; 
         
         let lastLogicUpdate = 0;
         let currentSpeed = 150; 
         let animationFrameId;
 
-        function initGame() {
+        const BUFF_TYPES = [
+            { id: 'SLOW', color: '#a855f7', name: 'ЗАМЕДЛЕНИЕ', icon: 'fa-solid fa-stopwatch' },
+            { id: 'MAGNET', color: '#eab308', name: 'МАГНИТ', icon: 'fa-solid fa-magnet' },
+            { id: 'DOUBLE', color: '#3b82f6', name: 'X2 ОЧКИ', icon: 'fa-solid fa-gem' },
+            { id: 'GHOST', color: '#ffffff', name: 'ПРИЗРАК', icon: 'fa-solid fa-ghost' }
+        ];
+        
+        let buffItem = null;
+        let activeBuff = null;
+        let buffTimer = null;
+        let buffStartTime = 0;
+        const buffDuration = 8000;
+        let pauseStartTime = 0;
+
+        function resetGameData() {
             snake = [
                 {x: 10, y: 10, oldX: 10, oldY: 10},
                 {x: 10, y: 11, oldX: 10, oldY: 11},
@@ -1285,14 +1051,22 @@
             ];
             dx = 0;
             dy = -1; 
+            inputQueue = [];
             score = 0;
             currentSpeed = 150;
             scoreEl.innerText = score;
+            buffItem = null;
+            clearBuff();
+            placeFood();
+        }
+
+        function initGame() {
+            resetGameData();
+            startScreen.classList.add('hidden');
             gameOverScreen.classList.add('hidden');
             gameOverScreen.classList.remove('flex');
             gameActive = true;
-            changingDirection = false;
-            placeFood();
+            isPaused = false;
             
             cancelAnimationFrame(animationFrameId);
             lastLogicUpdate = performance.now();
@@ -1305,11 +1079,94 @@
             for (let part of snake) {
                 if (part.x === foodX && part.y === foodY) return placeFood();
             }
+            if (buffItem && buffItem.x === foodX && buffItem.y === foodY) return placeFood();
+
+            if (!buffItem && !activeBuff && Math.random() < 0.20) {
+                placeBuff();
+            }
+        }
+
+        function placeBuff() {
+            let bx = Math.floor(Math.random() * tileCount);
+            let by = Math.floor(Math.random() * tileCount);
+            for (let part of snake) {
+                if (part.x === bx && part.y === by) return placeBuff();
+            }
+            if (bx === foodX && by === foodY) return placeBuff();
+
+            const randomBuff = BUFF_TYPES[Math.floor(Math.random() * BUFF_TYPES.length)];
+            buffItem = { x: bx, y: by, type: randomBuff, spawnTime: performance.now() };
+        }
+
+        function activateBuff(buffType) {
+            activeBuff = buffType;
+            buffStartTime = performance.now();
+            
+            const iconEl = document.getElementById('buff-icon');
+            const nameEl = document.getElementById('buff-name');
+            
+            nameEl.innerText = buffType.name;
+            iconEl.className = buffType.icon;
+            
+            activeBuffUI.style.backgroundColor = buffType.color + '30'; 
+            activeBuffUI.style.borderColor = buffType.color + '80';
+            activeBuffUI.style.color = buffType.color;
+            buffTimerBar.style.backgroundColor = buffType.color;
+            activeBuffUI.classList.remove('hidden');
+
+            if (buffTimer) clearTimeout(buffTimer);
+            buffTimer = setTimeout(clearBuff, buffDuration);
+        }
+
+        function clearBuff() {
+            activeBuff = null;
+            activeBuffUI.classList.add('hidden');
+            if (buffTimer) clearTimeout(buffTimer);
+        }
+
+        function togglePause() {
+            if (!gameActive) return;
+            isPaused = !isPaused;
+            if (isPaused) {
+                pauseScreen.classList.remove('hidden');
+                pauseScreen.classList.add('flex');
+                pauseBtn.innerHTML = '<i class="fa-solid fa-play text-xl"></i>';
+                pauseStartTime = performance.now();
+                if (buffTimer) clearTimeout(buffTimer);
+            } else {
+                pauseScreen.classList.add('hidden');
+                pauseScreen.classList.remove('flex');
+                pauseBtn.innerHTML = '<i class="fa-solid fa-pause text-xl"></i>';
+                
+                const pauseDuration = performance.now() - pauseStartTime;
+                lastLogicUpdate += pauseDuration;
+                if (buffItem) buffItem.spawnTime += pauseDuration;
+                
+                if (activeBuff) {
+                    buffStartTime += pauseDuration;
+                    const remainingTime = buffDuration - (performance.now() - buffStartTime);
+                    buffTimer = setTimeout(clearBuff, remainingTime);
+                }
+                requestAnimationFrame(gameLoop);
+            }
+        }
+
+        function addInput(newDx, newDy) {
+            let lastDir = inputQueue.length > 0 ? inputQueue[inputQueue.length - 1] : {dx: dx, dy: dy};
+            if (newDx === -lastDir.dx && newDy === -lastDir.dy) return; 
+            if (newDx === lastDir.dx && newDy === lastDir.dy) return; 
+            if (inputQueue.length < 2) {
+                inputQueue.push({dx: newDx, dy: newDy});
+            }
         }
 
         function updateSnakeLogic() {
-            changingDirection = false;
-            
+            if (inputQueue.length > 0) {
+                const nextDir = inputQueue.shift();
+                dx = nextDir.dx;
+                dy = nextDir.dy;
+            }
+
             snake.forEach(part => {
                 part.oldX = part.x;
                 part.oldY = part.y;
@@ -1320,15 +1177,36 @@
 
             if (nx < 0 || nx >= tileCount || ny < 0 || ny >= tileCount) return gameOver();
             for (let i = 0; i < snake.length; i++) {
-                if (nx === snake[i].x && ny === snake[i].y) return gameOver();
+                if (nx === snake[i].x && ny === snake[i].y) {
+                    if (activeBuff && activeBuff.id === 'GHOST') continue;
+                    return gameOver();
+                }
             }
 
+            if (buffItem && nx === buffItem.x && ny === buffItem.y) {
+                playUiSound('hover');
+                activateBuff(buffItem.type);
+                buffItem = null;
+            } else if (buffItem && performance.now() - buffItem.spawnTime > 10000) {
+                buffItem = null;
+            }
+
+            let isEating = false;
             if (nx === foodX && ny === foodY) {
-                score += 10;
+                isEating = true;
+            } else if (activeBuff && activeBuff.id === 'MAGNET') {
+                const dist = Math.abs(nx - foodX) + Math.abs(ny - foodY);
+                if (dist <= 2) {
+                    isEating = true;
+                }
+            }
+
+            if (isEating) {
+                let scoreMultiplier = (activeBuff && activeBuff.id === 'DOUBLE') ? 20 : 10;
+                score += scoreMultiplier;
                 scoreEl.innerText = score;
                 playUiSound('hover'); 
                 placeFood();
-                currentSpeed = Math.max(50, 150 - (score * 0.5));
                 
                 snake.unshift({ x: nx, y: ny, oldX: snake[0].x, oldY: snake[0].y });
             } else {
@@ -1339,11 +1217,27 @@
                 tail.oldY = snake[0].y;
                 snake.unshift(tail);
             }
+
+            let baseSpeed = Math.max(60, 150 - (score * 0.4));
+            if (activeBuff && activeBuff.id === 'SLOW') baseSpeed *= 1.7;
+            currentSpeed = baseSpeed;
         }
 
         function drawSmoothSnake(progress) {
             ctx.fillStyle = '#0a021c';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            if (buffItem) {
+                ctx.fillStyle = buffItem.type.color;
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = buffItem.type.color;
+                
+                const scale = 1 + Math.sin(performance.now() / 150) * 0.15;
+                const size = (gridSize - 4) * scale;
+                const offset = (gridSize - size) / 2;
+                ctx.fillRect(buffItem.x * gridSize + offset, buffItem.y * gridSize + offset, size, size);
+                ctx.shadowBlur = 0;
+            }
 
             ctx.fillStyle = '#22c55e';
             ctx.shadowBlur = 10;
@@ -1351,11 +1245,19 @@
             ctx.fillRect(foodX * gridSize + 2, foodY * gridSize + 2, gridSize - 4, gridSize - 4);
             ctx.shadowBlur = 0;
             
+            const isGhost = (activeBuff && activeBuff.id === 'GHOST');
+            if (isGhost) ctx.globalAlpha = 0.5;
+
             snake.forEach((part, index) => {
-                ctx.fillStyle = index === 0 ? '#a78bfa' : '#8b5cf6'; 
+                if (isGhost) {
+                    ctx.fillStyle = index === 0 ? '#ffffff' : '#cbd5e1';
+                } else {
+                    ctx.fillStyle = index === 0 ? '#a78bfa' : '#8b5cf6'; 
+                }
+                
                 if(index === 0) {
                     ctx.shadowBlur = 15;
-                    ctx.shadowColor = '#8b5cf6';
+                    ctx.shadowColor = isGhost ? '#ffffff' : '#8b5cf6';
                 } else {
                     ctx.shadowBlur = 0;
                 }
@@ -1366,10 +1268,22 @@
                 ctx.fillRect(renderX * gridSize + 1, renderY * gridSize + 1, gridSize - 2, gridSize - 2);
             });
             ctx.shadowBlur = 0;
+            ctx.globalAlpha = 1.0;
+        }
+
+        function updateUI(time) {
+            if (activeBuff && !isPaused) {
+                const elapsed = time - buffStartTime;
+                const remaining = Math.max(0, 1 - (elapsed / buffDuration));
+                buffTimerBar.style.width = (remaining * 100) + '%';
+            }
         }
 
         function gameLoop(time) {
             if (!gameActive) return;
+            if (isPaused) return;
+
+            updateUI(time);
 
             let elapsed = time - lastLogicUpdate;
             
@@ -1379,71 +1293,70 @@
                 elapsed = 0;
             }
 
-            if (gameActive) {
+            if (gameActive && !isPaused) {
                 let progress = Math.min(elapsed / currentSpeed, 1);
                 drawSmoothSnake(progress);
                 animationFrameId = requestAnimationFrame(gameLoop);
             }
         }
 
-        // Логика отправки данных в Firebase
         function gameOver() {
             gameActive = false;
             finalScoreEl.innerText = score;
             gameOverScreen.classList.remove('hidden');
             gameOverScreen.classList.add('flex');
             playUiSound('click');
+            clearBuff();
             
             if (score > localBestScore) {
                 localBestScore = score;
                 localStorage.setItem('delmyname_snakeBestScore', localBestScore);
                 document.getElementById('snake-best-score').innerText = localBestScore;
                 
-                // ИСПОЛЬЗУЕМ setDoc и ID документа == localUsername
-                // Это перезапишет старый рекорд пользователя, если он его побил
                 setDoc(doc(db, "leaderboard", localUsername), {
                     name: localUsername,
                     score: localBestScore,
                     timestamp: Date.now()
                 }).then(() => {
                     updateLeaderboardUI();
-                }).catch(err => console.error('Не удалось сохранить рекорд', err));
+                }).catch(err => console.error(err));
             } else {
                 updateLeaderboardUI();
             }
         }
 
         document.addEventListener('keydown', (e) => {
-            if (!gameActive) return;
+            if (gameActive && (e.code === 'Space' || e.code === 'Escape')) {
+                e.preventDefault();
+                togglePause();
+                return;
+            }
+
+            if (!gameActive || isPaused) return;
+            
             if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight","w","a","s","d"].includes(e.key)) {
                 e.preventDefault();
             }
             
-            if (changingDirection) return;
-            
-            if ( (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') && dy === 0) { dx = 0; dy = -1; changingDirection = true; }
-            if ( (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') && dy === 0) { dx = 0; dy = 1; changingDirection = true; }
-            if ( (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') && dx === 0) { dx = -1; dy = 0; changingDirection = true; }
-            if ( (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') && dx === 0) { dx = 1; dy = 0; changingDirection = true; }
+            if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') addInput(0, -1);
+            if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') addInput(0, 1);
+            if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') addInput(-1, 0);
+            if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') addInput(1, 0);
         }, {passive: false});
 
-                let touchStartX = 0;
+        let touchStartX = 0;
         let touchStartY = 0;
-        let swipeHandled = false; // Флаг, чтобы не дублировать свайпы
+        let lastSwipeTime = 0;
 
         snakeOverlay.addEventListener('touchstart', (e) => {
-            if (!gameActive) return;
+            if (!gameActive || isPaused) return;
             touchStartX = e.changedTouches[0].screenX;
             touchStartY = e.changedTouches[0].screenY;
-            swipeHandled = false; // Сбрасываем флаг при новом касании
         }, {passive: false});
 
         snakeOverlay.addEventListener('touchmove', (e) => {
-            if (!gameActive) return;
-            e.preventDefault(); // Блокируем скролл страницы
-            
-            // Если направление уже меняется или свайп уже засчитан — ждем
-            if (changingDirection || swipeHandled) return;
+            if (!gameActive || isPaused) return;
+            e.preventDefault(); 
 
             let touchX = e.changedTouches[0].screenX;
             let touchY = e.changedTouches[0].screenY;
@@ -1451,58 +1364,67 @@
             let deltaX = touchX - touchStartX;
             let deltaY = touchY - touchStartY;
 
-            // Как только палец сдвинулся на 30px — МГНОВЕННО фиксируем свайп
             if (Math.abs(deltaX) > 15 || Math.abs(deltaY) > 15) {
+                
+                const now = performance.now();
+                if (now - lastSwipeTime < 50) return;
+                lastSwipeTime = now;
+
                 if (Math.abs(deltaX) > Math.abs(deltaY)) {
-                    if (deltaX > 0 && dx === 0) { dx = 1; dy = 0; changingDirection = true; } 
-                    else if (deltaX < 0 && dx === 0) { dx = -1; dy = 0; changingDirection = true; } 
+                    if (deltaX > 0) addInput(1, 0); 
+                    else addInput(-1, 0);
                 } else {
-                    if (deltaY > 0 && dy === 0) { dx = 0; dy = 1; changingDirection = true; } 
-                    else if (deltaY < 0 && dy === 0) { dx = 0; dy = -1; changingDirection = true; }
+                    if (deltaY > 0) addInput(0, 1);
+                    else addInput(0, -1);
                 }
-                swipeHandled = true; // Запоминаем, что в этом касании команда уже отдана
+                
+                touchStartX = touchX;
+                touchStartY = touchY;
             }
         }, {passive: false});
-
-        snakeOverlay.addEventListener('touchend', (e) => {
-            // Событие отрыва пальца больше не используем для расчетов, 
-            // так как всё обрабатывается моментально в touchmove
-            if (!gameActive) return;
-        });
-
 
         openSnakeBtn.addEventListener('click', (e) => {
             e.preventDefault();
             snakeOverlay.classList.remove('hidden');
             snakeOverlay.classList.add('flex');
             
+            if (isPlaying) { audio.volume = 0.05; }
+            
             requestAnimationFrame(() => {
                 snakeOverlay.style.opacity = '1';
             });
-            
-            setTimeout(initGame, 300);
+            resetGameData();
+            startScreen.classList.remove('hidden');
         });
 
         closeSnakeBtn.addEventListener('click', () => {
             gameActive = false;
             cancelAnimationFrame(animationFrameId);
             snakeOverlay.style.opacity = '0';
+            
+            if (isPlaying) { audio.volume = lastUserVolume; }
+
             setTimeout(() => {
                 snakeOverlay.classList.remove('flex');
                 snakeOverlay.classList.add('hidden');
             }, 300);
         });
 
+        startGameBtn.addEventListener('click', initGame);
         restartBtn.addEventListener('click', initGame);
+        pauseBtn.addEventListener('click', togglePause);
         
-        // Чтение данных из Firebase
         async function updateLeaderboardUI() {
             const listEl = document.getElementById('leaderboard-list');
-            listEl.innerHTML = '<div class="text-center text-gray-400 mt-10">Загрузка данных...</div>';
+            listEl.innerHTML = '';
+            
+            const loadingMsg = document.createElement('div');
+            loadingMsg.className = 'text-center text-gray-400 mt-10';
+            loadingMsg.textContent = 'Загрузка данных...';
+            listEl.appendChild(loadingMsg);
 
             try {
                 const leaders = [];
-                // Запрашиваем топ-10 игроков
                 const q = query(collection(db, "leaderboard"), orderBy("score", "desc"), limit(10));
                 const querySnapshot = await getDocs(q);
                 
@@ -1510,10 +1432,13 @@
                     leaders.push(doc.data());
                 });
                 
-                listEl.innerHTML = '';
+                listEl.innerHTML = ''; 
                 
                 if (leaders.length === 0) {
-                    listEl.innerHTML = '<div class="text-center text-gray-400 mt-10">Пока никого нет. Стань первым!</div>';
+                    const emptyMsg = document.createElement('div');
+                    emptyMsg.className = 'text-center text-gray-400 mt-10';
+                    emptyMsg.textContent = 'Пока никого нет. Стань первым!';
+                    listEl.appendChild(emptyMsg);
                     return;
                 }
 
@@ -1529,18 +1454,34 @@
                     if (index === 1) rankClass = 'leaderboard-rank-2';
                     if (index === 2) rankClass = 'leaderboard-rank-3';
                     
-                    row.innerHTML = `
-                        <div class="flex items-center gap-3">
-                            <span class="w-4 text-left ${rankClass}">${index + 1}</span>
-                            <span class="${isMe ? 'text-[var(--color-accent)] font-bold' : 'text-gray-300'}">${player.name}</span>
-                        </div>
-                        <span class="${isMe ? 'text-[#22c55e]' : 'text-white'} font-bold">${player.score}</span>
-                    `;
+                    const leftCol = document.createElement('div');
+                    leftCol.className = 'flex items-center gap-3';
+
+                    const rankSpan = document.createElement('span');
+                    rankSpan.className = `w-4 text-left ${rankClass}`;
+                    rankSpan.textContent = index + 1;
+
+                    const nameSpan = document.createElement('span');
+                    nameSpan.className = isMe ? 'text-[var(--color-accent)] font-bold' : 'text-gray-300';
+                    nameSpan.textContent = player.name; 
+
+                    leftCol.appendChild(rankSpan);
+                    leftCol.appendChild(nameSpan);
+
+                    const scoreSpan = document.createElement('span');
+                    scoreSpan.className = isMe ? 'text-[#22c55e] font-bold' : 'text-white font-bold';
+                    scoreSpan.textContent = player.score;
+
+                    row.appendChild(leftCol);
+                    row.appendChild(scoreSpan);
                     listEl.appendChild(row);
                 });
             } catch (err) {
-                console.error("Firebase Error:", err);
-                listEl.innerHTML = '<div class="text-center text-red-400 mt-10">Ошибка загрузки таблицы</div>';
+                listEl.innerHTML = '';
+                const errMsg = document.createElement('div');
+                errMsg.className = 'text-center text-red-400 mt-10';
+                errMsg.textContent = 'Ошибка загрузки таблицы';
+                listEl.appendChild(errMsg);
             }
         }
 
