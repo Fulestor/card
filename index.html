@@ -458,7 +458,51 @@
             line-height: 1.68;
             margin: 0;
             flex: 1 1 auto;
+            white-space: pre-line;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
+        .review-read-more {
+            margin-top: 0.75rem;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #ffffff;
+            font-weight: 700;
+            cursor: pointer;
+            opacity: 0.55;
+            transition: opacity 0.2s, transform 0.2s, color 0.2s;
+        }
+        .review-card:hover .review-read-more { 
+            opacity: 1; 
+            color: var(--color-accent);
+            transform: translateX(3px); 
+        }
+
+        /* Стили модалки отзыва */
+        #client-review-modal {
+            position: fixed; inset: 0; z-index: 50000;
+            background: rgba(0,0,0,0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            display: none; justify-content: center; align-items: center; padding: 1rem;
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        #client-review-modal.active { display: flex; opacity: 1; }
+        .crm-content {
+            background: linear-gradient(145deg, rgba(20, 20, 30, 0.95), rgba(10, 10, 15, 0.98));
+            border: 1px solid var(--color-accent); border-radius: 1.5rem; padding: 2rem; 
+            max-width: 500px; width: 100%; position: relative;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.7), inset 0 0 0 1px rgba(255,255,255,0.05);
+            transform: scale(0.95) translateY(20px); transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+        }
+        #client-review-modal.active .crm-content { transform: scale(1) translateY(0); }
+        .crm-close { 
+            position: absolute; top: 1.25rem; right: 1.25rem; font-size: 1.5rem; 
+            color: rgba(255,255,255,0.3); cursor: pointer; transition: color 0.2s; 
+            width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center;
+        }
+        .crm-close:hover { color: white; }
         .reviews-empty {
             width: 100%;
             padding: 1.5rem;
@@ -626,6 +670,26 @@
     <p class="text-gray-500 text-xs mt-10">© 2026. Все права защищены.</p>
 </div>
 
+<!-- Модалка для длинных отзывов -->
+<div id="client-review-modal" onclick="if(event.target === this) { this.classList.remove('active'); setTimeout(() => {if(!this.classList.contains('active')) this.style.display='none'}, 300); }">
+    <div class="crm-content">
+        <div class="crm-close" onclick="document.getElementById('client-review-modal').classList.remove('active'); setTimeout(() => document.getElementById('client-review-modal').style.display='none', 300);"><i class="fa-solid fa-xmark"></i></div>
+        <div class="flex items-start gap-4 mb-5">
+            <div id="crm-avatar-container" class="relative flex-shrink-0"></div>
+            <div>
+                <h3 id="crm-name" class="font-bold text-lg text-white leading-tight"></h3>
+                <p id="crm-sub" class="text-xs text-white/40 mt-1"></p>
+                <div id="crm-stars" class="review-stars mt-2"></div>
+            </div>
+        </div>
+        <p id="crm-text" class="text-white/80 text-sm leading-relaxed whitespace-pre-line overflow-y-auto max-h-[50vh] pr-2"></p>
+    </div>
+</div>
+
+<audio id="bg-audio" loop="" preload="none">
+<source src="outsider-no-more.mp3" type="audio/mpeg"/>
+</audio>
+
 <!-- Оверлей Змейки -->
 <div id="snake-overlay" style="touch-action: none;" class="fixed inset-0 z-[300] bg-black/90 backdrop-blur-md hidden opacity-0 transition-opacity duration-300 flex-col items-center justify-center p-4">
     <div class="w-full max-w-[400px] flex justify-between items-end mb-4 relative">
@@ -691,10 +755,6 @@
     <p class="text-gray-500 text-sm mt-6 text-center md:hidden"><i class="fa-solid fa-hand-pointer mr-2"></i>Свайпай по экрану для управления</p>
     <p class="text-gray-500 text-sm mt-6 text-center hidden md:block"><i class="fa-solid fa-keyboard mr-2"></i>WASD или Стрелочки для управления</p>
 </div>
-
-<audio id="bg-audio" loop="" preload="none">
-<source src="outsider-no-more.mp3" type="audio/mpeg"/>
-</audio>
 
 <script type="module">
     // === НАСТРОЙКИ ГРОМКОСТИ ЗВУКОВ (от 0.0 до 1.0) ===
@@ -1857,11 +1917,38 @@
                         top.appendChild(stars);
 
                         const body = document.createElement('div');
-                        body.className = 'relative z-10 mt-5 flex-1 flex';
+                        body.className = 'relative z-10 mt-5 flex-1 flex flex-col justify-between';
+                        
                         const textEl = document.createElement('p');
                         textEl.className = 'review-text';
                         textEl.textContent = escapeText(review.text);
                         body.appendChild(textEl);
+
+                        // Если текст длинный (больше 100 символов), добавляем кнопку вызова модалки
+                        if (review.text && review.text.length > 100) {
+                            const moreBtn = document.createElement('div');
+                            moreBtn.className = 'review-read-more';
+                            moreBtn.innerHTML = 'Читать полностью <i class="fa-solid fa-arrow-right ml-1"></i>';
+                            body.appendChild(moreBtn);
+
+                            card.addEventListener('click', (e) => {
+                                if (typeof playUiSound === 'function') playUiSound('click');
+                                document.getElementById('crm-name').textContent = escapeText(review.name) || 'Клиент';
+                                document.getElementById('crm-sub').textContent = escapeText(review.subtitle);
+                                document.getElementById('crm-text').textContent = escapeText(review.text);
+                                
+                                const crmAva = document.getElementById('crm-avatar-container');
+                                crmAva.innerHTML = '';
+                                crmAva.appendChild(avatarWrap.cloneNode(true));
+                                
+                                document.getElementById('crm-stars').innerHTML = stars.innerHTML;
+                                
+                                const modal = document.getElementById('client-review-modal');
+                                modal.style.display = 'flex';
+                                void modal.offsetWidth; 
+                                modal.classList.add('active');
+                            });
+                        }
 
                         card.appendChild(quote);
                         card.appendChild(top);
@@ -1874,7 +1961,6 @@
                         return card;
                     };
 
-                    // Two copies create a seamless infinite loop.
                     const fragmentA = document.createDocumentFragment();
                     const fragmentB = document.createDocumentFragment();
                     visibleReviews.forEach(review => fragmentA.appendChild(buildCard(review)));
@@ -1887,27 +1973,6 @@
 
                     const allCards = Array.from(track.children);
                     const firstSet = allCards.slice(0, visibleReviews.length);
-
-                    const syncReviewCardHeights = () => {
-                        allCards.forEach(card => {
-                            card.style.height = 'auto';
-                            card.style.minHeight = '0px';
-                        });
-                        const maxHeight = Math.max(...allCards.map(el => Math.ceil(el.getBoundingClientRect().height)));
-                        track.style.setProperty('--reviews-card-height', `${maxHeight}px`);
-                        allCards.forEach(card => {
-                            card.style.height = `${maxHeight}px`;
-                        });
-                        return maxHeight;
-                    };
-
-                    syncReviewCardHeights();
-
-                    let resizeTimer = null;
-                    window.addEventListener('resize', () => {
-                        clearTimeout(resizeTimer);
-                        resizeTimer = setTimeout(() => syncReviewCardHeights(), 120);
-                    }, { passive: true });
 
                     const gap = parseFloat(getComputedStyle(track).gap) || 0;
                     const firstSetWidth = firstSet.reduce((sum, el) => sum + el.getBoundingClientRect().width, 0) + gap * Math.max(0, visibleReviews.length - 1);
