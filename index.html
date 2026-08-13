@@ -43,8 +43,64 @@
         }
 
         .portfolio-item { transition: opacity 0.25s ease-out, transform 0.25s ease-out; }
+        .portfolio-hover-video { transition: opacity 0.45s ease, transform var(--dynamic-transition); transform: scale(1); }
+        .portfolio-hover-video.is-visible { opacity: 1; transform: scale(1.02); }
+        .portfolio-item .portfolio-hover-video { z-index: 1; }
+        .portfolio-item .portfolio-media-overlay { z-index: 2; }
+        .portfolio-item .portfolio-poster { z-index: 0; }
         .portfolio-item.hide { display: none; }
         .filter-btn.active { background-color: var(--color-accent); border-color: var(--color-accent); color: #ffffff; }
+
+        .filter-tabs {
+            position: relative; display: inline-flex; align-items: center; gap: 0.25rem;
+            padding: 0.25rem; border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.025); backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px); border-radius: 999px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.14), inset 0 1px 0 rgba(255,255,255,0.04);
+        }
+        .filter-active-pill {
+            position: absolute; left: 0; top: 0; height: calc(100% - 0.5rem);
+            margin-top: 0.25rem; border-radius: 999px; z-index: 0;
+            background: linear-gradient(135deg, var(--color-accent), var(--color-accent-hover));
+            box-shadow: 0 8px 24px color-mix(in srgb, var(--color-accent) 28%, transparent),
+                        inset 0 1px 0 rgba(255,255,255,0.2);
+            transition: transform 0.48s cubic-bezier(.22,1,.36,1), width 0.48s cubic-bezier(.22,1,.36,1);
+            pointer-events: none;
+        }
+        .filter-tab { position: relative; z-index: 1; border-color: transparent !important; background: transparent !important; transition: color .28s ease, transform .28s ease; }
+        .filter-tab:not(.active) { color: rgba(255,255,255,.55) !important; }
+        .filter-tab:hover { transform: translateY(-1px); color: #fff !important; }
+
+        .section-heading {
+            opacity: 0; transform: translate3d(0, 18px, 0) scale(.985);
+            transition: opacity .7s ease, transform .7s cubic-bezier(.22,1,.36,1);
+            will-change: opacity, transform;
+        }
+        .section-heading.is-visible { opacity: 1; transform: translate3d(0,0,0) scale(1); }
+        .section-heading .section-kicker { opacity: 0; transform: translateY(8px); transition: opacity .55s ease .05s, transform .55s ease .05s; }
+        .section-heading.is-visible .section-kicker { opacity: 1; transform: translateY(0); }
+        .section-heading h2 { transition: text-shadow .45s ease; }
+        .section-heading.is-visible h2 { text-shadow: 0 0 28px color-mix(in srgb, var(--color-accent) 18%, transparent); }
+
+        .portfolio-cta {
+            position: relative; overflow: hidden;
+            background: linear-gradient(135deg, rgba(255,255,255,.055), rgba(255,255,255,.018));
+            border: 1px solid rgba(255,255,255,.09);
+            border-radius: 1.5rem; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+            box-shadow: 0 24px 60px rgba(0,0,0,.24), inset 0 1px 0 rgba(255,255,255,.05);
+        }
+        .portfolio-cta::before {
+            content: ''; position: absolute; inset: -35%;
+            background: radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--color-accent) 18%, transparent), transparent 60%);
+            pointer-events: none; filter: blur(12px);
+        }
+        .portfolio-cta-content { position: relative; z-index: 1; }
+        .cta-pulse { animation: ctaPulse 3.6s ease-in-out infinite; }
+        @keyframes ctaPulse { 0%,100% { box-shadow: 0 10px 25px color-mix(in srgb, var(--color-accent) 28%, transparent); } 50% { box-shadow: 0 14px 34px color-mix(in srgb, var(--color-accent) 42%, transparent); } }
+
+        @media (prefers-reduced-motion: reduce) {
+            .filter-active-pill, .section-heading, .section-heading .section-kicker, .cta-pulse { transition: none !important; animation: none !important; }
+        }
     
         @keyframes icon-jello {
             0%, 11.1%, 100% { transform: none; }
@@ -238,6 +294,187 @@
         .leaderboard-rank-1 { color: #facc15; font-weight: bold; }
         .leaderboard-rank-2 { color: #94a3b8; font-weight: bold; }
         .leaderboard-rank-3 { color: #b45309; font-weight: bold; }
+
+        /* === REVIEWS CAROUSEL === */
+        .reviews-shell { position: relative; width: 100%; overflow: visible; }
+        .reviews-viewport {
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            padding: 1.8rem 1rem 4.8rem;
+            margin: -0.8rem 0;
+            -webkit-mask-image: linear-gradient(to right, transparent 0, black 6%, black 94%, transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0, black 6%, black 94%, transparent 100%);
+            isolation: isolate;
+        }
+        .reviews-viewport::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--color-accent) 8%, transparent), transparent 62%);
+            filter: blur(28px);
+            opacity: .9;
+            z-index: -1;
+        }
+        .reviews-track {
+            display: flex;
+            align-items: stretch;
+            gap: 1.25rem;
+            width: max-content;
+            will-change: transform;
+            transform: translate3d(0,0,0);
+            padding: 0.25rem 0 0.4rem;
+        }
+        .review-card {
+            position: relative;
+            width: clamp(290px, 31vw, 390px);
+            flex: 0 0 clamp(290px, 31vw, 390px);
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            height: auto;
+            box-sizing: border-box;
+            padding: 1.35rem;
+            border: 1px solid var(--color-card-border);
+            border-radius: var(--dynamic-radius, 1.5rem);
+            background: linear-gradient(145deg, rgba(255,255,255,0.07), rgba(255,255,255,0.025));
+            backdrop-filter: blur(14px) saturate(125%);
+            -webkit-backdrop-filter: blur(14px) saturate(125%);
+            box-shadow: 0 24px 48px -24px rgba(0,0,0,0.82), 0 0 0 1px rgba(255,255,255,0.02);
+            overflow: hidden;
+            isolation: isolate;
+            transition: transform 0.35s cubic-bezier(.2,.7,.2,1), border-color 0.35s ease, box-shadow 0.35s ease;
+        }
+        .review-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+            z-index: 2;
+            background:
+                radial-gradient(circle at 78% 8%, color-mix(in srgb, var(--color-accent) 12%, transparent), transparent 34%),
+                linear-gradient(135deg, rgba(255,255,255,0.10), transparent 34%, transparent 72%, color-mix(in srgb, var(--color-accent) 9%, transparent));
+        }
+        .review-card::before {
+            content: '';
+            position: absolute;
+            inset: -7%;
+            border-radius: inherit;
+            pointer-events: none;
+            z-index: -1;
+            background: inherit;
+            transform: scale(1.055);
+            backdrop-filter: blur(10px) saturate(135%);
+            -webkit-backdrop-filter: blur(10px) saturate(135%);
+            box-shadow: inset 0 0 40px rgba(255,255,255,0.035);
+            opacity: 0.92;
+        }
+        .review-card:hover {
+            transform: translateY(-6px);
+            border-color: color-mix(in srgb, var(--color-accent) 55%, transparent);
+            box-shadow: 0 30px 70px -24px color-mix(in srgb, var(--color-accent) 34%, transparent), 0 24px 55px -26px rgba(0,0,0,0.9);
+        }
+        .review-card > * {
+            position: relative;
+            z-index: 3;
+        }
+        .review-quote {
+            position: absolute;
+            right: 1.35rem;
+            top: 1.15rem;
+            color: var(--color-accent);
+            opacity: 0.35;
+            font-size: 2.25rem;
+            line-height: 1;
+            z-index: 1;
+        }
+        .review-avatar {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 999px;
+            flex: 0 0 auto;
+            object-fit: cover;
+            border: 1px solid rgba(255,255,255,0.14);
+            background: rgba(255,255,255,0.07);
+            box-shadow: 0 0 0 5px rgba(255,255,255,0.02);
+        }
+        .review-avatar-fallback {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.95rem;
+            font-weight: 700;
+            background: radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--color-accent) 85%, white), var(--color-accent));
+        }
+        .review-stars {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.18rem;
+            min-height: 1rem;
+        }
+        .review-star {
+            position: relative;
+            width: 0.78rem;
+            height: 0.78rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.34);
+            font-size: 0.78rem;
+            line-height: 1;
+            filter: drop-shadow(0 0 4px rgba(255,255,255,0.10));
+        }
+        .review-star > .review-star-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: var(--star-fill, 0%);
+            height: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            color: color-mix(in srgb, white 34%, var(--color-accent));
+            filter: drop-shadow(0 0 7px color-mix(in srgb, white 18%, var(--color-accent) 82%)) drop-shadow(0 0 14px color-mix(in srgb, var(--color-accent) 30%, transparent));
+        }
+        .review-star > .review-star-fill i { width: 0.78rem; font-size: 0.78rem; color: inherit; }
+        .review-stars:hover .review-star > .review-star-fill { filter: drop-shadow(0 0 8px color-mix(in srgb, white 24%, var(--color-accent) 76%)) drop-shadow(0 0 16px color-mix(in srgb, var(--color-accent) 36%, transparent)); }
+        .review-identity { min-width: 0; flex: 1 1 auto; }
+        .review-name { font-weight: 600; color: #fff; white-space: normal; line-height: 1.2; }
+        .review-subtitle {
+            color: rgba(255,255,255,0.35);
+            font-size: 0.68rem;
+            line-height: 1.35;
+            margin-top: 0.12rem;
+            white-space: normal;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+            max-width: none;
+        }
+        .review-text {
+            color: rgba(255,255,255,0.80);
+            font-size: 0.95rem;
+            line-height: 1.68;
+            margin: 0;
+            flex: 1 1 auto;
+        }
+        .reviews-empty {
+            width: 100%;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px dashed rgba(255,255,255,0.10);
+            border-radius: 1.25rem;
+            background: rgba(255,255,255,0.02);
+            color: rgba(255,255,255,0.35);
+        }
+        @media (max-width: 640px) {
+            .reviews-viewport { padding-inline: 0.65rem; }
+            .review-card { width: min(82vw, 360px); flex-basis: min(82vw, 360px); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .reviews-viewport { -webkit-mask-image: none; mask-image: none; }
+        }
     </style>
 </head>
 <body class="bg-[#0a021c] text-white relative selection:bg-purple-500/30">
@@ -257,7 +494,7 @@
         <div class="relative w-10 h-10 flex-shrink-0 z-10">
             <div class="absolute inset-0 z-[-1] opacity-70 blur-[15px] scale-[1.6] rounded-full pointer-events-none transition-all duration-700" style="background-image: url('https://cdn-image.zvuk.com/pic?hash=90b321de-52a5-4f53-8a6d-bfe0cb66b3b5&id=38128316&size=medium&type=release'); background-size: cover; background-position: center;"></div>
             <div class="w-full h-full rounded overflow-hidden bg-[var(--color-accent)] flex items-center justify-center text-white relative z-10">
-                <img alt="Cover" class="w-full h-full object-cover" onerror="this.style.display='none'" src="https://cdn-image.zvuk.com/pic?hash=90b321de-52a5-4f53-8a6d-bfe0cb66b3b5&id=38128316&size=medium&type=release"/>
+                <img alt="Cover" class="w-full h-full object-cover" loading="lazy" decoding="async" onerror="this.style.display='none'" src="https://cdn-image.zvuk.com/pic?hash=90b321de-52a5-4f53-8a6d-bfe0cb66b3b5&id=38128316&size=medium&type=release"/>
             </div>
         </div>
 
@@ -286,23 +523,24 @@
 
 <div class="fixed inset-0 pointer-events-none overflow-hidden" id="particles-bg" style="z-index: 1;"></div>
 
-<div id="main-content-wrapper" class="relative z-10 flex flex-col items-center pt-20 pb-20 px-4 w-full gap-16">
-    <div class="relative w-full max-w-md mx-auto fade-in-up z-20 mb-12 md:mb-0">
+<div id="main-content-wrapper" class="relative z-10 flex flex-col items-center pt-12 pb-16 px-4 w-full gap-8">
+    <div class="relative w-full max-w-md mx-auto fade-in-up z-20">
         <div class="glass-card spotlight-border rounded-3xl relative p-8 text-center z-10 group/card" id="main-card">
             <button type="button" aria-label="Play music" class="music-btn" id="music-toggle">
                 <i class="fa-solid fa-play ml-1" id="music-icon"></i>
                 <div class="music-pulse"></div>
             </button>
-            <div class="relative w-28 h-28 mx-auto mb-5 group/avatar">
+            <div class="relative w-28 h-28 mx-auto mb-5 group/avatar rounded-full overflow-hidden z-10">
                 <div class="absolute inset-0 bg-[var(--color-accent)] rounded-full blur-[20px] opacity-40 group-hover/card:opacity-70 transition-opacity duration-500 pointer-events-none"></div>
-                <img alt="Profile" class="relative w-full h-full object-cover rounded-full border-2 border-white/10 z-10 cursor-pointer select-none" id="avatar-img" src="https://s.fotora.ru/855e832a165681a6.png" draggable="false"/>
+                <video id="avatar-video" class="relative w-full h-full object-cover rounded-full border-2 border-white/10 z-10 cursor-pointer select-none hidden" autoplay loop muted playsinline></video>
+                <img alt="Profile" class="relative w-full h-full object-cover rounded-full border-2 border-white/10 z-10 cursor-pointer select-none" id="avatar-img" src="https://s.fotora.ru/855e832a165681a6.png" fetchpriority="high" decoding="async" draggable="false"/>
                 <div class="absolute -top-12 left-1/2 -translate-x-1/2 bg-[#0a021c]/90 backdrop-blur-md border border-[var(--color-accent)] text-white text-xs px-3 py-1.5 rounded-lg opacity-0 group-hover/avatar:opacity-100 group-hover/avatar:-translate-y-1 transition-all duration-300 pointer-events-none whitespace-nowrap z-20 shadow-[0_0_15px_color-mix(in_srgb,var(--color-accent)_40%,transparent)]">
                     Нажми 3 раза 🤫
                 </div>
             </div>
             <h1 id="site-title" class="text-3xl font-bold text-white mb-0 tracking-tight">Герман</h1>
             <h2 class="text-[11px] text-white/30 font-semibold uppercase tracking-[0.35em] mb-2 ml-0">delmyname</h2>
-            <p id="site-subtitle" class="text-[var(--color-accent)] font-semibold text-sm tracking-widest uppercase mb-4">Video editor & creator</p>
+            <p id="site-subtitle" class="text-[var(--color-accent)] font-semibold text-sm tracking-widest uppercase mb-4 transition-all duration-500 hover:text-white hover:drop-shadow-[0_0_15px_var(--color-accent)] cursor-default">Video editor & creator</p>
             <p id="site-bio" class="text-gray-300 text-sm mb-6 leading-relaxed">
                 Создаю динамичные видео, Reels, Shorts и рекламные креативы. Воплощаю ваши идеи в кадре. 🎬
             </p>
@@ -337,21 +575,55 @@
         </div>
     </div>
 
+    <section id="reviews" class="reviews-shell w-full max-w-4xl 2xl:max-w-6xl mx-auto flex flex-col items-center z-10 mt-8">
+            <div class="w-full px-4 mb-7 section-heading">
+                <div class="flex flex-col items-center text-center">
+                    <span class="section-kicker text-[10px] font-semibold uppercase tracking-[0.32em] text-[var(--color-accent)]/80 mb-2">Отзывы клиентов</span>
+                    <h2 class="text-2xl font-bold text-white flex items-center gap-3">
+                        <i class="fa-solid fa-quote-left no-jello text-[var(--color-accent)]"></i> Что говорят обо мне
+                    </h2>
+                    <p class="text-sm text-white/35 mt-2 max-w-xl">Коротко о том, как проходит работа и что получается на выходе.</p>
+                </div>
+            </div>
+            <div id="reviews-grid" class="reviews-viewport" aria-live="polite"><div id="reviews-track" class="reviews-track"></div></div>
+    </section>
+
     <section class="w-full max-w-4xl 2xl:max-w-6xl mx-auto flex flex-col items-center scroll-reveal z-10" id="portfolio">
-        <h2 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
-            <i class="fa-solid fa-film no-jello text-[var(--color-accent)]"></i> Мои работы
-        </h2>
-        <div class="flex flex-wrap justify-center gap-3 mb-10 w-full px-4 relative">
-            <button type="button" class="filter-btn active px-4 py-2 text-sm font-medium rounded-full bg-[var(--color-accent)] text-white border border-[var(--color-accent)] transition-all hover:bg-[var(--color-accent-hover)]" data-filter="all">Все работы</button>
-            <button type="button" class="filter-btn px-4 py-2 text-sm font-medium rounded-full bg-white/5 text-gray-300 border border-white/10 transition-all hover:bg-white/10 hover:text-white" data-filter="irl">IRL / Шоу</button>
-            <button type="button" class="filter-btn px-4 py-2 text-sm font-medium rounded-full bg-white/5 text-gray-300 border border-white/10 transition-all hover:bg-white/10 hover:text-white" data-filter="gaming">Игровые</button>
-            <button type="button" class="filter-btn px-4 py-2 text-sm font-medium rounded-full bg-white/5 text-gray-300 border border-white/10 transition-all hover:bg-white/10 hover:text-white" data-filter="shorts">Shorts / Reels</button>
+        <div class="w-full px-4 mb-7 section-heading">
+            <div class="flex flex-col items-center text-center">
+                <span class="section-kicker text-[10px] font-semibold uppercase tracking-[0.32em] text-[var(--color-accent)]/80 mb-2">Портфолио</span>
+                <h2 class="text-2xl font-bold text-white flex items-center gap-3">
+                    <i class="fa-solid fa-film no-jello text-[var(--color-accent)]"></i> Мои работы
+                </h2>
+                <p class="text-sm text-white/35 mt-2 max-w-xl">Монтаж, динамика и визуальный стиль — от идеи до готового ролика.</p>
+            </div>
+        </div>
+        <div class="flex justify-center mb-8 w-full px-4">
+            <div class="filter-tabs" id="portfolio-filters" role="tablist" aria-label="Фильтр работ">
+                <span class="filter-active-pill" id="filter-active-pill" aria-hidden="true"></span>
+                <button type="button" class="filter-btn filter-tab active px-4 py-2 text-sm font-medium rounded-full text-white" data-filter="all" role="tab" aria-selected="true">Все работы</button>
+                <button type="button" class="filter-btn filter-tab px-4 py-2 text-sm font-medium rounded-full" data-filter="irl" role="tab" aria-selected="false">IRL / Шоу</button>
+                <button type="button" class="filter-btn filter-tab px-4 py-2 text-sm font-medium rounded-full" data-filter="gaming" role="tab" aria-selected="false">Игровые</button>
+                <button type="button" class="filter-btn filter-tab px-4 py-2 text-sm font-medium rounded-full" data-filter="shorts" role="tab" aria-selected="false">Shorts / Reels</button>
+            </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 2xl:grid-cols-4 auto-rows-[300px] grid-flow-row-dense gap-6 w-full px-4 place-content-center justify-items-center md:justify-items-stretch" id="portfolio-grid">
             <!-- Сюда JS будет рендерить карточки -->
         </div>
-        <p class="text-gray-500 text-xs mt-10">© 2026. Все права защищены.</p>
+
+        <div class="portfolio-cta w-[calc(100%-2rem)] md:w-[calc(100%-2rem)] mt-10 p-6 md:p-7 text-center">
+            <div class="portfolio-cta-content">
+                <span class="text-[10px] font-semibold uppercase tracking-[0.3em] text-[var(--color-accent)]/80">Есть идея?</span>
+                <h3 class="text-xl md:text-2xl font-bold text-white mt-2">Давай превратим её в ролик.</h3>
+                <p class="text-sm text-white/40 mt-2 max-w-xl mx-auto">Расскажи задачу, формат и что должно получиться на выходе — обсудим подход и соберём решение.</p>
+                <a href="https://telegram.me/fulestor" target="_blank" rel="noopener noreferrer" class="cta-pulse inline-flex items-center justify-center gap-2 mt-5 px-5 py-3 rounded-xl bg-[var(--color-accent)] text-white font-semibold transition-transform duration-300 hover:-translate-y-1 hover:bg-[var(--color-accent-hover)]">
+                    Обсудить проект <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
     </section>
+
+    <p class="text-gray-500 text-xs mt-10">© 2026. Все права защищены.</p>
 </div>
 
 <!-- Оверлей Змейки -->
@@ -426,12 +698,12 @@
 
 <script type="module">
     // === НАСТРОЙКИ ГРОМКОСТИ ЗВУКОВ (от 0.0 до 1.0) ===
-    const VOL_HOVER   = 0.05; // Наведение на элементы
-    const VOL_CLICK   = 0.035; // Клик по кнопкам
-    const VOL_EAT     = 0.075; // Подбор обычной еды
-    const VOL_POWERUP = 0.075; // Подбор баффа
-    const VOL_DIE     = 0.075; // Обычная смерть
-    const VOL_RECORD  = 0.05; // Побитие рекорда
+    const VOL_HOVER   = 0.05; 
+    const VOL_CLICK   = 0.035; 
+    const VOL_EAT     = 0.075; 
+    const VOL_POWERUP = 0.05; 
+    const VOL_DIE     = 0.075; 
+    const VOL_RECORD  = 0.035; 
 
     const firebaseConfig = {
         apiKey: "AIzaSyBqEHY1U4JZAohw7cJNhPciJGrh6mgIHVk",
@@ -462,12 +734,9 @@
     function playUiSound(type) {
         const baseSound = uiSounds[type];
         if (baseSound) {
-            // Клонируем ноду для полифонии, чтобы звуки не обрывали друг друга
             const clone = baseSound.cloneNode();
-            clone.volume = baseSound.volume; // Подтягиваем громкость из настроек
+            clone.volume = baseSound.volume; 
             clone.play().catch(() => {}); 
-            
-            // Сборщик мусора в браузере сам удалит клон после завершения проигрывания
         }
     }
 
@@ -478,17 +747,6 @@
         document.querySelectorAll('.filter-btn, .glass-btn, .music-btn, #avatar-img, #close-snake-btn, #restart-snake-btn, #leaderboard-btn, #close-leaderboard-btn, #start-snake-btn, #pause-snake-btn').forEach(el => {
             el.addEventListener('click', () => playUiSound('click'));
         });
-
-        const scrollObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                }
-            });
-        }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
-        
-        const portfolioSection = document.getElementById('portfolio');
-        if (portfolioSection) scrollObserver.observe(portfolioSection);
 
         const gridPattern = document.querySelector('.workspace-grid-pattern');
         if (gridPattern) {
@@ -521,11 +779,13 @@
             if (isPlaying) {
                 audio.pause();
                 icon.classList.replace('fa-pause', 'fa-play');
+                icon.classList.add('ml-1'); 
                 toggleBtn.classList.remove('playing');
                 playerPanel.classList.remove('active');
                 isPlaying = false;
             } else {
                 icon.classList.replace('fa-play', 'fa-pause');
+                icon.classList.remove('ml-1'); 
                 toggleBtn.classList.add('playing');
                 playerPanel.classList.add('active');
                 isPlaying = true;
@@ -533,6 +793,7 @@
                     await audio.play();
                 } catch (error) {
                     icon.classList.replace('fa-pause', 'fa-play');
+                    icon.classList.add('ml-1');
                     toggleBtn.classList.remove('playing');
                     isPlaying = false;
                 }
@@ -562,7 +823,7 @@
                 el.style.setProperty('--mouse-y', `${y}px`);
                 el.style.setProperty('--spotlight-opacity', `1`);
 
-                if (el === mainCard) {
+                if (el === mainCard && !mainCard.style.transform.includes('scale(')) {
                     const centerX = rect.width / 2;
                     const centerY = rect.height / 2;
                     const rotateX = ((y - centerY) / centerY) * -3.5; 
@@ -575,7 +836,7 @@
         function handlePointerLeave(el) {
             if (el.rafId) cancelAnimationFrame(el.rafId);
             el.style.setProperty('--spotlight-opacity', `0`);
-            if (el === mainCard) {
+            if (el === mainCard && !mainCard.style.transform.includes('scale(')) {
                 mainCard.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
             }
         }
@@ -609,12 +870,25 @@
         }); 
 
         const filterBtns = document.querySelectorAll('.filter-btn');
-        const portfolioItems = document.querySelectorAll('.portfolio-item');
         const portfolioGrid = document.getElementById('portfolio-grid');
         const shakeElements = [document.getElementById('main-content-wrapper'), document.getElementById('player-inner')];
         
         let glitchTimeout, filterTimeout, filterClickCount = 0, filterShakeTimeout, filterResetTimeout;
         const easterEggMessages = ["Ай!", "Эй!", "Хватит", "Остановись", "Зачем?", "Тебе заняться нечем?", "Прекрати", "Мне больно!", "ОСТАНОВИСЬ", "Сайт сломается!", "10", "9", "8", "7", "Это не шутка!", "ПОЩАДИ", "ААААААА"];
+
+        const filterActivePill = document.getElementById('filter-active-pill');
+        const positionFilterPill = (btn, instant = false) => {
+            if (!btn || !filterActivePill) return;
+            const containerRect = btn.parentElement.getBoundingClientRect();
+            const rect = btn.getBoundingClientRect();
+            filterActivePill.style.transition = instant ? 'none' : '';
+            filterActivePill.style.width = `${rect.width}px`;
+            filterActivePill.style.transform = `translate3d(${rect.left - containerRect.left}px, 0, 0)`;
+            if (instant) requestAnimationFrame(() => { filterActivePill.style.transition = ''; });
+        };
+
+        const activeFilter = document.querySelector('.filter-btn.active');
+        if (activeFilter) positionFilterPill(activeFilter, true);
 
         filterBtns.forEach(btn => {
             btn.addEventListener('click', function(e) {
@@ -624,21 +898,21 @@
                 portfolioGrid.classList.remove('glitch-active');
                 void portfolioGrid.offsetWidth; 
                 portfolioGrid.classList.add('glitch-active');
-                
                 glitchTimeout = setTimeout(() => { portfolioGrid.classList.remove('glitch-active'); }, 250);
 
                 filterBtns.forEach(b => {
-                    b.classList.remove('active', 'bg-[var(--color-accent)]', 'text-white', 'border-[var(--color-accent)]');
-                    b.classList.add('bg-white/5', 'text-gray-300', 'border-white/10');
+                    b.classList.remove('active');
+                    b.setAttribute('aria-selected', 'false');
                 });
-                
-                this.classList.add('active', 'bg-[var(--color-accent)]', 'text-white', 'border-[var(--color-accent)]');
-                this.classList.remove('bg-white/5', 'text-gray-300', 'border-white/10');
+                this.classList.add('active');
+                this.setAttribute('aria-selected', 'true');
+                positionFilterPill(this);
 
                 const filterValue = this.getAttribute('data-filter');
 
                 filterTimeout = setTimeout(() => {
-                    portfolioItems.forEach(item => {
+                    const currentPortfolioItems = document.querySelectorAll('.portfolio-item');
+                    currentPortfolioItems.forEach(item => {
                         const rawCategories = item.getAttribute('data-category');
                         if (!rawCategories) return; 
                         const itemCategoriesArray = rawCategories.split(',').map(cat => cat.trim());
@@ -698,11 +972,12 @@
         });
 
         const profileImg = document.getElementById('avatar-img');
+        const profileVid = document.getElementById('avatar-video');
         let mcClickCount = 0;
         let mcClickTimer;
         let mcEasterEggActive = false;
 
-        profileImg.addEventListener('click', (e) => {
+        const avatarClickHandler = (e) => {
             e.preventDefault();
             mcClickCount++;
             clearTimeout(mcClickTimer);
@@ -742,7 +1017,10 @@
             } else {
                 mcClickTimer = setTimeout(() => { mcClickCount = 0; }, 400);
             }
-        });
+        };
+
+        if (profileImg) profileImg.addEventListener('click', avatarClickHandler);
+        if (profileVid) profileVid.addEventListener('click', avatarClickHandler);
 
         const adjs = ['Redstone', 'Iron', 'Quantum', 'Blox', 'Epic', 'Brave', 'Gamer', 'Golden', 'Dark', 'Cosmic', 'Marvelous', 'Fabric', 'Spider', 'delmy', 'Rock', 'beautiful', 'BIG_', 'Gay', 'Фармацевт', 'Uzbek'];
         const nouns = ['Creeper', 'Batman', 'Shinobi', 'Avenger', 'Jedi', 'Noob', 'Titan', 'Hokage', 'ChickenFarmer', 'Spider', 'Witcher', 'Miner', 'doggie', 'man', '_Chpoker', 'Operator', 'Vandal', 'Узбек'];
@@ -1257,8 +1535,80 @@
             }
         })();
 
-// --- ДИНАМИЧЕСКИЙ РЕНДЕР ИЗ JSON ---
+        // --- ДИНАМИЧЕСКИЙ РЕНДЕР ИЗ JSON ---
         (async function loadDynamicContent() {
+            function hexToHSL(H) {
+                let r = parseInt(H.slice(1, 3), 16) / 255; let g = parseInt(H.slice(3, 5), 16) / 255; let b = parseInt(H.slice(5, 7), 16) / 255;
+                let cmin = Math.min(r,g,b), cmax = Math.max(r,g,b), delta = cmax - cmin, h = 0, s = 0, l = 0;
+                if (delta == 0) h = 0; else if (cmax == r) h = ((g - b) / delta) % 6; else if (cmax == g) h = (b - r) / delta + 2; else h = (r - g) / delta + 4;
+                h = Math.round(h * 60); if (h < 0) h += 360; l = (cmax + cmin) / 2;
+                s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1)); s = +(s * 100).toFixed(1); l = +(l * 100).toFixed(1);
+                return {h, s, l};
+            }
+
+            const cardObserver = new IntersectionObserver((entries) => {
+                let delayCounter = 0;
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        if (entry.target.classList.contains('portfolio-item')) {
+                            entry.target.style.transitionDelay = `${delayCounter * 0.15}s`;
+                            delayCounter++;
+                        }
+                        
+                        entry.target.classList.add('is-visible');
+                        cardObserver.unobserve(entry.target); 
+                        
+                        if (entry.target.classList.contains('portfolio-item')) {
+                            setTimeout(() => {
+                                entry.target.style.transitionDelay = '0s';
+                            }, (delayCounter * 150) + 800);
+                        }
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+
+            const sectionHeadingObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        sectionHeadingObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.3, rootMargin: '0px 0px -30px 0px' });
+
+            document.querySelectorAll('.section-heading').forEach(el => sectionHeadingObserver.observe(el));
+
+            function initParticles() {
+                const container = document.getElementById('particles-bg');
+                if (!container) return;
+                container.innerHTML = ''; 
+                
+                if(!document.getElementById('particle-styles')) {
+                    let s = document.createElement('style');
+                    s.id = 'particle-styles';
+                    s.innerHTML = `
+                        @keyframes float-particle { 0% { transform: translateY(0) scale(1); } 100% { transform: translateY(-100vh) scale(0); } }
+                        @keyframes fade-particle { 0% { opacity: 0; } 50% { opacity: 0.6; } 100% { opacity: 0; } }
+                    `;
+                    document.head.appendChild(s);
+                }
+
+                for (let i = 0; i < 18; i++) {
+                    let p = document.createElement('div');
+                    p.className = 'absolute rounded-full opacity-0 pointer-events-none';
+                    let size = Math.random() * 4 + 2; 
+                    p.style.width = size + 'px';
+                    p.style.height = size + 'px';
+                    p.style.background = 'var(--color-accent)';
+                    p.style.boxShadow = '0 0 10px var(--color-accent)';
+                    p.style.left = Math.random() * 100 + 'vw';
+                    p.style.top = Math.random() * 100 + 'vh';
+                    p.style.animation = `float-particle ${Math.random() * 15 + 10}s linear infinite, fade-particle ${Math.random() * 5 + 3}s ease-in-out infinite alternate`;
+                    p.style.animationDelay = `-${Math.random() * 10}s`;
+                    container.appendChild(p);
+                }
+            }
+
             try {
                 const configRes = await fetch('config.json');
                 if (configRes.ok) {
@@ -1267,28 +1617,335 @@
                     if (document.getElementById('site-title')) document.getElementById('site-title').textContent = config.title_name;
                     if (document.getElementById('site-subtitle')) document.getElementById('site-subtitle').textContent = config.subtitle;
                     if (document.getElementById('site-bio')) document.getElementById('site-bio').textContent = config.bio_text;
-                    if (document.getElementById('avatar-img')) document.getElementById('avatar-img').src = config.avatar;
+                    if (document.getElementById('avatar-img')) {
+                        const imgEl = document.getElementById('avatar-img');
+                        const vidEl = document.getElementById('avatar-video');
+                        const objPos = config.avatar_pos || '50% 50%';
+                        const objScale = config.avatar_scale || '1';
+                        
+                        if (config.avatar && config.avatar.match(/\.(mp4|webm|mov)$/i)) {
+                            imgEl.classList.add('hidden');
+                            vidEl.classList.remove('hidden');
+                            vidEl.src = config.avatar;
+                            vidEl.style.objectPosition = objPos;
+                            vidEl.style.transform = `scale(${objScale})`;
+                        } else if (config.avatar) {
+                            vidEl.classList.add('hidden');
+                            imgEl.classList.remove('hidden');
+                            imgEl.src = config.avatar;
+                            imgEl.style.objectPosition = objPos;
+                            imgEl.style.transform = `scale(${objScale})`;
+                        }
+                    }
                     
                     let link = document.querySelector("link[rel~='icon']");
-                    if (!link) {
-                        link = document.createElement('link');
-                        link.rel = 'icon';
-                        document.head.appendChild(link);
-                    }
+                    if (!link) { link = document.createElement('link'); link.rel = 'icon'; document.head.appendChild(link); }
                     link.href = config.favicon;
 
                     if (config.visuals) {
                         const root = document.documentElement;
                         root.style.setProperty('--dynamic-radius', config.visuals.card_radius || '1rem');
-                        root.style.setProperty('--dynamic-scale-hover', config.visuals.img_scale_hover || '1.1');
-                        root.style.setProperty('--dynamic-overlay-base', config.visuals.overlay_base || 'rgba(10, 2, 28, 0.3)');
-                        root.style.setProperty('--dynamic-overlay-hover', config.visuals.overlay_hover || 'rgba(10, 2, 28, 0.7)');
-                        root.style.setProperty('--dynamic-transition', config.visuals.transition_time || '0.2s');
                         root.style.setProperty('--dynamic-title-color', config.visuals.title_color || '#ffffff');
-                        root.style.setProperty('--dynamic-desc-color', config.visuals.desc_color || '#d1d5db');
+                        root.style.setProperty('--dynamic-transition', '0.2s');
+                        
+                        const hex = config.visuals.base_color || '#8b5cf6';
+                        const targetColor = hexToHSL(hex);
+                        const opBase = config.visuals.overlay_base_op || 0.3;
+                        const opHover = config.visuals.overlay_hover_op || 0.7;
+
+                        function renderColors(h, s, l) {
+                            root.style.setProperty('--color-accent', `hsl(${h}, ${s}%, ${l}%)`);
+                            root.style.setProperty('--color-accent-hover', `hsl(${h}, ${s}%, ${Math.max(10, l - 10)}%)`);
+                            root.style.setProperty('--blob-1', `hsl(${h}, ${s}%, ${l}%)`);
+                            root.style.setProperty('--blob-2', `hsl(${(h + 20) % 360}, ${Math.max(0, s - 10)}%, ${l}%)`);
+                            root.style.setProperty('--blob-3', `hsl(${(h - 30 + 360) % 360}, ${s}%, ${l}%)`);
+                            root.style.setProperty('--color-card-border', `hsla(${h}, ${s}%, ${l}%, 0.2)`);
+                            
+                            root.style.setProperty('--color-bg', `hsl(${h}, ${Math.max(10, s * 0.4)}%, 8%)`);
+                            root.style.setProperty('--dynamic-overlay-base', `hsla(${h}, ${s}%, 15%, ${opBase})`);
+                            root.style.setProperty('--dynamic-overlay-hover', `hsla(${h}, ${s}%, 15%, ${opHover})`);
+
+                            let dynamicStyle = document.getElementById('frontend-dynamic-overrides');
+                            if (!dynamicStyle) {
+                                dynamicStyle = document.createElement('style');
+                                dynamicStyle.id = 'frontend-dynamic-overrides';
+                                document.head.appendChild(dynamicStyle);
+                            }
+                            dynamicStyle.innerHTML = `
+                                .btn-primary { box-shadow: 0 8px 25px hsla(${h}, ${s}%, ${l}%, 0.5) !important; }
+                                .skill-badge:hover {
+                                    background-color: hsla(${h}, ${s}%, ${l}%, 0.2) !important;
+                                    border-color: #ffffff !important;
+                                    color: #fff !important;
+                                    box-shadow: 0 0 10px hsla(${h}, ${s}%, ${l}%, 0.3) !important;
+                                }
+                                .glass-btn { position: relative; }
+                                .glass-btn::after { content: ''; position: absolute; inset: 0; bottom: -15px; z-index: -1; }
+                            `;
+                        }
+
+                        renderColors(targetColor.h, targetColor.s, targetColor.l);
+
+                        setTimeout(() => {
+                            const ANIM = {
+                                duration: 5000,      
+                                scale: 1.03,         
+                                maxL: 80,            
+                                pulse: 10,           
+                                phaseIn: 0.35,       
+                                phaseOut: 0.35       
+                            };
+
+                            let startTime = null;
+                            const mainCard = document.getElementById('main-card');
+                            const blobs = document.querySelectorAll('.blob');
+                            
+                            if (mainCard) mainCard.style.transition = 'none';
+                            blobs.forEach(b => b.style.transition = 'none'); 
+
+                            function animateBreath(time) {
+                                if (!startTime) startTime = time;
+                                let elapsed = time - startTime;
+                                let progress = Math.min(elapsed / ANIM.duration, 1);
+                                
+                                let breath = 0;
+                                const holdStart = ANIM.phaseIn;
+                                const holdEnd = 1 - ANIM.phaseOut;
+
+                                if (progress < holdStart) {
+                                    breath = 0.5 - Math.cos((progress / holdStart) * Math.PI) / 2;
+                                } else if (progress < holdEnd) {
+                                    breath = 1;
+                                } else {
+                                    breath = 0.5 - Math.cos(((1 - progress) / ANIM.phaseOut) * Math.PI) / 2;
+                                }
+
+                                if (mainCard) {
+                                    let currentScale = 1 + ((ANIM.scale - 1) * breath);
+                                    mainCard.style.transform = `perspective(1000px) scale(${currentScale})`;
+                                }
+
+                                let currentL = targetColor.l;
+                                let targetBrightL = targetColor.l + (ANIM.maxL - targetColor.l) * breath;
+                                
+                                if (progress >= holdStart && progress < holdEnd) {
+                                    let pulseProgress = (progress - holdStart) / (holdEnd - holdStart);
+                                    let pulseDip = ANIM.pulse * Math.sin(pulseProgress * Math.PI); 
+                                    targetBrightL -= pulseDip;
+                                }
+                                
+                                let currentS = targetColor.s;
+                                if (targetBrightL > 80) currentS = Math.max(10, currentS - (targetBrightL - 80));
+
+                                renderColors(targetColor.h, currentS, targetBrightL);
+
+                                if (progress < 1) {
+                                    requestAnimationFrame(animateBreath);
+                                } else {
+                                    renderColors(targetColor.h, targetColor.s, targetColor.l);
+                                    if (mainCard) {
+                                        mainCard.style.transition = 'transform 0.2s ease-out';
+                                        mainCard.style.transform = ''; 
+                                    }
+                                    blobs.forEach(b => b.style.transition = ''); 
+                                    initParticles();
+                                }
+                            }
+                            requestAnimationFrame(animateBreath);
+                        }, 1000); 
                     }
                 }
             } catch (e) { console.error("Config load error:", e); }
+
+            async function renderReviews() {
+                const viewport = document.getElementById('reviews-grid');
+                const track = document.getElementById('reviews-track');
+                if (!viewport || !track) return;
+
+                try {
+                    const res = await fetch('reviews.json', { cache: 'no-store' });
+                    if (!res.ok) throw new Error('reviews.json not available');
+                    const reviews = await res.json();
+                    const visibleReviews = Array.isArray(reviews) ? reviews.filter(r => r && r.published === true) : [];
+
+                    track.innerHTML = '';
+                    if (!visibleReviews.length) {
+                        viewport.innerHTML = `
+                            <div class="reviews-empty">
+                                <i class="fa-regular fa-comments text-xl mb-2 block text-[var(--color-accent)]/50"></i>
+                                Отзывы появятся здесь
+                            </div>
+                        `;
+                        return;
+                    }
+
+                    const escapeText = (value) => String(value ?? '').trim();
+                    const getInitial = (name) => {
+                        const clean = escapeText(name);
+                        return clean ? clean.charAt(0).toUpperCase() : '?';
+                    };
+                    const clampStars = (value) => Math.max(1, Math.min(5, Number(value) || 5));
+
+                    const buildCard = (review) => {
+                        const card = document.createElement('article');
+                        card.className = 'review-card spotlight-border';
+
+                        const quote = document.createElement('div');
+                        quote.className = 'review-quote';
+                        quote.innerHTML = '<i class="fa-solid fa-quote-right"></i>';
+
+                        const top = document.createElement('div');
+                        top.className = 'flex items-start justify-between gap-4 relative z-10';
+
+                        const person = document.createElement('div');
+                        person.className = 'flex items-start gap-3 min-w-0 flex-1';
+
+                        const avatarWrap = document.createElement('div');
+                        avatarWrap.className = 'relative flex-shrink-0';
+
+                        if (escapeText(review.avatar)) {
+                            const img = document.createElement('img');
+                            img.className = 'review-avatar';
+                            img.alt = `Аватар ${escapeText(review.name)}`;
+                            img.src = escapeText(review.avatar);
+                            img.loading = 'lazy';
+                            img.onerror = () => {
+                                avatarWrap.innerHTML = '';
+                                const fallback = document.createElement('div');
+                                fallback.className = 'review-avatar review-avatar-fallback';
+                                fallback.textContent = getInitial(review.name);
+                                avatarWrap.appendChild(fallback);
+                            };
+                            avatarWrap.appendChild(img);
+                        } else {
+                            const fallback = document.createElement('div');
+                            fallback.className = 'review-avatar review-avatar-fallback';
+                            fallback.textContent = getInitial(review.name);
+                            avatarWrap.appendChild(fallback);
+                        }
+
+                        const identity = document.createElement('div');
+                        identity.className = 'review-identity';
+                        const name = document.createElement('div');
+                        name.className = 'review-name';
+                        name.textContent = escapeText(review.name) || 'Клиент';
+                        identity.appendChild(name);
+
+                        if (escapeText(review.subtitle)) {
+                            const subtitle = document.createElement('div');
+                            subtitle.className = 'review-subtitle';
+                            subtitle.textContent = escapeText(review.subtitle);
+                            identity.appendChild(subtitle);
+                        }
+
+                        person.appendChild(avatarWrap);
+                        person.appendChild(identity);
+
+                        const stars = document.createElement('div');
+                        stars.className = 'review-stars flex-shrink-0 pt-1';
+                        const score = clampStars(review.stars);
+                        for (let starIndex = 1; starIndex <= 5; starIndex++) {
+                            const star = document.createElement('span');
+                            star.className = 'review-star';
+                            const fill = Math.max(0, Math.min(1, score - (starIndex - 1))) * 100;
+                            star.style.setProperty('--star-fill', `${fill}%`);
+                            star.innerHTML = `<i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span>`;
+                            stars.appendChild(star);
+                        }
+
+                        top.appendChild(person);
+                        top.appendChild(stars);
+
+                        const body = document.createElement('div');
+                        body.className = 'relative z-10 mt-5 flex-1 flex';
+                        const textEl = document.createElement('p');
+                        textEl.className = 'review-text';
+                        textEl.textContent = escapeText(review.text);
+                        body.appendChild(textEl);
+
+                        card.appendChild(quote);
+                        card.appendChild(top);
+                        card.appendChild(body);
+
+                        if (typeof handlePointerMove === 'function') {
+                            card.addEventListener('mousemove', (e) => handlePointerMove(e, card));
+                            card.addEventListener('mouseleave', () => handlePointerLeave(card));
+                        }
+                        return card;
+                    };
+
+                    // Two copies create a seamless infinite loop.
+                    const fragmentA = document.createDocumentFragment();
+                    const fragmentB = document.createDocumentFragment();
+                    visibleReviews.forEach(review => fragmentA.appendChild(buildCard(review)));
+                    visibleReviews.forEach(review => fragmentB.appendChild(buildCard(review)));
+                    track.appendChild(fragmentA);
+                    track.appendChild(fragmentB);
+
+                    await new Promise(requestAnimationFrame);
+                    await new Promise(requestAnimationFrame);
+
+                    const allCards = Array.from(track.children);
+                    const firstSet = allCards.slice(0, visibleReviews.length);
+
+                    const syncReviewCardHeights = () => {
+                        allCards.forEach(card => {
+                            card.style.height = 'auto';
+                            card.style.minHeight = '0px';
+                        });
+                        const maxHeight = Math.max(...allCards.map(el => Math.ceil(el.getBoundingClientRect().height)));
+                        track.style.setProperty('--reviews-card-height', `${maxHeight}px`);
+                        allCards.forEach(card => {
+                            card.style.height = `${maxHeight}px`;
+                        });
+                        return maxHeight;
+                    };
+
+                    syncReviewCardHeights();
+
+                    let resizeTimer = null;
+                    window.addEventListener('resize', () => {
+                        clearTimeout(resizeTimer);
+                        resizeTimer = setTimeout(() => syncReviewCardHeights(), 120);
+                    }, { passive: true });
+
+                    const gap = parseFloat(getComputedStyle(track).gap) || 0;
+                    const firstSetWidth = firstSet.reduce((sum, el) => sum + el.getBoundingClientRect().width, 0) + gap * Math.max(0, visibleReviews.length - 1);
+                    const cycleWidth = firstSetWidth + gap;
+
+                    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                    if (reduceMotion) return;
+
+                    let position = 0;
+                    let speed = 0.42;
+                    let targetSpeed = speed;
+                    let lastTime = performance.now();
+                    let rafId = null;
+
+                    const tick = (now) => {
+                        const dt = Math.min(32, now - lastTime);
+                        lastTime = now;
+                        speed += (targetSpeed - speed) * 0.045;
+                        position += speed * (dt / 16.67);
+                        if (position >= cycleWidth) position -= cycleWidth;
+                        track.style.transform = `translate3d(${-position}px, 0, 0)`;
+                        rafId = requestAnimationFrame(tick);
+                    };
+
+                    viewport.addEventListener('mouseenter', () => { targetSpeed = 0.055; });
+                    viewport.addEventListener('mouseleave', () => { targetSpeed = 0.42; });
+                    viewport.addEventListener('touchstart', () => { targetSpeed = 0.06; }, { passive: true });
+                    viewport.addEventListener('touchend', () => { targetSpeed = 0.42; }, { passive: true });
+
+                    if (rafId) cancelAnimationFrame(rafId);
+                    rafId = requestAnimationFrame(tick);
+                } catch (error) {
+                    console.error('Reviews load error:', error);
+                    viewport.innerHTML = '';
+                }
+            }
+
+            renderReviews();
 
             try {
                 const portRes = await fetch('portfolio.json');
@@ -1297,21 +1954,21 @@
                     const grid = document.getElementById('portfolio-grid');
                     grid.innerHTML = ''; 
                     
-                    items.forEach(item => {
+                    const gridItems = []; 
+                    
+                    items.forEach((item, index) => {
                         const card = document.createElement('a');
                         card.href = item.link;
                         card.target = '_blank';
                         
-                        card.className = `portfolio-item glass-card spotlight-border overflow-hidden group flex flex-col hover:-translate-y-2 w-full max-w-md md:max-w-none md:col-span-${item.cols} md:row-span-${item.rows}`;
+                        card.className = `portfolio-item scroll-reveal glass-card spotlight-border overflow-hidden group flex flex-col hover:-translate-y-2 w-full max-w-md md:max-w-none md:col-span-${item.cols} md:row-span-${item.rows}`;
                         card.setAttribute('data-category', item.category);
                         card.draggable = false;
-                        
                         card.style.borderRadius = 'var(--dynamic-radius)';
-                        card.style.transition = 'transform var(--dynamic-transition) ease-out';
+                        card.style.transition = 'transform var(--dynamic-transition) ease-out, opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
                         
-                        // Если в JSON стоит флаг pinned, генерируем HTML для иконки
                         let badgeHTML = '';
-                        const currentBadge = item.badge || (item.pinned ? 'pin' : 'none'); // поддержка старых сохранений
+                        const currentBadge = item.badge || (item.pinned ? 'pin' : 'none'); 
 
                         if (currentBadge === 'pin') {
                             badgeHTML = `<div class="absolute top-3 left-3 z-20 bg-black/40 backdrop-blur-md w-6 h-6 flex items-center justify-center rounded-md border border-[var(--color-accent)] text-xs text-white/70" title="Закреплено"><i class="fa-solid fa-thumbtack no-jello" style="transform: rotate(45deg);"></i></div>`;
@@ -1321,17 +1978,26 @@
                             badgeHTML = `<div class="absolute top-3 left-3 z-20 bg-black/40 backdrop-blur-md px-2 h-6 flex items-center justify-center rounded-md border border-yellow-400 text-[10px] font-bold text-yellow-400 uppercase tracking-wider" title="Новое">New</div>`;
                         }
 
+                        const hoverVideoHTML = item.hover_video ? `
+                            <video class="portfolio-hover-video absolute inset-0 w-full h-full object-cover opacity-0 pointer-events-none"
+                                   muted playsinline loop preload="none"
+                                   aria-hidden="true">
+                                <source src="${item.hover_video}" type="video/webm">
+                            </video>
+                        ` : '';
+
                         card.innerHTML = `
                             <div class="relative flex-1 flex items-center justify-center overflow-hidden skeleton bg-white/5">
                                 ${badgeHTML}
                                 <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">${item.date}</div>
                                 
-                                <img alt="${item.title}" class="absolute inset-0 w-full h-full object-cover opacity-0" 
-                                     style="transition: transform var(--dynamic-transition), opacity 0.5s;" 
+                                <img alt="${item.title}" class="portfolio-poster absolute inset-0 w-full h-full object-cover opacity-0" 
+                                     style="transition: transform var(--dynamic-transition), opacity 0.45s;" 
                                      onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('skeleton', 'bg-white/5');" 
                                      draggable="false" loading="lazy" src="${item.image}"/>
+                                ${hoverVideoHTML}
                                 
-                                <div class="absolute inset-0 z-0" 
+                                <div class="absolute inset-0 z-0 portfolio-media-overlay" 
                                      style="background-color: var(--dynamic-overlay-base); transition: background-color var(--dynamic-transition);"></div>
                                 
                                 <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 z-10 flex items-center justify-center"
@@ -1345,35 +2011,128 @@
                                 <p class="text-sm line-clamp-1" style="color: var(--dynamic-desc-color);">${item.desc}</p>
                             </div>
                         `;
-                        
-                        card.addEventListener('mouseenter', () => {
-                            const img = card.querySelector('img');
-                            const overlay = card.querySelector('.z-0');
-                            if (img) img.style.transform = 'scale(var(--dynamic-scale-hover))';
+
+                        const img = card.querySelector('.portfolio-poster');
+                        const video = card.querySelector('.portfolio-hover-video');
+                        const overlay = card.querySelector('.portfolio-media-overlay');
+                        let hoverTimer = null;
+                        let touchPreviewTriggered = false;
+
+                        const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+                        const startHoverVideo = () => {
+                            if (!video || reduceMotion) return;
+                            video.load();
+                            const playPromise = video.play();
+                            if (playPromise && typeof playPromise.catch === 'function') playPromise.catch(() => {});
+                            video.classList.add('is-visible');
+                            if (img) img.style.transform = 'scale(1)';
                             if (overlay) overlay.style.backgroundColor = 'var(--dynamic-overlay-hover)';
-                            // ВОЗВРАЩАЕМ ЗВУК НАВЕДЕНИЯ
-                            if (typeof playUiSound === 'function') playUiSound('hover');
-                        });
-                        
-                        card.addEventListener('mouseleave', () => {
-                            const img = card.querySelector('img');
-                            const overlay = card.querySelector('.z-0');
+                        };
+
+                        const stopHoverVideo = () => {
+                            if (video) {
+                                video.pause();
+                                try { video.currentTime = 0; } catch (_) {}
+                                video.classList.remove('is-visible');
+                            }
                             if (img) img.style.transform = 'scale(1)';
                             if (overlay) overlay.style.backgroundColor = 'var(--dynamic-overlay-base)';
+                        };
+
+                        const scheduleHoverVideo = (isTouch = false) => {
+                            if (!video || reduceMotion) return;
+                            clearTimeout(hoverTimer);
+                            hoverTimer = setTimeout(() => {
+                                if (isTouch) touchPreviewTriggered = true;
+                                startHoverVideo();
+                            }, isTouch ? 700 : 120);
+                        };
+
+                        const cancelHoverVideo = () => {
+                            clearTimeout(hoverTimer);
+                            hoverTimer = null;
+                            stopHoverVideo();
+                            touchPreviewTriggered = false;
+                        };
+
+                        card.addEventListener('mouseenter', () => {
+                            if (video) {
+                                scheduleHoverVideo(false);
+                            } else {
+                                if (img) img.style.transform = 'scale(var(--dynamic-scale-hover))';
+                                if (overlay) overlay.style.backgroundColor = 'var(--dynamic-overlay-hover)';
+                            }
+                            if (typeof playUiSound === 'function') playUiSound('hover');
                         });
 
-                        // ВОЗВРАЩАЕМ ЗВУК КЛИКА
-                        card.addEventListener('click', () => {
+                        card.addEventListener('mouseleave', () => {
+                            cancelHoverVideo();
+                        });
+
+                        // Touch / mobile: YouTube-like dwell preview. A quick tap still opens the project;
+                        // holding on the card for ~0.7s starts the muted preview.
+                        card.addEventListener('touchstart', () => {
+                            scheduleHoverVideo(true);
+                        }, { passive: true });
+
+                        card.addEventListener('touchend', () => {
+                            clearTimeout(hoverTimer);
+                            hoverTimer = null;
+                            if (!touchPreviewTriggered) stopHoverVideo();
+                        }, { passive: true });
+
+                        card.addEventListener('touchcancel', cancelHoverVideo, { passive: true });
+
+                        card.addEventListener('click', (e) => {
+                            if (touchPreviewTriggered) {
+                                e.preventDefault();
+                                touchPreviewTriggered = false;
+                                return;
+                            }
                             if (typeof playUiSound === 'function') playUiSound('click');
                         });
 
                         grid.appendChild(card);
+                        gridItems.push(card); 
                     });
+
+                    let observerActivated = false;
+                    function activateOnScroll() {
+                        if (!observerActivated) {
+                            observerActivated = true;
+                            const portfolioSection = document.getElementById('portfolio');
+                            if (portfolioSection) {
+                                portfolioSection.style.transitionDelay = '0s';
+                                cardObserver.observe(portfolioSection);
+                            }
+                            gridItems.forEach(c => cardObserver.observe(c));
+                            if ('IntersectionObserver' in window) {
+                                const videoVisibilityObserver = new IntersectionObserver((entries) => {
+                                    entries.forEach(entry => {
+                                        if (!entry.isIntersecting) {
+                                            const v = entry.target.querySelector('.portfolio-hover-video');
+                                            if (v) { v.pause(); try { v.currentTime = 0; } catch (_) {} v.classList.remove('is-visible'); }
+                                        }
+                                    });
+                                }, { threshold: 0.05, rootMargin: '120px' });
+                                gridItems.forEach(c => { if (c.querySelector('.portfolio-hover-video')) videoVisibilityObserver.observe(c); });
+                            }
+                            window.removeEventListener('scroll', handleScroll);
+                        }
+                    }
+                    function handleScroll() {
+                        if (window.scrollY > 30) activateOnScroll();
+                    }
+                    window.addEventListener('scroll', handleScroll, { passive: true });
+                    handleScroll(); 
+                    
+                    setTimeout(activateOnScroll, 3000); 
+
                 }
             } catch (e) { console.error("Portfolio load error:", e); }
         })();
         // --- КОНЕЦ ДИНАМИЧЕСКОГО РЕНДЕРА ---
-
     }); 
 </script>
 </body>

@@ -10,7 +10,8 @@
     "icon_class": "fa-brands fa-youtube",
     "icon_color": "text-red-500",
     "badge": "pin",
-    "image": "/pic/work_1786587611.webp"
+    "image": "/pic/work_1786587611.webp",
+    "hover_video": "/pic/hover_06b004e0ad28.webm"
   },
   {
     "title": "Авиация",
@@ -23,7 +24,8 @@
     "icon_class": "fa-solid fa-compact-disc",
     "icon_color": "text-[#FFCC00]",
     "badge": "new",
-    "image": "/pic/work_1786587630.webp"
+    "image": "/pic/work_1786587630.webp",
+    "hover_video": "/pic/hover_e0a0da0e935d.webm"
   },
   {
     "title": "Работа по биологии",
@@ -35,19 +37,22 @@
     "rows": "1",
     "category": "irl",
     "icon_class": "fa-solid fa-compact-disc",
-    "icon_color": "text-yellow-400"
+    "icon_color": "text-yellow-400",
+    "hover_video": "/pic/hover_37fc07afdd01.webm"
   },
   {
     "title": "Продажные блоггеры",
     "desc": "Рекламные ролики для разных брендов.",
-    "image": "/pic/work_1786587649.webp",
     "link": "https://www.instagram.com/prodajnie",
-    "date": "Авг. 2025",
+    "date": "Дек. 2025",
     "cols": "1",
     "rows": "2",
     "category": "irl, shorts",
     "icon_class": "fa-brands fa-instagram",
-    "icon_color": "text-pink-500"
+    "icon_color": "text-pink-500",
+    "badge": "none",
+    "image": "/pic/work_1786587649.webp",
+    "hover_video": "/pic/hover_f7aa64615297.webm"
   },
   {
     "title": "Переходники | Продажные",
@@ -59,7 +64,8 @@
     "rows": "2",
     "category": "irl, shorts",
     "icon_class": "fa-solid fa-compact-disc",
-    "icon_color": "text-[#FFCC00]"
+    "icon_color": "text-[#FFCC00]",
+    "hover_video": "/pic/hover_bfb964e9eed8.webm"
   },
   {
     "title": "День 4 | Продажные",
@@ -71,7 +77,8 @@
     "rows": "2",
     "category": "irl, shorts",
     "icon_class": "fa-solid fa-compact-disc",
-    "icon_color": "text-[#FFCC00]"
+    "icon_color": "text-[#FFCC00]",
+    "hover_video": "/pic/hover_1cc1bf4cbc74.webm"
   },
   {
     "title": "Сказка | Продажные",
@@ -83,7 +90,8 @@
     "rows": "2",
     "category": "irl, shorts",
     "icon_class": "fa-solid fa-compact-disc",
-    "icon_color": "text-[#FFCC00]"
+    "icon_color": "text-[#FFCC00]",
+    "hover_video": "/pic/hover_c7e00af5f738.webm"
   },
   {
     "title": "Rainbow GG Minecraft",
@@ -95,7 +103,8 @@
     "rows": "1",
     "category": "gaming",
     "icon_class": "fa-brands fa-youtube",
-    "icon_color": "text-red-500"
+    "icon_color": "text-red-500",
+    "hover_video": "/pic/hover_2dbc31a1265a.webm"
   },
   {
     "title": "Rainbow GG Minecraft",
@@ -107,7 +116,8 @@
     "rows": "1",
     "category": "gaming",
     "icon_class": "fa-brands fa-youtube",
-    "icon_color": "text-red-500"
+    "icon_color": "text-red-500",
+    "hover_video": "/pic/hover_0e51d563f9c4.mp4"
   },
   {
     "title": "YT Shorts для Делика",
@@ -119,7 +129,8 @@
     "rows": "2",
     "category": "gaming, shorts",
     "icon_class": "fa-brands fa-youtube",
-    "icon_color": "text-red-500"
+    "icon_color": "text-red-500",
+    "hover_video": "/pic/hover_e4e9735a2a17.webm"
   },
   {
     "title": "Rainbow GG Minecraft",
@@ -131,7 +142,8 @@
     "rows": "1",
     "category": "gaming",
     "icon_class": "fa-brands fa-youtube",
-    "icon_color": "text-red-500"
+    "icon_color": "text-red-500",
+    "hover_video": "/pic/hover_c253a9817671.mp4"
   },
   {
     "title": "Трейлеры Resolver",
@@ -143,7 +155,8 @@
     "rows": "1",
     "category": "gaming",
     "icon_class": "fa-brands fa-youtube",
-    "icon_color": "text-red-500"
+    "icon_color": "text-red-500",
+    "hover_video": "/pic/hover_7724c4f1fb00.webm"
   },
   {
     "title": "Green Agriculture",
@@ -155,7 +168,8 @@
     "rows": "1",
     "category": "irl",
     "icon_class": "fa-brands fa-youtube",
-    "icon_color": "text-red-500"
+    "icon_color": "text-red-500",
+    "hover_video": "/pic/hover_983d7727c279.webm"
   },
   {
     "title": "Фимайн — Я Сделал БЕСКОНЕЧНЫЙ Источник Денег на АНАРХИИ ФанТайм",
@@ -167,7 +181,8 @@
     "rows": "1",
     "category": "gaming",
     "icon_class": "fa-brands fa-youtube",
-    "icon_color": "text-red-500"
+    "icon_color": "text-red-500",
+    "hover_video": "/pic/hover_5bb03353c560.mp4"
   },
   {
     "title": "Фимайн — Я стал МИЛЛИАРДЕРОМ В ПЕРВЫЙ ДЕНЬ ВАЙПА На Анархии ФанТайм",
@@ -179,7 +194,8 @@
     "rows": "1",
     "category": "gaming",
     "icon_class": "fa-brands fa-youtube",
-    "icon_color": "text-red-500"
+    "icon_color": "text-red-500",
+    "hover_video": "/pic/hover_50e2e7bdaa16.mp4"
   },
   {
     "title": "Фимайн — Получил КНЯЗЯ ЗА 24 ЧАСА ИГРЫ НА АНАРХИИ ФАНТАЙМ",
@@ -191,7 +207,8 @@
     "rows": "1",
     "category": "gaming",
     "icon_class": "fa-brands fa-youtube",
-    "icon_color": "text-red-500"
+    "icon_color": "text-red-500",
+    "hover_video": "/pic/hover_ba35adce48ab.mp4"
   },
   {
     "title": "Монтаж для Делика",
@@ -203,6 +220,7 @@
     "rows": "1",
     "category": "gaming",
     "icon_class": "fa-brands fa-youtube",
-    "icon_color": "text-red-500"
+    "icon_color": "text-red-500",
+    "hover_video": "/pic/hover_2d4c24c80a64.mp4"
   }
 ]
