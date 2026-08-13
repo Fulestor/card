@@ -1255,7 +1255,7 @@
             }
         })();
 
-        // --- ДИНАМИЧЕСКИЙ РЕНДЕР ИЗ JSON ---
+// --- ДИНАМИЧЕСКИЙ РЕНДЕР ИЗ JSON ---
         (async function loadDynamicContent() {
             try {
                 const configRes = await fetch('config.json');
@@ -1307,8 +1307,21 @@
                         card.style.borderRadius = 'var(--dynamic-radius)';
                         card.style.transition = 'transform var(--dynamic-transition) ease-out';
                         
+                        // Если в JSON стоит флаг pinned, генерируем HTML для иконки
+                        let badgeHTML = '';
+                        const currentBadge = item.badge || (item.pinned ? 'pin' : 'none'); // поддержка старых сохранений
+
+                        if (currentBadge === 'pin') {
+                            badgeHTML = `<div class="absolute top-3 left-3 z-20 bg-black/40 backdrop-blur-md w-6 h-6 flex items-center justify-center rounded-md border border-[var(--color-accent)] text-xs text-white/70" title="Закреплено"><i class="fa-solid fa-thumbtack no-jello" style="transform: rotate(45deg);"></i></div>`;
+                        } else if (currentBadge === 'fire') {
+                            badgeHTML = `<div class="absolute top-3 left-3 z-20 bg-black/40 backdrop-blur-md w-6 h-6 flex items-center justify-center rounded-md border border-orange-500 text-xs text-orange-500" title="Топ"><i class="fa-solid fa-fire no-jello"></i></div>`;
+                        } else if (currentBadge === 'new') {
+                            badgeHTML = `<div class="absolute top-3 left-3 z-20 bg-black/40 backdrop-blur-md px-2 h-6 flex items-center justify-center rounded-md border border-yellow-400 text-[10px] font-bold text-yellow-400 uppercase tracking-wider" title="Новое">New</div>`;
+                        }
+
                         card.innerHTML = `
                             <div class="relative flex-1 flex items-center justify-center overflow-hidden skeleton bg-white/5">
+                                ${badgeHTML}
                                 <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">${item.date}</div>
                                 
                                 <img alt="${item.title}" class="absolute inset-0 w-full h-full object-cover opacity-0" 
@@ -1336,6 +1349,8 @@
                             const overlay = card.querySelector('.z-0');
                             if (img) img.style.transform = 'scale(var(--dynamic-scale-hover))';
                             if (overlay) overlay.style.backgroundColor = 'var(--dynamic-overlay-hover)';
+                            // ВОЗВРАЩАЕМ ЗВУК НАВЕДЕНИЯ
+                            if (typeof playUiSound === 'function') playUiSound('hover');
                         });
                         
                         card.addEventListener('mouseleave', () => {
@@ -1345,11 +1360,17 @@
                             if (overlay) overlay.style.backgroundColor = 'var(--dynamic-overlay-base)';
                         });
 
+                        // ВОЗВРАЩАЕМ ЗВУК КЛИКА
+                        card.addEventListener('click', () => {
+                            if (typeof playUiSound === 'function') playUiSound('click');
+                        });
+
                         grid.appendChild(card);
                     });
                 }
             } catch (e) { console.error("Portfolio load error:", e); }
         })();
+        // --- КОНЕЦ ДИНАМИЧЕСКОГО РЕНДЕРА ---
 
     }); 
 </script>
