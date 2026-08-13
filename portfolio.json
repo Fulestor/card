@@ -9,19 +9,21 @@
     "category": "irl",
     "icon_class": "fa-brands fa-youtube",
     "icon_color": "text-red-500",
+    "badge": "pin",
     "image": "/pic/work_1786587611.webp"
   },
   {
     "title": "Авиация",
     "desc": "Склейка, саунд, color",
-    "image": "/pic/work_1786587630.webp",
     "link": "https://disk.yandex.ru/i/qrLRHdzb-r2EPg",
     "date": "Авг. 2026",
     "cols": "1",
     "rows": "2",
     "category": "irl, shorts",
     "icon_class": "fa-solid fa-compact-disc",
-    "icon_color": "text-[#FFCC00]"
+    "icon_color": "text-[#FFCC00]",
+    "badge": "new",
+    "image": "/pic/work_1786587630.webp"
   },
   {
     "title": "Работа по биологии",
