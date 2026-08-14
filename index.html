@@ -13,14 +13,17 @@
 <meta content="https://delmyname.vercel.app" property="og:url"/>
 <meta content="website" property="og:type"/>
 <meta content="summary_large_image" name="twitter:card"/>
-<link href="https://s.fotora.ru/0e59c2750971d9b6.png" rel="icon" type="image/jpeg"/>
+<link href="/pic/icon.png" rel="icon" type="image/png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://s.fotora.ru" crossorigin>
+<link rel="preconnect" href="https://cdn-image.zvuk.com" crossorigin>
+<link rel="preconnect" href="https://www.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" media="print" onload="this.media='all'"/>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-        :root {
+	:root {
             --color-bg: #0a021c; 
             --color-accent: #8b5cf6; 
             --color-accent-hover: #7c3aed;
@@ -101,6 +104,14 @@
         @media (prefers-reduced-motion: reduce) {
             .filter-active-pill, .section-heading, .section-heading .section-kicker, .cta-pulse { transition: none !important; animation: none !important; }
         }
+
+        .page-hidden .blob,
+        .page-hidden .marquee-track,
+        .page-hidden .cta-pulse,
+        .page-hidden .skeleton,
+        .page-hidden #particles-bg * {
+            animation-play-state: paused !important;
+        }
     
         @keyframes icon-jello {
             0%, 11.1%, 100% { transform: none; }
@@ -154,10 +165,12 @@
         }
         
         .glass-card {
-            background: var(--color-card-bg); backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px); border: 1px solid var(--color-card-border);
+            background: var(--color-card-bg); 
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px); 
+            border: 1px solid var(--color-card-border);
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            transition: transform 0.2s ease-out; transform-style: preserve-3d; will-change: transform;
+            transition: transform 0.2s ease-out;
         }
 
         .spotlight-border {
@@ -183,13 +196,17 @@
             display: flex; align-items: center; width: 100%; padding: 1rem 1.25rem;
             background: rgba(255, 255, 255, 0.015); border: 1px solid rgba(255, 255, 255, 0.1); 
             backdrop-filter: blur(8px); border-radius: 0.75rem; color: #ffffff;
-            font-weight: 500; text-decoration: none; transition: all 0.3s ease; will-change: transform;
+            font-weight: 500; text-decoration: none; transition: all 0.3s ease;
         }
         .glass-btn:hover {
             background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.2); transform: translateY(-4px);
         }
 
-        .btn-primary { background: var(--color-accent) !important; border: none !important; justify-content: center; transition: background 0.3s ease; }
+        .btn-primary {
+	    background: var(--color-accent) !important;
+	    border: none !important;
+	    justify-content: center;
+	}	
         .btn-primary:hover { background: var(--color-accent-hover) !important; }
         
         .mask-gradient {
@@ -242,14 +259,18 @@
         input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; cursor: pointer; background: rgba(255,255,255,0.2); border-radius: 2px; }
 
         .fade-in-up { animation: fadeInUp 0.8s forwards ease-out; opacity: 0; transform: translate3d(0, 20px, 0); }
-        @keyframes fadeInUp { to { opacity: 1; transform: translate3d(0, 0, 0); } }
+        @keyframes fadeInUp { 
+            to { opacity: 1; transform: none; } 
+        }
         
         .scroll-reveal {
             opacity: 0; transform: translate3d(0, 40px, 0);
             transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            will-change: opacity, transform;
         }
-        .scroll-reveal.is-visible { opacity: 1; transform: translate3d(0, 0, 0); }
+        .scroll-reveal.is-visible { 
+            opacity: 1; 
+            transform: none; 
+        }
 
         ::-webkit-scrollbar { width: 2px; }
         ::-webkit-scrollbar-track { background: transparent; }
@@ -519,7 +540,59 @@
         @media (prefers-reduced-motion: reduce) {
             .reviews-viewport { -webkit-mask-image: none; mask-image: none; }
         }
+	.btn-tg:hover i { color: #24A1DE !important; }
+        .btn-yt:hover i { color: #FF0000 !important; }
+        .btn-disk:hover i { color: #FFCC00 !important; }
+        .social-icon { color: var(--color-accent); transition: color 0.3s ease; }
+<!-- THEME_START -->
+<style id="baked-theme">
+    @property --color-accent { syntax: '<color>'; inherits: true; initial-value: hsl(233, 64.7%, 50.0%); }
+    @property --color-accent-hover { syntax: '<color>'; inherits: true; initial-value: hsl(233, 64.7%, 40.0%); }
+
+    :root {
+        --dynamic-radius: 1rem; --dynamic-title-color: #ffffff; --dynamic-transition: 0.2s;
+        --color-accent: hsl(233, 64.7%, 50.0%); --color-accent-hover: hsl(233, 64.7%, 40.0%);
+        --blob-1: hsl(233, 64.7%, 50.0%); --blob-2: hsl(253, 54.7%, 50.0%); --blob-3: hsl(203, 64.7%, 50.0%);
+        --color-card-border: hsla(233, 64.7%, 50.0%, 0.2); 
+        --color-bg: hsl(233, 25.880000000000003%, 9%);
+        --dynamic-overlay-base: hsla(233, 64.7%, 15%, 0.25); --dynamic-overlay-hover: hsla(233, 64.7%, 15%, 0.45);
+    }
+    
+    .btn-primary { box-shadow: 0 8px 25px color-mix(in srgb, var(--color-accent) 50%, transparent) !important; }
+    .skill-badge:hover { background-color: color-mix(in srgb, var(--color-accent) 20%, transparent) !important; border-color: #ffffff !important; color: #fff !important; box-shadow: 0 0 10px color-mix(in srgb, var(--color-accent) 30%, transparent) !important; }
+    .glass-btn { position: relative; } .glass-btn::after { content: ''; position: absolute; inset: 0; bottom: -15px; z-index: -1; }
+
+    /* Динамические настройки из админки */
+    .blob { opacity: 0.1 !important; filter: blur(40px) !important; }
+    .workspace-grid-pattern { background-image: linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px) !important; }
+
+    @keyframes cardBreath {
+        0%, 100% { scale: 1; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); --color-accent: hsl(233, 64.7%, 50.0%); --color-accent-hover: hsl(233, 64.7%, 40.0%); }
+        35%, 65% { scale: 1.05; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 75px hsla(233, 64.7%, 70%, 0.55); --color-accent: hsl(233, 64.7%, 70%); --color-accent-hover: hsl(233, 64.7%, 60%); }
+        50% { scale: 1.05; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 50px hsla(233, 64.7%, 55%, 0.4); --color-accent: hsl(233, 64.7%, 55%); --color-accent-hover: hsl(233, 64.7%, 45%); }
+    }
+    @keyframes blob1Breath {
+        0%, 100% { background: hsl(233, 64.7%, 50.0%); }
+        35%, 65% { background: hsl(233, 64.7%, 70%); }
+        50% { background: hsl(233, 64.7%, 55%); }
+    }
+    @keyframes blob2Breath {
+        0%, 100% { background: hsl(253, 54.7%, 50.0%); }
+        35%, 65% { background: hsl(253, 54.7%, 70%); }
+        50% { background: hsl(253, 54.7%, 55%); }
+    }
+    @keyframes blob3Breath {
+        0%, 100% { background: hsl(203, 64.7%, 50.0%); }
+        35%, 65% { background: hsl(203, 64.7%, 70%); }
+        50% { background: hsl(203, 64.7%, 55%); }
+    }
+
+    .animate-card-breath { animation: cardBreath 2.5s cubic-bezier(0.4, 0, 0.2, 1) 0.75s forwards; }
+    .blob.blob-1 { animation: moveBlob 10s infinite alternate ease-in-out, blob1Breath 2.5s cubic-bezier(0.4, 0, 0.2, 1) 0.75s forwards !important; animation-delay: 0s, 0.75s !important; }
+    .blob.blob-2 { animation: moveBlob 10s infinite alternate ease-in-out, blob2Breath 2.5s cubic-bezier(0.4, 0, 0.2, 1) 0.75s forwards !important; animation-delay: -5s, 0.75s !important; }
+    .blob.blob-3 { animation: moveBlob 10s infinite alternate ease-in-out, blob3Breath 2.5s cubic-bezier(0.4, 0, 0.2, 1) 0.75s forwards !important; animation-delay: -10s, 0.75s !important; }
     </style>
+<!-- THEME_END -->
 </head>
 <body class="bg-[#0a021c] text-white relative selection:bg-purple-500/30">
 
@@ -569,15 +642,16 @@
 
 <div id="main-content-wrapper" class="relative z-10 flex flex-col items-center pt-12 pb-16 px-4 w-full gap-8">
     <div class="relative w-full max-w-md mx-auto fade-in-up z-20">
-        <div class="glass-card spotlight-border rounded-3xl relative p-8 text-center z-10 group/card" id="main-card">
+        <div class="glass-card spotlight-border rounded-3xl relative p-8 text-center z-10 group/card animate-card-breath" id="main-card">
             <button type="button" aria-label="Play music" class="music-btn" id="music-toggle">
                 <i class="fa-solid fa-play ml-1" id="music-icon"></i>
                 <div class="music-pulse"></div>
             </button>
-            <div class="relative w-28 h-28 mx-auto mb-5 group/avatar rounded-full overflow-hidden z-10">
-                <div class="absolute inset-0 bg-[var(--color-accent)] rounded-full blur-[20px] opacity-40 group-hover/card:opacity-70 transition-opacity duration-500 pointer-events-none"></div>
-                <video id="avatar-video" class="relative w-full h-full object-cover rounded-full border-2 border-white/10 z-10 cursor-pointer select-none hidden" autoplay loop muted playsinline></video>
-                <img alt="Profile" class="relative w-full h-full object-cover rounded-full border-2 border-white/10 z-10 cursor-pointer select-none" id="avatar-img" src="https://s.fotora.ru/855e832a165681a6.png" fetchpriority="high" decoding="async" draggable="false"/>
+            <div id="avatar-wrapper" class="relative w-28 h-28 mx-auto mb-5 group/avatar rounded-full overflow-hidden z-10 skeleton bg-white/5 border-2 border-white/10">
+                <i class="fa-solid fa-user text-4xl text-white/30 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0"></i>
+                <div class="absolute inset-0 bg-[var(--color-accent)] rounded-full blur-[20px] opacity-40 group-hover/card:opacity-70 transition-opacity duration-500 pointer-events-none z-0"></div>
+                <video id="avatar-video" class="absolute inset-0 w-full h-full object-cover rounded-full z-10 cursor-pointer select-none transition-opacity duration-500 opacity-0" style="object-position: -10% -10%; transform: scale(1.75);" src="/pic/sys_1786645643.mp4" autoplay loop muted playsinline preload="auto" oncanplay="this.classList.remove('opacity-0'); document.getElementById('avatar-wrapper').classList.remove('skeleton', 'bg-white/5');"></video>
+                <img alt="Profile" class="absolute inset-0 w-full h-full object-cover rounded-full z-10 cursor-pointer select-none transition-opacity duration-500 hidden opacity-0" id="avatar-img" src="" style="object-position: -10% -10%; transform: scale(1.75);" fetchpriority="high" decoding="async" draggable="false" onload="this.classList.remove('opacity-0'); document.getElementById('avatar-wrapper').classList.remove('skeleton', 'bg-white/5');"/>
                 <div class="absolute -top-12 left-1/2 -translate-x-1/2 bg-[#0a021c]/90 backdrop-blur-md border border-[var(--color-accent)] text-white text-xs px-3 py-1.5 rounded-lg opacity-0 group-hover/avatar:opacity-100 group-hover/avatar:-translate-y-1 transition-all duration-300 pointer-events-none whitespace-nowrap z-20 shadow-[0_0_15px_color-mix(in_srgb,var(--color-accent)_40%,transparent)]">
                     Нажми 3 раза 🤫
                 </div>
@@ -594,44 +668,257 @@
                 <span class="skill-badge px-3 py-1 text-xs font-medium bg-white/5 border border-white/10 rounded-full text-gray-300 cursor-default">Google AI</span>
             </div>
             <div class="flex flex-col gap-3">
-                <a class="glass-btn btn-primary spotlight-border shadow-[0_8px_25px_rgba(139,92,246,0.5)]" href="#portfolio">
-                    <i class="fa-solid fa-circle-play mr-3"></i>
-                    Портфолио ↓
-                </a>
+                <a class="glass-btn btn-primary spotlight-border group shadow-[0_8px_25px_rgba(139,92,246,0.5)]" href="#portfolio">
+		    <span class="flex items-center">
+		        <i class="fa-solid fa-circle-play mr-3 no-jello"></i>
+		        <span class="mr-3">Портфолио</span>
+			<i class="fa-solid fa-arrow-down no-jello opacity-0 -translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300"></i>
+		    </span>
+		</a>
                 <button type="button" class="glass-btn spotlight-border shadow-[0_0_15px_rgba(34,197,94,0.15)] hover:shadow-[0_0_25px_rgba(34,197,94,0.4)] group cursor-pointer border-[rgba(34,197,94,0.3)]" id="open-snake-btn">
                     <i class="fa-solid fa-gamepad text-[#22c55e] group-hover:text-[#4ade80] text-lg mr-3 w-5 text-center transition-colors duration-300"></i>
                     Сыграть в змейку
                 </button>
-                <a class="glass-btn spotlight-border group" href="https://telegram.me/fulestor" target="_blank">
+                <a class="glass-btn spotlight-border group btn-tg" href="https://telegram.me/fulestor" target="_blank" rel="noopener noreferrer">
                     <i class="fa-brands fa-telegram text-[var(--color-accent)] group-hover:text-[#24A1DE] text-lg mr-3 w-5 text-center transition-colors duration-300"></i>
                     Связаться со мной
                 </a>
-                <a class="glass-btn spotlight-border group" href="https://www.youtube.com/@delik_kryt/videos" target="_blank">
+                <a class="glass-btn spotlight-border group btn-yt" href="https://www.youtube.com/@delik_kryt/videos" target="_blank" rel="noopener noreferrer">
                     <i class="fa-brands fa-youtube text-[var(--color-accent)] group-hover:text-[#FF0000] text-lg mr-3 w-5 text-center transition-colors duration-300"></i>
                     Мой канал
                 </a>
                 <hr style="border: none; height: 1px; opacity: 60%; background: linear-gradient(to right, transparent, var(--color-accent), transparent); margin: 15px 0;"/>
-                <a class="glass-btn spotlight-border" href="https://disk.yandex.ru/d/dMs1UxgfMstpSA" target="_blank">
-                    <i class="fa-solid fa-compact-disc text-[var(--color-accent)] text-lg mr-3 w-5 text-center"></i>
+                <a class="glass-btn spotlight-border group btn-disk" href="https://disk.yandex.ru/d/dMs1UxgfMstpSA" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-solid fa-compact-disc text-[var(--color-accent)] group-hover:text-[#FFCC00] text-lg mr-3 w-5 text-center transition-colors duration-300"></i>
                     Диск
                 </a>
             </div>
         </div>
     </div>
 
-    <section id="reviews" class="reviews-shell w-full max-w-4xl 2xl:max-w-6xl mx-auto flex flex-col items-center z-10 mt-8">
-            <div class="w-full px-4 mb-7 section-heading">
-                <div class="flex flex-col items-center text-center">
-                    <span class="section-kicker text-[10px] font-semibold uppercase tracking-[0.32em] text-[var(--color-accent)]/80 mb-2">Отзывы клиентов</span>
-                    <h2 class="text-2xl font-bold text-white flex items-center gap-3">
-                        <i class="fa-solid fa-quote-left no-jello text-[var(--color-accent)]"></i> Что говорят обо мне
-                    </h2>
-                    <p class="text-sm text-white/35 mt-2 max-w-xl">Коротко о том, как проходит работа и что получается на выходе.</p>
-                </div>
+    <!-- 1. ОТЗЫВЫ -->
+    <section id="reviews" class="reviews-shell scroll-reveal w-full max-w-4xl 2xl:max-w-6xl mx-auto flex flex-col items-center z-10 mt-8 mb-4">
+        <div class="w-full px-4 mb-7 section-heading">
+            <div class="flex flex-col items-center text-center">
+                <span class="section-kicker text-[10px] font-semibold uppercase tracking-[0.32em] text-[var(--color-accent)]/80 mb-2">Отзывы клиентов</span>
+                <h2 class="text-2xl font-bold text-white flex items-center gap-3">
+                    <i class="fa-solid fa-quote-left no-jello text-[var(--color-accent)]"></i> Что говорят обо мне
+                </h2>
+                <p class="text-sm text-white/35 mt-2 max-w-xl">Коротко о том, как проходит работа и что получается на выходе.</p>
             </div>
-            <div id="reviews-grid" class="reviews-viewport" aria-live="polite"><div id="reviews-track" class="reviews-track"></div></div>
+        </div>
+        <div id="reviews-grid" class="reviews-viewport" aria-live="polite">
+            <div id="reviews-track" class="reviews-track">
+                <!-- REVIEWS_START -->
+
+        <article class="review-card spotlight-border overflow-hidden">
+            <i class="fa-solid fa-bahai absolute -bottom-8 -right-8 text-[140px] opacity-10 z-0 pointer-events-none select-none" style="color: var(--color-accent); transform: rotate(15deg);"></i>
+            <div class="review-quote"><i class="fa-solid fa-quote-right"></i></div>
+            <div class="flex items-start justify-between gap-4 relative z-10">
+                <div class="flex items-start gap-3 min-w-0 flex-1">
+                    <div class="relative flex-shrink-0 review-ava-wrap"><img class="review-avatar" alt="Аватар Случайный проходимец" src="/pic/rev_1786743732.webp" loading="lazy" onerror="this.outerHTML='<div class=\'review-avatar review-avatar-fallback\'>С</div>'"/></div>
+                    <div class="review-identity">
+                        <div class="review-name">Случайный проходимец</div>
+                        <div class="review-subtitle">Продавец на маркетплейсе</div>
+                    </div>
+                </div>
+                <div class="review-stars flex-shrink-0 pt-1 review-stars-wrap"><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 0%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span></div>
+            </div>
+            <div class="relative z-10 mt-5 flex-1 flex flex-col justify-between pb-4">
+                <p class="review-text">Быстро сделал все как обсудили, по красоте получилось хорошо, но есть моменты которые можно было сделать лучше, в целом результату рад</p>
+                <div class="review-read-more" onclick="openReviewModal(this)">Читать полностью <i class="fa-solid fa-arrow-right ml-1"></i></div>
+            </div>
+            <div class="absolute bottom-4 right-4 flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/5 bg-black/40 backdrop-blur-md text-[9px] font-bold text-white/80 tracking-widest uppercase z-20 shadow-xl"><span class="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] shadow-[0_0_8px_var(--color-accent)]"></span>Дизайн</div>
+        </article>
+        
+        <article class="review-card spotlight-border overflow-hidden">
+            <i class="fa-solid fa-bahai absolute -bottom-8 -right-8 text-[140px] opacity-10 z-0 pointer-events-none select-none" style="color: var(--color-accent); transform: rotate(15deg);"></i>
+            <div class="review-quote"><i class="fa-solid fa-quote-right"></i></div>
+            <div class="flex items-start justify-between gap-4 relative z-10">
+                <div class="flex items-start gap-3 min-w-0 flex-1">
+                    <div class="relative flex-shrink-0 review-ava-wrap"><img class="review-avatar" alt="Аватар Сеня Ильин Михайлович" src="/pic/rev_1786646265.webp" loading="lazy" onerror="this.outerHTML='<div class=\'review-avatar review-avatar-fallback\'>С</div>'"/></div>
+                    <div class="review-identity">
+                        <div class="review-name">Сеня Ильин Михайлович</div>
+                        <div class="review-subtitle">Близкий друг</div>
+                    </div>
+                </div>
+                <div class="review-stars flex-shrink-0 pt-1 review-stars-wrap"><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span></div>
+            </div>
+            <div class="relative z-10 mt-5 flex-1 flex flex-col justify-between pb-4">
+                <p class="review-text">Десяточка уверенная десяточка.
+Когда я обращался к этому пацанчику, я своим крошечным мозгом и представить не мог как он повлияет работу алгоритмов и охватов ютуба (кончено же в положительном ключе). Короче, если бы не обратился именно к Герману, возможно ночевал где-нибудь на вокзале.</p>
+                <div class="review-read-more" onclick="openReviewModal(this)">Читать полностью <i class="fa-solid fa-arrow-right ml-1"></i></div>
+            </div>
+            <div class="absolute bottom-4 right-4 flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/5 bg-black/40 backdrop-blur-md text-[9px] font-bold text-white/80 tracking-widest uppercase z-20 shadow-xl"><span class="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] shadow-[0_0_8px_var(--color-accent)]"></span>Дизайн</div>
+        </article>
+        
+        <article class="review-card spotlight-border overflow-hidden">
+            <i class="fa-solid fa-bahai absolute -bottom-8 -right-8 text-[140px] opacity-10 z-0 pointer-events-none select-none" style="color: var(--color-accent); transform: rotate(15deg);"></i>
+            <div class="review-quote"><i class="fa-solid fa-quote-right"></i></div>
+            <div class="flex items-start justify-between gap-4 relative z-10">
+                <div class="flex items-start gap-3 min-w-0 flex-1">
+                    <div class="relative flex-shrink-0 review-ava-wrap"><img class="review-avatar" alt="Аватар Фимайн" src="/pic/rev_1786606728.webp" loading="lazy" onerror="this.outerHTML='<div class=\'review-avatar review-avatar-fallback\'>Ф</div>'"/></div>
+                    <div class="review-identity">
+                        <div class="review-name">Фимайн</div>
+                        <div class="review-subtitle">Майнкрафт-ютубер</div>
+                    </div>
+                </div>
+                <div class="review-stars flex-shrink-0 pt-1 review-stars-wrap"><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 50.0%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span></div>
+            </div>
+            <div class="relative z-10 mt-5 flex-1 flex flex-col justify-between pb-4">
+                <p class="review-text">Сделано качественно, но косяки есть.</p>
+                
+            </div>
+            <div class="absolute bottom-4 right-4 flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/5 bg-black/40 backdrop-blur-md text-[9px] font-bold text-white/80 tracking-widest uppercase z-20 shadow-xl"><span class="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] shadow-[0_0_8px_var(--color-accent)]"></span>Монтаж</div>
+        </article>
+        
+        <article class="review-card spotlight-border overflow-hidden">
+            <i class="fa-solid fa-bahai absolute -bottom-8 -right-8 text-[140px] opacity-10 z-0 pointer-events-none select-none" style="color: var(--color-accent); transform: rotate(15deg);"></i>
+            <div class="review-quote"><i class="fa-solid fa-quote-right"></i></div>
+            <div class="flex items-start justify-between gap-4 relative z-10">
+                <div class="flex items-start gap-3 min-w-0 flex-1">
+                    <div class="relative flex-shrink-0 review-ava-wrap"><div class="review-avatar review-avatar-fallback">С</div></div>
+                    <div class="review-identity">
+                        <div class="review-name">Старый знакомый</div>
+                        <div class="review-subtitle">Монтаж видеоролика по биологии</div>
+                    </div>
+                </div>
+                <div class="review-stars flex-shrink-0 pt-1 review-stars-wrap"><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span></div>
+            </div>
+            <div class="relative z-10 mt-5 flex-1 flex flex-col justify-between pb-4">
+                <p class="review-text">Выполнил работу быстро, в сроки. Я получил автомат:)</p>
+                
+            </div>
+            <div class="absolute bottom-4 right-4 flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/5 bg-black/40 backdrop-blur-md text-[9px] font-bold text-white/80 tracking-widest uppercase z-20 shadow-xl"><span class="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] shadow-[0_0_8px_var(--color-accent)]"></span>Монтаж</div>
+        </article>
+        
+        <article class="review-card spotlight-border overflow-hidden">
+            <i class="fa-solid fa-bahai absolute -bottom-8 -right-8 text-[140px] opacity-10 z-0 pointer-events-none select-none" style="color: var(--color-accent); transform: rotate(15deg);"></i>
+            <div class="review-quote"><i class="fa-solid fa-quote-right"></i></div>
+            <div class="flex items-start justify-between gap-4 relative z-10">
+                <div class="flex items-start gap-3 min-w-0 flex-1">
+                    <div class="relative flex-shrink-0 review-ava-wrap"><img class="review-avatar" alt="Аватар Магамед" src="/pic/rev_1786606643.webp" loading="lazy" onerror="this.outerHTML='<div class=\'review-avatar review-avatar-fallback\'>М</div>'"/></div>
+                    <div class="review-identity">
+                        <div class="review-name">Магамед</div>
+                        <div class="review-subtitle">Креативщик, продюсер канала Брадтваа</div>
+                    </div>
+                </div>
+                <div class="review-stars flex-shrink-0 pt-1 review-stars-wrap"><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span></div>
+            </div>
+            <div class="relative z-10 mt-5 flex-1 flex flex-col justify-between pb-4">
+                <p class="review-text">Герман своевременно делал монтаж общего нашего проекта Братдваа, очень круто монтирует</p>
+                
+            </div>
+            <div class="absolute bottom-4 right-4 flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/5 bg-black/40 backdrop-blur-md text-[9px] font-bold text-white/80 tracking-widest uppercase z-20 shadow-xl"><span class="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] shadow-[0_0_8px_var(--color-accent)]"></span>Разное</div>
+        </article>
+        
+        <article class="review-card spotlight-border overflow-hidden">
+            <i class="fa-solid fa-bahai absolute -bottom-8 -right-8 text-[140px] opacity-10 z-0 pointer-events-none select-none" style="color: var(--color-accent); transform: rotate(15deg);"></i>
+            <div class="review-quote"><i class="fa-solid fa-quote-right"></i></div>
+            <div class="flex items-start justify-between gap-4 relative z-10">
+                <div class="flex items-start gap-3 min-w-0 flex-1">
+                    <div class="relative flex-shrink-0 review-ava-wrap"><img class="review-avatar" alt="Аватар Случайный проходимец" src="/pic/rev_1786743732.webp" loading="lazy" onerror="this.outerHTML='<div class=\'review-avatar review-avatar-fallback\'>С</div>'"/></div>
+                    <div class="review-identity">
+                        <div class="review-name">Случайный проходимец</div>
+                        <div class="review-subtitle">Продавец на маркетплейсе</div>
+                    </div>
+                </div>
+                <div class="review-stars flex-shrink-0 pt-1 review-stars-wrap"><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 0%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span></div>
+            </div>
+            <div class="relative z-10 mt-5 flex-1 flex flex-col justify-between pb-4">
+                <p class="review-text">Быстро сделал все как обсудили, по красоте получилось хорошо, но есть моменты которые можно было сделать лучше, в целом результату рад</p>
+                <div class="review-read-more" onclick="openReviewModal(this)">Читать полностью <i class="fa-solid fa-arrow-right ml-1"></i></div>
+            </div>
+            <div class="absolute bottom-4 right-4 flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/5 bg-black/40 backdrop-blur-md text-[9px] font-bold text-white/80 tracking-widest uppercase z-20 shadow-xl"><span class="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] shadow-[0_0_8px_var(--color-accent)]"></span>Дизайн</div>
+        </article>
+        
+        <article class="review-card spotlight-border overflow-hidden">
+            <i class="fa-solid fa-bahai absolute -bottom-8 -right-8 text-[140px] opacity-10 z-0 pointer-events-none select-none" style="color: var(--color-accent); transform: rotate(15deg);"></i>
+            <div class="review-quote"><i class="fa-solid fa-quote-right"></i></div>
+            <div class="flex items-start justify-between gap-4 relative z-10">
+                <div class="flex items-start gap-3 min-w-0 flex-1">
+                    <div class="relative flex-shrink-0 review-ava-wrap"><img class="review-avatar" alt="Аватар Сеня Ильин Михайлович" src="/pic/rev_1786646265.webp" loading="lazy" onerror="this.outerHTML='<div class=\'review-avatar review-avatar-fallback\'>С</div>'"/></div>
+                    <div class="review-identity">
+                        <div class="review-name">Сеня Ильин Михайлович</div>
+                        <div class="review-subtitle">Близкий друг</div>
+                    </div>
+                </div>
+                <div class="review-stars flex-shrink-0 pt-1 review-stars-wrap"><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span></div>
+            </div>
+            <div class="relative z-10 mt-5 flex-1 flex flex-col justify-between pb-4">
+                <p class="review-text">Десяточка уверенная десяточка.
+Когда я обращался к этому пацанчику, я своим крошечным мозгом и представить не мог как он повлияет работу алгоритмов и охватов ютуба (кончено же в положительном ключе). Короче, если бы не обратился именно к Герману, возможно ночевал где-нибудь на вокзале.</p>
+                <div class="review-read-more" onclick="openReviewModal(this)">Читать полностью <i class="fa-solid fa-arrow-right ml-1"></i></div>
+            </div>
+            <div class="absolute bottom-4 right-4 flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/5 bg-black/40 backdrop-blur-md text-[9px] font-bold text-white/80 tracking-widest uppercase z-20 shadow-xl"><span class="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] shadow-[0_0_8px_var(--color-accent)]"></span>Дизайн</div>
+        </article>
+        
+        <article class="review-card spotlight-border overflow-hidden">
+            <i class="fa-solid fa-bahai absolute -bottom-8 -right-8 text-[140px] opacity-10 z-0 pointer-events-none select-none" style="color: var(--color-accent); transform: rotate(15deg);"></i>
+            <div class="review-quote"><i class="fa-solid fa-quote-right"></i></div>
+            <div class="flex items-start justify-between gap-4 relative z-10">
+                <div class="flex items-start gap-3 min-w-0 flex-1">
+                    <div class="relative flex-shrink-0 review-ava-wrap"><img class="review-avatar" alt="Аватар Фимайн" src="/pic/rev_1786606728.webp" loading="lazy" onerror="this.outerHTML='<div class=\'review-avatar review-avatar-fallback\'>Ф</div>'"/></div>
+                    <div class="review-identity">
+                        <div class="review-name">Фимайн</div>
+                        <div class="review-subtitle">Майнкрафт-ютубер</div>
+                    </div>
+                </div>
+                <div class="review-stars flex-shrink-0 pt-1 review-stars-wrap"><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 50.0%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span></div>
+            </div>
+            <div class="relative z-10 mt-5 flex-1 flex flex-col justify-between pb-4">
+                <p class="review-text">Сделано качественно, но косяки есть.</p>
+                
+            </div>
+            <div class="absolute bottom-4 right-4 flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/5 bg-black/40 backdrop-blur-md text-[9px] font-bold text-white/80 tracking-widest uppercase z-20 shadow-xl"><span class="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] shadow-[0_0_8px_var(--color-accent)]"></span>Монтаж</div>
+        </article>
+        
+        <article class="review-card spotlight-border overflow-hidden">
+            <i class="fa-solid fa-bahai absolute -bottom-8 -right-8 text-[140px] opacity-10 z-0 pointer-events-none select-none" style="color: var(--color-accent); transform: rotate(15deg);"></i>
+            <div class="review-quote"><i class="fa-solid fa-quote-right"></i></div>
+            <div class="flex items-start justify-between gap-4 relative z-10">
+                <div class="flex items-start gap-3 min-w-0 flex-1">
+                    <div class="relative flex-shrink-0 review-ava-wrap"><div class="review-avatar review-avatar-fallback">С</div></div>
+                    <div class="review-identity">
+                        <div class="review-name">Старый знакомый</div>
+                        <div class="review-subtitle">Монтаж видеоролика по биологии</div>
+                    </div>
+                </div>
+                <div class="review-stars flex-shrink-0 pt-1 review-stars-wrap"><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span></div>
+            </div>
+            <div class="relative z-10 mt-5 flex-1 flex flex-col justify-between pb-4">
+                <p class="review-text">Выполнил работу быстро, в сроки. Я получил автомат:)</p>
+                
+            </div>
+            <div class="absolute bottom-4 right-4 flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/5 bg-black/40 backdrop-blur-md text-[9px] font-bold text-white/80 tracking-widest uppercase z-20 shadow-xl"><span class="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] shadow-[0_0_8px_var(--color-accent)]"></span>Монтаж</div>
+        </article>
+        
+        <article class="review-card spotlight-border overflow-hidden">
+            <i class="fa-solid fa-bahai absolute -bottom-8 -right-8 text-[140px] opacity-10 z-0 pointer-events-none select-none" style="color: var(--color-accent); transform: rotate(15deg);"></i>
+            <div class="review-quote"><i class="fa-solid fa-quote-right"></i></div>
+            <div class="flex items-start justify-between gap-4 relative z-10">
+                <div class="flex items-start gap-3 min-w-0 flex-1">
+                    <div class="relative flex-shrink-0 review-ava-wrap"><img class="review-avatar" alt="Аватар Магамед" src="/pic/rev_1786606643.webp" loading="lazy" onerror="this.outerHTML='<div class=\'review-avatar review-avatar-fallback\'>М</div>'"/></div>
+                    <div class="review-identity">
+                        <div class="review-name">Магамед</div>
+                        <div class="review-subtitle">Креативщик, продюсер канала Брадтваа</div>
+                    </div>
+                </div>
+                <div class="review-stars flex-shrink-0 pt-1 review-stars-wrap"><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span><span class="review-star" style="--star-fill: 100%;"><i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span></span></div>
+            </div>
+            <div class="relative z-10 mt-5 flex-1 flex flex-col justify-between pb-4">
+                <p class="review-text">Герман своевременно делал монтаж общего нашего проекта Братдваа, очень круто монтирует</p>
+                
+            </div>
+            <div class="absolute bottom-4 right-4 flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/5 bg-black/40 backdrop-blur-md text-[9px] font-bold text-white/80 tracking-widest uppercase z-20 shadow-xl"><span class="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] shadow-[0_0_8px_var(--color-accent)]"></span>Разное</div>
+        </article>
+        
+<!-- REVIEWS_END -->
+            </div>
+        </div>
     </section>
 
+    <!-- 2. ПОРТФОЛИО -->
     <section class="w-full max-w-4xl 2xl:max-w-6xl mx-auto flex flex-col items-center scroll-reveal z-10" id="portfolio">
         <div class="w-full px-4 mb-7 section-heading">
             <div class="flex flex-col items-center text-center">
@@ -652,7 +939,332 @@
             </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 2xl:grid-cols-4 auto-rows-[300px] grid-flow-row-dense gap-6 w-full px-4 place-content-center justify-items-center md:justify-items-stretch" id="portfolio-grid">
-            <!-- Сюда JS будет рендерить карточки -->
+            <!-- PORTFOLIO_START -->
+
+            <div class="portfolio-item scroll-reveal w-full max-w-md md:max-w-none md:col-span-4 md:row-span-1 group/cardwrapper" data-category="irl">
+                <a href="https://www.youtube.com/@bratdvaa" target="_blank" class="glass-card spotlight-border overflow-hidden flex flex-col group-hover/cardwrapper:-translate-y-2 group w-full h-full block" draggable="false" style="border-radius: 1rem; transition: transform var(--dynamic-transition) ease-out, opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);">
+                    <div class="relative flex-1 flex items-center justify-center overflow-hidden skeleton bg-white/5">
+                        <div class="absolute top-3 left-3 z-20 bg-black/40 backdrop-blur-md w-6 h-6 flex items-center justify-center rounded-md border border-[var(--color-accent)] text-xs text-white/70" title="Закреплено"><i class="fa-solid fa-thumbtack no-jello" style="transform: rotate(45deg);"></i></div>
+                        <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Авг. 2025</div>
+                        <img alt="Братдваа" class="portfolio-poster absolute inset-0 w-full h-full object-cover opacity-0" style="transition: transform var(--dynamic-transition), opacity 0.45s;" onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('skeleton', 'bg-white/5');" draggable="false" loading="lazy" fetchpriority="low" src="/pic/work_1786587611.webp"/>
+                        <video class="portfolio-hover-video absolute inset-0 w-full h-full object-cover opacity-0 pointer-events-none" muted playsinline loop preload="none" aria-hidden="true"><source src="/pic/hover_2ed02d6bd83d.mp4" type="video/mp4"></video>
+                        <div class="absolute inset-0 z-0 portfolio-media-overlay" style="background-color: var(--dynamic-overlay-base); transition: background-color var(--dynamic-transition);"></div>
+                        <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 z-10 flex items-center justify-center" style="transition: all var(--dynamic-transition);">
+                            <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg" style="transition: color var(--dynamic-transition);"></i>
+                        </div>
+                    </div>
+                    <div class="p-5 border-t border-white/5 relative z-10 shrink-0 text-left w-full">
+                        <h3 class="font-bold mb-1" style="color: #ffffff;">Братдваа</h3>
+                        <p class="text-sm line-clamp-1" style="color: #d1d5db;">Мой крупный проект — Динамичный IRL контент в формате шоу.</p>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="portfolio-item scroll-reveal w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2 group/cardwrapper" data-category="irl, shorts">
+                <a href="https://disk.yandex.ru/i/qrLRHdzb-r2EPg" target="_blank" class="glass-card spotlight-border overflow-hidden flex flex-col group-hover/cardwrapper:-translate-y-2 group w-full h-full block" draggable="false" style="border-radius: 1rem; transition: transform var(--dynamic-transition) ease-out, opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);">
+                    <div class="relative flex-1 flex items-center justify-center overflow-hidden skeleton bg-white/5">
+                        <div class="absolute top-3 left-3 z-20 bg-black/40 backdrop-blur-md px-2 h-6 flex items-center justify-center rounded-md border border-yellow-400 text-[10px] font-bold text-yellow-400 uppercase tracking-wider" title="Новое">New</div>
+                        <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Авг. 2026</div>
+                        <img alt="Авиация" class="portfolio-poster absolute inset-0 w-full h-full object-cover opacity-0" style="transition: transform var(--dynamic-transition), opacity 0.45s;" onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('skeleton', 'bg-white/5');" draggable="false" loading="lazy" fetchpriority="low" src="/pic/work_1786587630.webp"/>
+                        <video class="portfolio-hover-video absolute inset-0 w-full h-full object-cover opacity-0 pointer-events-none" muted playsinline loop preload="none" aria-hidden="true"><source src="/pic/hover_e0a0da0e935d.webm" type="video/webm"></video>
+                        <div class="absolute inset-0 z-0 portfolio-media-overlay" style="background-color: var(--dynamic-overlay-base); transition: background-color var(--dynamic-transition);"></div>
+                        <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 z-10 flex items-center justify-center" style="transition: all var(--dynamic-transition);">
+                            <i class="fa-solid fa-compact-disc text-4xl text-white/80 group-hover:text-[#FFCC00] drop-shadow-lg" style="transition: color var(--dynamic-transition);"></i>
+                        </div>
+                    </div>
+                    <div class="p-5 border-t border-white/5 relative z-10 shrink-0 text-left w-full">
+                        <h3 class="font-bold mb-1" style="color: #ffffff;">Авиация</h3>
+                        <p class="text-sm line-clamp-1" style="color: #d1d5db;">Склейка, саунд, color</p>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="portfolio-item scroll-reveal w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1 group/cardwrapper" data-category="irl">
+                <a href="https://disk.yandex.ru/i/1-1H46zRa50SBQ" target="_blank" class="glass-card spotlight-border overflow-hidden flex flex-col group-hover/cardwrapper:-translate-y-2 group w-full h-full block" draggable="false" style="border-radius: 1rem; transition: transform var(--dynamic-transition) ease-out, opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);">
+                    <div class="relative flex-1 flex items-center justify-center overflow-hidden skeleton bg-white/5">
+                        
+                        <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Фев. 2026</div>
+                        <img alt="Работа по биологии" class="portfolio-poster absolute inset-0 w-full h-full object-cover opacity-0" style="transition: transform var(--dynamic-transition), opacity 0.45s;" onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('skeleton', 'bg-white/5');" draggable="false" loading="lazy" fetchpriority="low" src="/pic/work_1786587641.webp"/>
+                        <video class="portfolio-hover-video absolute inset-0 w-full h-full object-cover opacity-0 pointer-events-none" muted playsinline loop preload="none" aria-hidden="true"><source src="/pic/hover_37fc07afdd01.webm" type="video/webm"></video>
+                        <div class="absolute inset-0 z-0 portfolio-media-overlay" style="background-color: var(--dynamic-overlay-base); transition: background-color var(--dynamic-transition);"></div>
+                        <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 z-10 flex items-center justify-center" style="transition: all var(--dynamic-transition);">
+                            <i class="fa-solid fa-compact-disc text-4xl text-white/80 group-hover:text-yellow-400 drop-shadow-lg" style="transition: color var(--dynamic-transition);"></i>
+                        </div>
+                    </div>
+                    <div class="p-5 border-t border-white/5 relative z-10 shrink-0 text-left w-full">
+                        <h3 class="font-bold mb-1" style="color: #ffffff;">Работа по биологии</h3>
+                        <p class="text-sm line-clamp-1" style="color: #d1d5db;">Работа с нейросетями, цветокорреция.</p>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="portfolio-item scroll-reveal w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2 group/cardwrapper" data-category="irl, shorts">
+                <a href="https://www.instagram.com/prodajnie" target="_blank" class="glass-card spotlight-border overflow-hidden flex flex-col group-hover/cardwrapper:-translate-y-2 group w-full h-full block" draggable="false" style="border-radius: 1rem; transition: transform var(--dynamic-transition) ease-out, opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);">
+                    <div class="relative flex-1 flex items-center justify-center overflow-hidden skeleton bg-white/5">
+                        
+                        <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Дек. 2025</div>
+                        <img alt="Продажные блоггеры" class="portfolio-poster absolute inset-0 w-full h-full object-cover opacity-0" style="transition: transform var(--dynamic-transition), opacity 0.45s;" onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('skeleton', 'bg-white/5');" draggable="false" loading="lazy" fetchpriority="low" src="/pic/work_1786587649.webp"/>
+                        <video class="portfolio-hover-video absolute inset-0 w-full h-full object-cover opacity-0 pointer-events-none" muted playsinline loop preload="none" aria-hidden="true"><source src="/pic/hover_f7aa64615297.webm" type="video/webm"></video>
+                        <div class="absolute inset-0 z-0 portfolio-media-overlay" style="background-color: var(--dynamic-overlay-base); transition: background-color var(--dynamic-transition);"></div>
+                        <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 z-10 flex items-center justify-center" style="transition: all var(--dynamic-transition);">
+                            <i class="fa-brands fa-instagram text-4xl text-white/80 group-hover:text-pink-500 drop-shadow-lg" style="transition: color var(--dynamic-transition);"></i>
+                        </div>
+                    </div>
+                    <div class="p-5 border-t border-white/5 relative z-10 shrink-0 text-left w-full">
+                        <h3 class="font-bold mb-1" style="color: #ffffff;">Продажные блоггеры</h3>
+                        <p class="text-sm line-clamp-1" style="color: #d1d5db;">Рекламные ролики для разных брендов.</p>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="portfolio-item scroll-reveal w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2 group/cardwrapper" data-category="irl, shorts">
+                <a href="https://disk.yandex.ru/i/HLhs7LcHXgLbbQ" target="_blank" class="glass-card spotlight-border overflow-hidden flex flex-col group-hover/cardwrapper:-translate-y-2 group w-full h-full block" draggable="false" style="border-radius: 1rem; transition: transform var(--dynamic-transition) ease-out, opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);">
+                    <div class="relative flex-1 flex items-center justify-center overflow-hidden skeleton bg-white/5">
+                        
+                        <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Нояб. 2025</div>
+                        <img alt="Переходники | Продажные" class="portfolio-poster absolute inset-0 w-full h-full object-cover opacity-0" style="transition: transform var(--dynamic-transition), opacity 0.45s;" onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('skeleton', 'bg-white/5');" draggable="false" loading="lazy" fetchpriority="low" src="/pic/work_1786587658.webp"/>
+                        <video class="portfolio-hover-video absolute inset-0 w-full h-full object-cover opacity-0 pointer-events-none" muted playsinline loop preload="none" aria-hidden="true"><source src="/pic/hover_bfb964e9eed8.webm" type="video/webm"></video>
+                        <div class="absolute inset-0 z-0 portfolio-media-overlay" style="background-color: var(--dynamic-overlay-base); transition: background-color var(--dynamic-transition);"></div>
+                        <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 z-10 flex items-center justify-center" style="transition: all var(--dynamic-transition);">
+                            <i class="fa-solid fa-compact-disc text-4xl text-white/80 group-hover:text-[#FFCC00] drop-shadow-lg" style="transition: color var(--dynamic-transition);"></i>
+                        </div>
+                    </div>
+                    <div class="p-5 border-t border-white/5 relative z-10 shrink-0 text-left w-full">
+                        <h3 class="font-bold mb-1" style="color: #ffffff;">Переходники | Продажные</h3>
+                        <p class="text-sm line-clamp-1" style="color: #d1d5db;">Монтаж готовой склейки</p>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="portfolio-item scroll-reveal w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2 group/cardwrapper" data-category="irl, shorts">
+                <a href="https://disk.yandex.ru/i/YjBJA_Bq4iBvJg" target="_blank" class="glass-card spotlight-border overflow-hidden flex flex-col group-hover/cardwrapper:-translate-y-2 group w-full h-full block" draggable="false" style="border-radius: 1rem; transition: transform var(--dynamic-transition) ease-out, opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);">
+                    <div class="relative flex-1 flex items-center justify-center overflow-hidden skeleton bg-white/5">
+                        
+                        <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Дек. 2025</div>
+                        <img alt="День 4 | Продажные" class="portfolio-poster absolute inset-0 w-full h-full object-cover opacity-0" style="transition: transform var(--dynamic-transition), opacity 0.45s;" onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('skeleton', 'bg-white/5');" draggable="false" loading="lazy" fetchpriority="low" src="/pic/work_1786587674.webp"/>
+                        <video class="portfolio-hover-video absolute inset-0 w-full h-full object-cover opacity-0 pointer-events-none" muted playsinline loop preload="none" aria-hidden="true"><source src="/pic/hover_1cc1bf4cbc74.webm" type="video/webm"></video>
+                        <div class="absolute inset-0 z-0 portfolio-media-overlay" style="background-color: var(--dynamic-overlay-base); transition: background-color var(--dynamic-transition);"></div>
+                        <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 z-10 flex items-center justify-center" style="transition: all var(--dynamic-transition);">
+                            <i class="fa-solid fa-compact-disc text-4xl text-white/80 group-hover:text-[#FFCC00] drop-shadow-lg" style="transition: color var(--dynamic-transition);"></i>
+                        </div>
+                    </div>
+                    <div class="p-5 border-t border-white/5 relative z-10 shrink-0 text-left w-full">
+                        <h3 class="font-bold mb-1" style="color: #ffffff;">День 4 | Продажные</h3>
+                        <p class="text-sm line-clamp-1" style="color: #d1d5db;">Монтаж готовой склейки</p>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="portfolio-item scroll-reveal w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2 group/cardwrapper" data-category="irl, shorts">
+                <a href="https://disk.yandex.ru/i/XSNDFEKIv8c0Pw" target="_blank" class="glass-card spotlight-border overflow-hidden flex flex-col group-hover/cardwrapper:-translate-y-2 group w-full h-full block" draggable="false" style="border-radius: 1rem; transition: transform var(--dynamic-transition) ease-out, opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);">
+                    <div class="relative flex-1 flex items-center justify-center overflow-hidden skeleton bg-white/5">
+                        
+                        <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Дек. 2025</div>
+                        <img alt="Сказка | Продажные" class="portfolio-poster absolute inset-0 w-full h-full object-cover opacity-0" style="transition: transform var(--dynamic-transition), opacity 0.45s;" onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('skeleton', 'bg-white/5');" draggable="false" loading="lazy" fetchpriority="low" src="/pic/work_1786587687.webp"/>
+                        <video class="portfolio-hover-video absolute inset-0 w-full h-full object-cover opacity-0 pointer-events-none" muted playsinline loop preload="none" aria-hidden="true"><source src="/pic/hover_c7e00af5f738.webm" type="video/webm"></video>
+                        <div class="absolute inset-0 z-0 portfolio-media-overlay" style="background-color: var(--dynamic-overlay-base); transition: background-color var(--dynamic-transition);"></div>
+                        <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 z-10 flex items-center justify-center" style="transition: all var(--dynamic-transition);">
+                            <i class="fa-solid fa-compact-disc text-4xl text-white/80 group-hover:text-[#FFCC00] drop-shadow-lg" style="transition: color var(--dynamic-transition);"></i>
+                        </div>
+                    </div>
+                    <div class="p-5 border-t border-white/5 relative z-10 shrink-0 text-left w-full">
+                        <h3 class="font-bold mb-1" style="color: #ffffff;">Сказка | Продажные</h3>
+                        <p class="text-sm line-clamp-1" style="color: #d1d5db;">Съёмка, сборка, эффекты</p>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="portfolio-item scroll-reveal w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1 group/cardwrapper" data-category="gaming">
+                <a href="https://www.youtube.com/watch?v=9mKflJB1Gmo" target="_blank" class="glass-card spotlight-border overflow-hidden flex flex-col group-hover/cardwrapper:-translate-y-2 group w-full h-full block" draggable="false" style="border-radius: 1rem; transition: transform var(--dynamic-transition) ease-out, opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);">
+                    <div class="relative flex-1 flex items-center justify-center overflow-hidden skeleton bg-white/5">
+                        
+                        <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Янв. 2025</div>
+                        <img alt="Rainbow GG Minecraft" class="portfolio-poster absolute inset-0 w-full h-full object-cover opacity-0" style="transition: transform var(--dynamic-transition), opacity 0.45s;" onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('skeleton', 'bg-white/5');" draggable="false" loading="lazy" fetchpriority="low" src="/pic/work_1786587703.webp"/>
+                        <video class="portfolio-hover-video absolute inset-0 w-full h-full object-cover opacity-0 pointer-events-none" muted playsinline loop preload="none" aria-hidden="true"><source src="/pic/hover_2dbc31a1265a.webm" type="video/webm"></video>
+                        <div class="absolute inset-0 z-0 portfolio-media-overlay" style="background-color: var(--dynamic-overlay-base); transition: background-color var(--dynamic-transition);"></div>
+                        <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 z-10 flex items-center justify-center" style="transition: all var(--dynamic-transition);">
+                            <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg" style="transition: color var(--dynamic-transition);"></i>
+                        </div>
+                    </div>
+                    <div class="p-5 border-t border-white/5 relative z-10 shrink-0 text-left w-full">
+                        <h3 class="font-bold mb-1" style="color: #ffffff;">Rainbow GG Minecraft</h3>
+                        <p class="text-sm line-clamp-1" style="color: #d1d5db;">485к, монтаж англоязычных роликов.</p>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="portfolio-item scroll-reveal w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1 group/cardwrapper" data-category="gaming">
+                <a href="https://www.youtube.com/watch?v=DiR2Cl5KF-Y" target="_blank" class="glass-card spotlight-border overflow-hidden flex flex-col group-hover/cardwrapper:-translate-y-2 group w-full h-full block" draggable="false" style="border-radius: 1rem; transition: transform var(--dynamic-transition) ease-out, opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);">
+                    <div class="relative flex-1 flex items-center justify-center overflow-hidden skeleton bg-white/5">
+                        
+                        <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Нояб. 2024</div>
+                        <img alt="Rainbow GG Minecraft" class="portfolio-poster absolute inset-0 w-full h-full object-cover opacity-0" style="transition: transform var(--dynamic-transition), opacity 0.45s;" onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('skeleton', 'bg-white/5');" draggable="false" loading="lazy" fetchpriority="low" src="/pic/work_1786587713.webp"/>
+                        <video class="portfolio-hover-video absolute inset-0 w-full h-full object-cover opacity-0 pointer-events-none" muted playsinline loop preload="none" aria-hidden="true"><source src="/pic/hover_0e51d563f9c4.mp4" type="video/mp4"></video>
+                        <div class="absolute inset-0 z-0 portfolio-media-overlay" style="background-color: var(--dynamic-overlay-base); transition: background-color var(--dynamic-transition);"></div>
+                        <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 z-10 flex items-center justify-center" style="transition: all var(--dynamic-transition);">
+                            <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg" style="transition: color var(--dynamic-transition);"></i>
+                        </div>
+                    </div>
+                    <div class="p-5 border-t border-white/5 relative z-10 shrink-0 text-left w-full">
+                        <h3 class="font-bold mb-1" style="color: #ffffff;">Rainbow GG Minecraft</h3>
+                        <p class="text-sm line-clamp-1" style="color: #d1d5db;">188к, монтаж англоязычных роликов</p>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="portfolio-item scroll-reveal w-full max-w-md md:max-w-none md:col-span-1 md:row-span-2 group/cardwrapper" data-category="gaming, shorts">
+                <a href="https://www.youtube.com/shorts/F8kd9Q-64VM" target="_blank" class="glass-card spotlight-border overflow-hidden flex flex-col group-hover/cardwrapper:-translate-y-2 group w-full h-full block" draggable="false" style="border-radius: 1rem; transition: transform var(--dynamic-transition) ease-out, opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);">
+                    <div class="relative flex-1 flex items-center justify-center overflow-hidden skeleton bg-white/5">
+                        
+                        <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Дек. 2024</div>
+                        <img alt="YT Shorts для Делика" class="portfolio-poster absolute inset-0 w-full h-full object-cover opacity-0" style="transition: transform var(--dynamic-transition), opacity 0.45s;" onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('skeleton', 'bg-white/5');" draggable="false" loading="lazy" fetchpriority="low" src="/pic/work_1786587697.webp"/>
+                        <video class="portfolio-hover-video absolute inset-0 w-full h-full object-cover opacity-0 pointer-events-none" muted playsinline loop preload="none" aria-hidden="true"><source src="/pic/hover_e4e9735a2a17.webm" type="video/webm"></video>
+                        <div class="absolute inset-0 z-0 portfolio-media-overlay" style="background-color: var(--dynamic-overlay-base); transition: background-color var(--dynamic-transition);"></div>
+                        <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 z-10 flex items-center justify-center" style="transition: all var(--dynamic-transition);">
+                            <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg" style="transition: color var(--dynamic-transition);"></i>
+                        </div>
+                    </div>
+                    <div class="p-5 border-t border-white/5 relative z-10 shrink-0 text-left w-full">
+                        <h3 class="font-bold mb-1" style="color: #ffffff;">YT Shorts для Делика</h3>
+                        <p class="text-sm line-clamp-1" style="color: #d1d5db;">Динамичный монтаж с добавлением эффектов</p>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="portfolio-item scroll-reveal w-full max-w-md md:max-w-none md:col-span-1 md:row-span-1 group/cardwrapper" data-category="gaming">
+                <a href="https://www.youtube.com/watch?v=zf-iC5QRgCA&" target="_blank" class="glass-card spotlight-border overflow-hidden flex flex-col group-hover/cardwrapper:-translate-y-2 group w-full h-full block" draggable="false" style="border-radius: 1rem; transition: transform var(--dynamic-transition) ease-out, opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);">
+                    <div class="relative flex-1 flex items-center justify-center overflow-hidden skeleton bg-white/5">
+                        
+                        <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Окт. 2024</div>
+                        <img alt="Rainbow GG Minecraft" class="portfolio-poster absolute inset-0 w-full h-full object-cover opacity-0" style="transition: transform var(--dynamic-transition), opacity 0.45s;" onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('skeleton', 'bg-white/5');" draggable="false" loading="lazy" fetchpriority="low" src="/pic/work_1786587730.webp"/>
+                        <video class="portfolio-hover-video absolute inset-0 w-full h-full object-cover opacity-0 pointer-events-none" muted playsinline loop preload="none" aria-hidden="true"><source src="/pic/hover_c253a9817671.mp4" type="video/mp4"></video>
+                        <div class="absolute inset-0 z-0 portfolio-media-overlay" style="background-color: var(--dynamic-overlay-base); transition: background-color var(--dynamic-transition);"></div>
+                        <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 z-10 flex items-center justify-center" style="transition: all var(--dynamic-transition);">
+                            <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg" style="transition: color var(--dynamic-transition);"></i>
+                        </div>
+                    </div>
+                    <div class="p-5 border-t border-white/5 relative z-10 shrink-0 text-left w-full">
+                        <h3 class="font-bold mb-1" style="color: #ffffff;">Rainbow GG Minecraft</h3>
+                        <p class="text-sm line-clamp-1" style="color: #d1d5db;">Монтаж англоязычных роликов</p>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="portfolio-item scroll-reveal w-full max-w-md md:max-w-none md:col-span-1 md:row-span-1 group/cardwrapper" data-category="gaming">
+                <a href="https://www.youtube.com/@mc_resolver" target="_blank" class="glass-card spotlight-border overflow-hidden flex flex-col group-hover/cardwrapper:-translate-y-2 group w-full h-full block" draggable="false" style="border-radius: 1rem; transition: transform var(--dynamic-transition) ease-out, opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);">
+                    <div class="relative flex-1 flex items-center justify-center overflow-hidden skeleton bg-white/5">
+                        
+                        <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Июль 2024</div>
+                        <img alt="Трейлеры Resolver" class="portfolio-poster absolute inset-0 w-full h-full object-cover opacity-0" style="transition: transform var(--dynamic-transition), opacity 0.45s;" onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('skeleton', 'bg-white/5');" draggable="false" loading="lazy" fetchpriority="low" src="/pic/work_1786587735.webp"/>
+                        <video class="portfolio-hover-video absolute inset-0 w-full h-full object-cover opacity-0 pointer-events-none" muted playsinline loop preload="none" aria-hidden="true"><source src="/pic/hover_7724c4f1fb00.webm" type="video/webm"></video>
+                        <div class="absolute inset-0 z-0 portfolio-media-overlay" style="background-color: var(--dynamic-overlay-base); transition: background-color var(--dynamic-transition);"></div>
+                        <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 z-10 flex items-center justify-center" style="transition: all var(--dynamic-transition);">
+                            <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg" style="transition: color var(--dynamic-transition);"></i>
+                        </div>
+                    </div>
+                    <div class="p-5 border-t border-white/5 relative z-10 shrink-0 text-left w-full">
+                        <h3 class="font-bold mb-1" style="color: #ffffff;">Трейлеры Resolver</h3>
+                        <p class="text-sm line-clamp-1" style="color: #d1d5db;">Короткометражки к обновлениям сервера</p>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="portfolio-item scroll-reveal w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1 group/cardwrapper" data-category="irl">
+                <a href="https://www.youtube.com/@ashleymccuen" target="_blank" class="glass-card spotlight-border overflow-hidden flex flex-col group-hover/cardwrapper:-translate-y-2 group w-full h-full block" draggable="false" style="border-radius: 1rem; transition: transform var(--dynamic-transition) ease-out, opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);">
+                    <div class="relative flex-1 flex items-center justify-center overflow-hidden skeleton bg-white/5">
+                        
+                        <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Фев. 2025</div>
+                        <img alt="Green Agriculture" class="portfolio-poster absolute inset-0 w-full h-full object-cover opacity-0" style="transition: transform var(--dynamic-transition), opacity 0.45s;" onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('skeleton', 'bg-white/5');" draggable="false" loading="lazy" fetchpriority="low" src="/pic/work_1786587752.webp"/>
+                        <video class="portfolio-hover-video absolute inset-0 w-full h-full object-cover opacity-0 pointer-events-none" muted playsinline loop preload="none" aria-hidden="true"><source src="/pic/hover_983d7727c279.webm" type="video/webm"></video>
+                        <div class="absolute inset-0 z-0 portfolio-media-overlay" style="background-color: var(--dynamic-overlay-base); transition: background-color var(--dynamic-transition);"></div>
+                        <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 z-10 flex items-center justify-center" style="transition: all var(--dynamic-transition);">
+                            <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg" style="transition: color var(--dynamic-transition);"></i>
+                        </div>
+                    </div>
+                    <div class="p-5 border-t border-white/5 relative z-10 shrink-0 text-left w-full">
+                        <h3 class="font-bold mb-1" style="color: #ffffff;">Green Agriculture</h3>
+                        <p class="text-sm line-clamp-1" style="color: #d1d5db;">Создание англоязычных видео с использованием ИИ</p>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="portfolio-item scroll-reveal w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1 group/cardwrapper" data-category="gaming">
+                <a href="https://www.youtube.com/watch?v=gtErHwRld1o" target="_blank" class="glass-card spotlight-border overflow-hidden flex flex-col group-hover/cardwrapper:-translate-y-2 group w-full h-full block" draggable="false" style="border-radius: 1rem; transition: transform var(--dynamic-transition) ease-out, opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);">
+                    <div class="relative flex-1 flex items-center justify-center overflow-hidden skeleton bg-white/5">
+                        
+                        <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Авг. 2025</div>
+                        <img alt="Фимайн — Я Сделал БЕСКОНЕЧНЫЙ Источник Денег на АНАРХИИ ФанТайм" class="portfolio-poster absolute inset-0 w-full h-full object-cover opacity-0" style="transition: transform var(--dynamic-transition), opacity 0.45s;" onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('skeleton', 'bg-white/5');" draggable="false" loading="lazy" fetchpriority="low" src="/pic/work_1786587761.webp"/>
+                        <video class="portfolio-hover-video absolute inset-0 w-full h-full object-cover opacity-0 pointer-events-none" muted playsinline loop preload="none" aria-hidden="true"><source src="/pic/hover_5bb03353c560.mp4" type="video/mp4"></video>
+                        <div class="absolute inset-0 z-0 portfolio-media-overlay" style="background-color: var(--dynamic-overlay-base); transition: background-color var(--dynamic-transition);"></div>
+                        <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 z-10 flex items-center justify-center" style="transition: all var(--dynamic-transition);">
+                            <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg" style="transition: color var(--dynamic-transition);"></i>
+                        </div>
+                    </div>
+                    <div class="p-5 border-t border-white/5 relative z-10 shrink-0 text-left w-full">
+                        <h3 class="font-bold mb-1" style="color: #ffffff;">Фимайн — Я Сделал БЕСКОНЕЧНЫЙ Источник Денег на АНАРХИИ ФанТайм</h3>
+                        <p class="text-sm line-clamp-1" style="color: #d1d5db;">Динамичный летсплей с добавлением эффектов.</p>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="portfolio-item scroll-reveal w-full max-w-md md:max-w-none md:col-span-2 md:row-span-1 group/cardwrapper" data-category="gaming">
+                <a href="https://www.youtube.com/watch?v=JyMkIKBMSFY" target="_blank" class="glass-card spotlight-border overflow-hidden flex flex-col group-hover/cardwrapper:-translate-y-2 group w-full h-full block" draggable="false" style="border-radius: 1rem; transition: transform var(--dynamic-transition) ease-out, opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);">
+                    <div class="relative flex-1 flex items-center justify-center overflow-hidden skeleton bg-white/5">
+                        
+                        <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Март 2025</div>
+                        <img alt="Фимайн — Я стал МИЛЛИАРДЕРОМ В ПЕРВЫЙ ДЕНЬ ВАЙПА На Анархии ФанТайм" class="portfolio-poster absolute inset-0 w-full h-full object-cover opacity-0" style="transition: transform var(--dynamic-transition), opacity 0.45s;" onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('skeleton', 'bg-white/5');" draggable="false" loading="lazy" fetchpriority="low" src="/pic/work_1786587768.webp"/>
+                        <video class="portfolio-hover-video absolute inset-0 w-full h-full object-cover opacity-0 pointer-events-none" muted playsinline loop preload="none" aria-hidden="true"><source src="/pic/hover_50e2e7bdaa16.mp4" type="video/mp4"></video>
+                        <div class="absolute inset-0 z-0 portfolio-media-overlay" style="background-color: var(--dynamic-overlay-base); transition: background-color var(--dynamic-transition);"></div>
+                        <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 z-10 flex items-center justify-center" style="transition: all var(--dynamic-transition);">
+                            <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg" style="transition: color var(--dynamic-transition);"></i>
+                        </div>
+                    </div>
+                    <div class="p-5 border-t border-white/5 relative z-10 shrink-0 text-left w-full">
+                        <h3 class="font-bold mb-1" style="color: #ffffff;">Фимайн — Я стал МИЛЛИАРДЕРОМ В ПЕРВЫЙ ДЕНЬ ВАЙПА На Анархии ФанТайм</h3>
+                        <p class="text-sm line-clamp-1" style="color: #d1d5db;">Динамичный летсплей с добавлением эффектов.</p>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="portfolio-item scroll-reveal w-full max-w-md md:max-w-none md:col-span-1 md:row-span-1 group/cardwrapper" data-category="gaming">
+                <a href="https://www.youtube.com/watch?v=p-t8exzF_d0" target="_blank" class="glass-card spotlight-border overflow-hidden flex flex-col group-hover/cardwrapper:-translate-y-2 group w-full h-full block" draggable="false" style="border-radius: 1rem; transition: transform var(--dynamic-transition) ease-out, opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);">
+                    <div class="relative flex-1 flex items-center justify-center overflow-hidden skeleton bg-white/5">
+                        
+                        <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Нояб. 2024</div>
+                        <img alt="Фимайн — Получил КНЯЗЯ ЗА 24 ЧАСА ИГРЫ НА АНАРХИИ ФАНТАЙМ" class="portfolio-poster absolute inset-0 w-full h-full object-cover opacity-0" style="transition: transform var(--dynamic-transition), opacity 0.45s;" onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('skeleton', 'bg-white/5');" draggable="false" loading="lazy" fetchpriority="low" src="/pic/work_1786587776.webp"/>
+                        <video class="portfolio-hover-video absolute inset-0 w-full h-full object-cover opacity-0 pointer-events-none" muted playsinline loop preload="none" aria-hidden="true"><source src="/pic/hover_ba35adce48ab.mp4" type="video/mp4"></video>
+                        <div class="absolute inset-0 z-0 portfolio-media-overlay" style="background-color: var(--dynamic-overlay-base); transition: background-color var(--dynamic-transition);"></div>
+                        <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 z-10 flex items-center justify-center" style="transition: all var(--dynamic-transition);">
+                            <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg" style="transition: color var(--dynamic-transition);"></i>
+                        </div>
+                    </div>
+                    <div class="p-5 border-t border-white/5 relative z-10 shrink-0 text-left w-full">
+                        <h3 class="font-bold mb-1" style="color: #ffffff;">Фимайн — Получил КНЯЗЯ ЗА 24 ЧАСА ИГРЫ НА АНАРХИИ ФАНТАЙМ</h3>
+                        <p class="text-sm line-clamp-1" style="color: #d1d5db;">Динамичный летсплей с добавлением эффектов.</p>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="portfolio-item scroll-reveal w-full max-w-md md:max-w-none md:col-span-1 md:row-span-1 group/cardwrapper" data-category="gaming">
+                <a href="https://www.youtube.com/@delik_kryt" target="_blank" class="glass-card spotlight-border overflow-hidden flex flex-col group-hover/cardwrapper:-translate-y-2 group w-full h-full block" draggable="false" style="border-radius: 1rem; transition: transform var(--dynamic-transition) ease-out, opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);">
+                    <div class="relative flex-1 flex items-center justify-center overflow-hidden skeleton bg-white/5">
+                        
+                        <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">Авг. 2024</div>
+                        <img alt="Монтаж для Делика" class="portfolio-poster absolute inset-0 w-full h-full object-cover opacity-0" style="transition: transform var(--dynamic-transition), opacity 0.45s;" onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('skeleton', 'bg-white/5');" draggable="false" loading="lazy" fetchpriority="low" src="/pic/work_1786587783.webp"/>
+                        <video class="portfolio-hover-video absolute inset-0 w-full h-full object-cover opacity-0 pointer-events-none" muted playsinline loop preload="none" aria-hidden="true"><source src="/pic/hover_2d4c24c80a64.mp4" type="video/mp4"></video>
+                        <div class="absolute inset-0 z-0 portfolio-media-overlay" style="background-color: var(--dynamic-overlay-base); transition: background-color var(--dynamic-transition);"></div>
+                        <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 z-10 flex items-center justify-center" style="transition: all var(--dynamic-transition);">
+                            <i class="fa-brands fa-youtube text-4xl text-white/80 group-hover:text-red-500 drop-shadow-lg" style="transition: color var(--dynamic-transition);"></i>
+                        </div>
+                    </div>
+                    <div class="p-5 border-t border-white/5 relative z-10 shrink-0 text-left w-full">
+                        <h3 class="font-bold mb-1" style="color: #ffffff;">Монтаж для Делика</h3>
+                        <p class="text-sm line-clamp-1" style="color: #d1d5db;">Мой канал, динамичный монтаж.</p>
+                    </div>
+                </a>
+            </div>
+            
+<!-- PORTFOLIO_END -->
         </div>
 
         <div class="portfolio-cta w-[calc(100%-2rem)] md:w-[calc(100%-2rem)] mt-10 p-6 md:p-7 text-center">
@@ -756,72 +1368,69 @@
     <p class="text-gray-500 text-sm mt-6 text-center hidden md:block"><i class="fa-solid fa-keyboard mr-2"></i>WASD или Стрелочки для управления</p>
 </div>
 
+<!-- __SITE_DATA_START__ -->
+<script id="__site-data">window.__SITE_DATA__ = {"config":{"avatar":"/pic/sys_1786645643.mp4","favicon":"/pic/icon.png","title_name":"Герман","subtitle":"Video editor & creator","bio_text":"Создаю динамичные видео, Reels, Shorts и рекламные креативы. Воплощаю ваши идеи в кадре. 🎬","visuals":{"card_radius":"1rem","img_scale_hover":"1.1","overlay_base":"rgba(10, 2, 28, 0.16)","overlay_hover":"rgba(10, 2, 28, 0.7)","transition_time":"0.2s","title_color":"#ffffff","desc_color":"#d1d5db","base_color":"#2d40d2","overlay_base_op":"0.25","overlay_hover_op":"0.45","bg_l":"9","particles":"30","blob_op":"0.1","blob_blur":"40","grid_op":"0.045"},"avatar_pos":"-10% -10%","avatar_scale":"1.75"},"portfolio":[{"title":"Братдваа","desc":"Мой крупный проект — Динамичный IRL контент в формате шоу.","link":"https://www.youtube.com/@bratdvaa","date":"Авг. 2025","cols":"4","rows":"1","category":"irl","icon_class":"fa-brands fa-youtube","icon_color":"text-red-500","badge":"pin","image":"/pic/work_1786587611.webp","hover_video":"/pic/hover_2ed02d6bd83d.mp4"},{"title":"Авиация","desc":"Склейка, саунд, color","link":"https://disk.yandex.ru/i/qrLRHdzb-r2EPg","date":"Авг. 2026","cols":"1","rows":"2","category":"irl, shorts","icon_class":"fa-solid fa-compact-disc","icon_color":"text-[#FFCC00]","badge":"new","image":"/pic/work_1786587630.webp","hover_video":"/pic/hover_e0a0da0e935d.webm"},{"title":"Работа по биологии","desc":"Работа с нейросетями, цветокорреция.","image":"/pic/work_1786587641.webp","link":"https://disk.yandex.ru/i/1-1H46zRa50SBQ","date":"Фев. 2026","cols":"2","rows":"1","category":"irl","icon_class":"fa-solid fa-compact-disc","icon_color":"text-yellow-400","hover_video":"/pic/hover_37fc07afdd01.webm"},{"title":"Продажные блоггеры","desc":"Рекламные ролики для разных брендов.","link":"https://www.instagram.com/prodajnie","date":"Дек. 2025","cols":"1","rows":"2","category":"irl, shorts","icon_class":"fa-brands fa-instagram","icon_color":"text-pink-500","badge":"none","image":"/pic/work_1786587649.webp","hover_video":"/pic/hover_f7aa64615297.webm"},{"title":"Переходники | Продажные","desc":"Монтаж готовой склейки","image":"/pic/work_1786587658.webp","link":"https://disk.yandex.ru/i/HLhs7LcHXgLbbQ","date":"Нояб. 2025","cols":"1","rows":"2","category":"irl, shorts","icon_class":"fa-solid fa-compact-disc","icon_color":"text-[#FFCC00]","hover_video":"/pic/hover_bfb964e9eed8.webm"},{"title":"День 4 | Продажные","desc":"Монтаж готовой склейки","image":"/pic/work_1786587674.webp","link":"https://disk.yandex.ru/i/YjBJA_Bq4iBvJg","date":"Дек. 2025","cols":"1","rows":"2","category":"irl, shorts","icon_class":"fa-solid fa-compact-disc","icon_color":"text-[#FFCC00]","hover_video":"/pic/hover_1cc1bf4cbc74.webm"},{"title":"Сказка | Продажные","desc":"Съёмка, сборка, эффекты","image":"/pic/work_1786587687.webp","link":"https://disk.yandex.ru/i/XSNDFEKIv8c0Pw","date":"Дек. 2025","cols":"1","rows":"2","category":"irl, shorts","icon_class":"fa-solid fa-compact-disc","icon_color":"text-[#FFCC00]","hover_video":"/pic/hover_c7e00af5f738.webm"},{"title":"Rainbow GG Minecraft","desc":"485к, монтаж англоязычных роликов.","image":"/pic/work_1786587703.webp","link":"https://www.youtube.com/watch?v=9mKflJB1Gmo","date":"Янв. 2025","cols":"2","rows":"1","category":"gaming","icon_class":"fa-brands fa-youtube","icon_color":"text-red-500","hover_video":"/pic/hover_2dbc31a1265a.webm"},{"title":"Rainbow GG Minecraft","desc":"188к, монтаж англоязычных роликов","image":"/pic/work_1786587713.webp","link":"https://www.youtube.com/watch?v=DiR2Cl5KF-Y","date":"Нояб. 2024","cols":"2","rows":"1","category":"gaming","icon_class":"fa-brands fa-youtube","icon_color":"text-red-500","hover_video":"/pic/hover_0e51d563f9c4.mp4"},{"title":"YT Shorts для Делика","desc":"Динамичный монтаж с добавлением эффектов","image":"/pic/work_1786587697.webp","link":"https://www.youtube.com/shorts/F8kd9Q-64VM","date":"Дек. 2024","cols":"1","rows":"2","category":"gaming, shorts","icon_class":"fa-brands fa-youtube","icon_color":"text-red-500","hover_video":"/pic/hover_e4e9735a2a17.webm"},{"title":"Rainbow GG Minecraft","desc":"Монтаж англоязычных роликов","image":"/pic/work_1786587730.webp","link":"https://www.youtube.com/watch?v=zf-iC5QRgCA&","date":"Окт. 2024","cols":"1","rows":"1","category":"gaming","icon_class":"fa-brands fa-youtube","icon_color":"text-red-500","hover_video":"/pic/hover_c253a9817671.mp4"},{"title":"Трейлеры Resolver","desc":"Короткометражки к обновлениям сервера","image":"/pic/work_1786587735.webp","link":"https://www.youtube.com/@mc_resolver","date":"Июль 2024","cols":"1","rows":"1","category":"gaming","icon_class":"fa-brands fa-youtube","icon_color":"text-red-500","hover_video":"/pic/hover_7724c4f1fb00.webm"},{"title":"Green Agriculture","desc":"Создание англоязычных видео с использованием ИИ","image":"/pic/work_1786587752.webp","link":"https://www.youtube.com/@ashleymccuen","date":"Фев. 2025","cols":"2","rows":"1","category":"irl","icon_class":"fa-brands fa-youtube","icon_color":"text-red-500","hover_video":"/pic/hover_983d7727c279.webm"},{"title":"Фимайн — Я Сделал БЕСКОНЕЧНЫЙ Источник Денег на АНАРХИИ ФанТайм","desc":"Динамичный летсплей с добавлением эффектов.","image":"/pic/work_1786587761.webp","link":"https://www.youtube.com/watch?v=gtErHwRld1o","date":"Авг. 2025","cols":"2","rows":"1","category":"gaming","icon_class":"fa-brands fa-youtube","icon_color":"text-red-500","hover_video":"/pic/hover_5bb03353c560.mp4"},{"title":"Фимайн — Я стал МИЛЛИАРДЕРОМ В ПЕРВЫЙ ДЕНЬ ВАЙПА На Анархии ФанТайм","desc":"Динамичный летсплей с добавлением эффектов.","image":"/pic/work_1786587768.webp","link":"https://www.youtube.com/watch?v=JyMkIKBMSFY","date":"Март 2025","cols":"2","rows":"1","category":"gaming","icon_class":"fa-brands fa-youtube","icon_color":"text-red-500","hover_video":"/pic/hover_50e2e7bdaa16.mp4"},{"title":"Фимайн — Получил КНЯЗЯ ЗА 24 ЧАСА ИГРЫ НА АНАРХИИ ФАНТАЙМ","desc":"Динамичный летсплей с добавлением эффектов.","image":"/pic/work_1786587776.webp","link":"https://www.youtube.com/watch?v=p-t8exzF_d0","date":"Нояб. 2024","cols":"1","rows":"1","category":"gaming","icon_class":"fa-brands fa-youtube","icon_color":"text-red-500","hover_video":"/pic/hover_ba35adce48ab.mp4"},{"title":"Монтаж для Делика","desc":"Мой канал, динамичный монтаж.","image":"/pic/work_1786587783.webp","link":"https://www.youtube.com/@delik_kryt","date":"Авг. 2024","cols":"1","rows":"1","category":"gaming","icon_class":"fa-brands fa-youtube","icon_color":"text-red-500","hover_video":"/pic/hover_2d4c24c80a64.mp4"}],"reviews":[{"name":"Случайный проходимец","subtitle":"Продавец на маркетплейсе","avatar":"/pic/rev_1786743732.webp","text":"Быстро сделал все как обсудили, по красоте получилось хорошо, но есть моменты которые можно было сделать лучше, в целом результату рад","stars":4,"tag":"Дизайн","published":true},{"name":"Сеня Ильин Михайлович","subtitle":"Близкий друг","avatar":"/pic/rev_1786646265.webp","text":"Десяточка уверенная десяточка.
+Когда я обращался к этому пацанчику, я своим крошечным мозгом и представить не мог как он повлияет работу алгоритмов и охватов ютуба (кончено же в положительном ключе). Короче, если бы не обратился именно к Герману, возможно ночевал где-нибудь на вокзале.","stars":5,"tag":"Дизайн","published":true},{"name":"Фимайн","subtitle":"Майнкрафт-ютубер","avatar":"/pic/rev_1786606728.webp","text":"Сделано качественно, но косяки есть.","stars":4.5,"tag":"Монтаж","published":true},{"name":"Старый знакомый","subtitle":"Монтаж видеоролика по биологии","avatar":"","text":"Выполнил работу быстро, в сроки. Я получил автомат:)","stars":5,"tag":"Монтаж","published":true},{"name":"Магамед","subtitle":"Креативщик, продюсер канала Брадтваа","avatar":"/pic/rev_1786606643.webp","text":"Герман своевременно делал монтаж общего нашего проекта Братдваа, очень круто монтирует","stars":5,"tag":"Разное","published":true}]}; window.__SITE_DATA_BAKED__ = true;</script>
+<!-- __SITE_DATA_END__ -->
 <script type="module">
-    // === НАСТРОЙКИ ГРОМКОСТИ ЗВУКОВ (от 0.0 до 1.0) ===
-    const VOL_HOVER   = 0.05; 
-    const VOL_CLICK   = 0.035; 
-    const VOL_EAT     = 0.075; 
-    const VOL_POWERUP = 0.05; 
-    const VOL_DIE     = 0.075; 
-    const VOL_RECORD  = 0.035; 
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyBqEHY1U4JZAohw7cJNhPciJGrh6mgIHVk",
-        authDomain: "delmysnakeleader.firebaseapp.com",
-        projectId: "delmysnakeleader",
-        storageBucket: "delmysnakeleader.firebasestorage.app",
-        messagingSenderId: "1083442947791",
-        appId: "1:1083442947791:web:3b380e10d12ead7d5c39ba",
-        measurementId: "G-RXTZ4504M0"
-    };
-
-    const uiSounds = {
-        hover: new Audio('ui-hover.mp3'),
-        click: new Audio('ui-click.mp3'),
-        eat: new Audio('eat.mp3'),
-        powerup: new Audio('powerup.mp3'),
-        die: new Audio('die.mp3'),
-        record: new Audio('record.mp3')
-    };
-    
-    uiSounds.hover.volume = VOL_HOVER;
-    uiSounds.click.volume = VOL_CLICK;
-    uiSounds.eat.volume = VOL_EAT;
-    uiSounds.powerup.volume = VOL_POWERUP;
-    uiSounds.die.volume = VOL_DIE;
-    uiSounds.record.volume = VOL_RECORD;
-
-    function playUiSound(type) {
-        const baseSound = uiSounds[type];
-        if (baseSound) {
-            const clone = baseSound.cloneNode();
-            clone.volume = baseSound.volume; 
-            clone.play().catch(() => {}); 
+    function initParticles() {
+        const container = document.getElementById('particles-bg');
+        if (!container) return;
+        container.innerHTML = '';
+        if(!document.getElementById('particle-styles')) {
+            let s = document.createElement('style'); s.id = 'particle-styles';
+            s.innerHTML = `@keyframes float-particle { 0% { transform: translateY(0) scale(1); } 100% { transform: translateY(-100vh) scale(0); } } @keyframes fade-particle { 0% { opacity: 0; } 50% { opacity: 0.6; } 100% { opacity: 0; } }`;
+            document.head.appendChild(s);
+        }
+        const pCount = window.__SITE_DATA__?.config?.visuals?.particles ?? 18;
+        for (let i = 0; i < pCount; i++) {
+            let p = document.createElement('div');
+            p.className = 'absolute rounded-full opacity-0 pointer-events-none';
+            let size = Math.random() * 4 + 2;
+            p.style.width = size + 'px'; p.style.height = size + 'px';
+            p.style.background = 'var(--color-accent)'; p.style.boxShadow = '0 0 10px var(--color-accent)';
+            p.style.left = Math.random() * 100 + 'vw'; p.style.top = Math.random() * 100 + 'vh';
+            p.style.animation = `float-particle ${Math.random() * 15 + 10}s linear infinite, fade-particle ${Math.random() * 5 + 3}s ease-in-out infinite alternate`;
+            p.style.animationDelay = `-${Math.random() * 10}s`;
+            container.appendChild(p);
         }
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll('.glass-btn, .portfolio-item, .filter-btn, .music-btn, #avatar-img').forEach(el => {
-            el.addEventListener('mouseenter', () => playUiSound('hover'));
-        });
-        document.querySelectorAll('.filter-btn, .glass-btn, .music-btn, #avatar-img, #close-snake-btn, #restart-snake-btn, #leaderboard-btn, #close-leaderboard-btn, #start-snake-btn, #pause-snake-btn').forEach(el => {
-            el.addEventListener('click', () => playUiSound('click'));
-        });
+    const initFrontend = () => {
+        initParticles();
+        const snakeButton = document.getElementById('open-snake-btn');
+        let snakeModulePromise = null;
+        if (snakeButton) {
+            snakeButton.addEventListener('click', async (e) => {
+                e.preventDefault();
+                try {
+                    if (!snakeModulePromise) snakeModulePromise = import('./snake.js');
+                    const snakeModule = await snakeModulePromise;
+                    if (typeof snakeModule.openSnake !== 'function') throw new Error('snake.js загружен, но openSnake() не найден');
+                    snakeModule.openSnake();
+                } catch (error) { console.error('Snake load error:', error); }
+            });
+        }
+        
+        const syncPageVisibility = () => document.documentElement.classList.toggle('page-hidden', document.hidden);
+        document.addEventListener('visibilitychange', syncPageVisibility, { passive: true });
+        syncPageVisibility();
 
         const gridPattern = document.querySelector('.workspace-grid-pattern');
         if (gridPattern) {
             let scrollY = 0;
             window.addEventListener('scroll', () => { scrollY = window.scrollY; }, { passive: true }); 
             const mod = (n, m) => ((n % m) + m) % m;
-
+            let gridRafId = null;
             function animateGrid(time) {
-                const drift = time * 0.008; 
-                const x = mod(drift, 60);
-                const y = mod(drift - (scrollY * 0.5), 60); 
-                gridPattern.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-                requestAnimationFrame(animateGrid);
+                if (document.hidden) { gridRafId = null; return; }
+                const drift = time * 0.008;
+                gridPattern.style.transform = `translate3d(${mod(drift, 60)}px, ${mod(drift - (scrollY * 0.5), 60)}px, 0)`;
+                gridRafId = requestAnimationFrame(animateGrid);
             }
-            requestAnimationFrame(animateGrid);
+            const resumeGridAnimation = () => { if (!document.hidden && gridRafId === null) gridRafId = requestAnimationFrame(animateGrid); };
+            document.addEventListener('visibilitychange', resumeGridAnimation, { passive: true });
+            resumeGridAnimation();
         }
 
         const audio = document.getElementById('bg-audio');
@@ -831,41 +1440,23 @@
         const volumeSlider = document.getElementById('volume-slider');
         
         let isPlaying = false;
-        let lastUserVolume = 0.3;
-        audio.volume = lastUserVolume;
+        audio.volume = 0.3;
 
         toggleBtn.addEventListener('click', async (e) => {
             e.stopPropagation(); 
             if (isPlaying) {
-                audio.pause();
-                icon.classList.replace('fa-pause', 'fa-play');
-                icon.classList.add('ml-1'); 
-                toggleBtn.classList.remove('playing');
-                playerPanel.classList.remove('active');
-                isPlaying = false;
+                audio.pause(); icon.classList.replace('fa-pause', 'fa-play'); icon.classList.add('ml-1'); 
+                toggleBtn.classList.remove('playing'); playerPanel.classList.remove('active'); isPlaying = false;
             } else {
-                icon.classList.replace('fa-play', 'fa-pause');
-                icon.classList.remove('ml-1'); 
-                toggleBtn.classList.add('playing');
-                playerPanel.classList.add('active');
-                isPlaying = true;
-                try {
-                    await audio.play();
-                } catch (error) {
-                    icon.classList.replace('fa-pause', 'fa-play');
-                    icon.classList.add('ml-1');
-                    toggleBtn.classList.remove('playing');
-                    isPlaying = false;
+                icon.classList.replace('fa-play', 'fa-pause'); icon.classList.remove('ml-1'); 
+                toggleBtn.classList.add('playing'); playerPanel.classList.add('active'); isPlaying = true;
+                try { await audio.play(); } catch (error) {
+                    icon.classList.replace('fa-pause', 'fa-play'); icon.classList.add('ml-1');
+                    toggleBtn.classList.remove('playing'); isPlaying = false;
                 }
             }
         });
-
-        if (volumeSlider) {
-            volumeSlider.addEventListener('input', (e) => {
-                lastUserVolume = e.target.value;
-                audio.volume = lastUserVolume;
-            });
-        }
+        if (volumeSlider) volumeSlider.addEventListener('input', (e) => audio.volume = e.target.value);
 
         const mainCard = document.getElementById('main-card');
         const spotlightElements = document.querySelectorAll('.spotlight-border');
@@ -876,14 +1467,10 @@
                 const rect = el.getBoundingClientRect();
                 const clientX = e.touches ? e.touches[0].clientX : e.clientX;
                 const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-                const x = clientX - rect.left;
-                const y = clientY - rect.top;
+                const x = clientX - rect.left; const y = clientY - rect.top;
+                el.style.setProperty('--mouse-x', `${x}px`); el.style.setProperty('--mouse-y', `${y}px`); el.style.setProperty('--spotlight-opacity', `1`);
                 
-                el.style.setProperty('--mouse-x', `${x}px`);
-                el.style.setProperty('--mouse-y', `${y}px`);
-                el.style.setProperty('--spotlight-opacity', `1`);
-
-                if (el === mainCard && !mainCard.style.transform.includes('scale(')) {
+                if (el === mainCard) {
                     const centerX = rect.width / 2;
                     const centerY = rect.height / 2;
                     const rotateX = ((y - centerY) / centerY) * -3.5; 
@@ -892,59 +1479,42 @@
                 }
             });
         }
-
         function handlePointerLeave(el) {
             if (el.rafId) cancelAnimationFrame(el.rafId);
             el.style.setProperty('--spotlight-opacity', `0`);
-            if (el === mainCard && !mainCard.style.transform.includes('scale(')) {
+            if (el === mainCard) {
                 mainCard.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
             }
-        }
-
-        if (mainCard) {
-            mainCard.addEventListener('mousemove', (e) => handlePointerMove(e, mainCard));
-            mainCard.addEventListener('touchmove', (e) => handlePointerMove(e, mainCard), { passive: true });
-            mainCard.addEventListener('mouseleave', () => handlePointerLeave(mainCard));
-            mainCard.addEventListener('touchend', () => handlePointerLeave(mainCard));
-        }
+	}
 
         spotlightElements.forEach(el => {
-            if (el !== mainCard) {
-                el.addEventListener('mousemove', (e) => handlePointerMove(e, el));
-                el.addEventListener('touchmove', (e) => handlePointerMove(e, el), { passive: true });
-                el.addEventListener('mouseleave', () => handlePointerLeave(el));
-                el.addEventListener('touchend', () => handlePointerLeave(el));
-            }
+            el.addEventListener('mousemove', (e) => handlePointerMove(e, el));
+            el.addEventListener('touchmove', (e) => handlePointerMove(e, el), { passive: true });
+            el.addEventListener('mouseleave', () => handlePointerLeave(el));
+            el.addEventListener('touchend', () => handlePointerLeave(el));
         });
 
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
-                const targetId = this.getAttribute('href');
-                if(targetId === '#') return;
-                const targetElement = document.querySelector(targetId);
-                if(targetElement) {
-                    e.preventDefault();
-                    targetElement.scrollIntoView({ behavior: 'smooth' });
-                }
+                const tId = this.getAttribute('href'); if(tId === '#') return;
+                const el = document.querySelector(tId); if(el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth' }); }
             });
         }); 
 
         const filterBtns = document.querySelectorAll('.filter-btn');
         const portfolioGrid = document.getElementById('portfolio-grid');
         const shakeElements = [document.getElementById('main-content-wrapper'), document.getElementById('player-inner')];
-        
         let glitchTimeout, filterTimeout, filterClickCount = 0, filterShakeTimeout, filterResetTimeout;
         const easterEggMessages = ["Ай!", "Эй!", "Хватит", "Остановись", "Зачем?", "Тебе заняться нечем?", "Прекрати", "Мне больно!", "ОСТАНОВИСЬ", "Сайт сломается!", "10", "9", "8", "7", "Это не шутка!", "ПОЩАДИ", "ААААААА"];
 
         const filterActivePill = document.getElementById('filter-active-pill');
         const positionFilterPill = (btn, instant = false) => {
             if (!btn || !filterActivePill) return;
-            const containerRect = btn.parentElement.getBoundingClientRect();
-            const rect = btn.getBoundingClientRect();
+            const containerRect = btn.parentElement.getBoundingClientRect(), rect = btn.getBoundingClientRect();
             filterActivePill.style.transition = instant ? 'none' : '';
             filterActivePill.style.width = `${rect.width}px`;
             filterActivePill.style.transform = `translate3d(${rect.left - containerRect.left}px, 0, 0)`;
-            if (instant) requestAnimationFrame(() => { filterActivePill.style.transition = ''; });
+            if (instant) requestAnimationFrame(() => filterActivePill.style.transition = '');
         };
 
         const activeFilter = document.querySelector('.filter-btn.active');
@@ -952,1253 +1522,162 @@
 
         filterBtns.forEach(btn => {
             btn.addEventListener('click', function(e) {
-                if (glitchTimeout) clearTimeout(glitchTimeout);
-                if (filterTimeout) clearTimeout(filterTimeout);
+                if (glitchTimeout) clearTimeout(glitchTimeout); if (filterTimeout) clearTimeout(filterTimeout);
+                portfolioGrid.classList.remove('glitch-active'); void portfolioGrid.offsetWidth; portfolioGrid.classList.add('glitch-active');
+                glitchTimeout = setTimeout(() => portfolioGrid.classList.remove('glitch-active'), 250);
+                filterBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+                this.classList.add('active'); this.setAttribute('aria-selected', 'true'); positionFilterPill(this);
 
-                portfolioGrid.classList.remove('glitch-active');
-                void portfolioGrid.offsetWidth; 
-                portfolioGrid.classList.add('glitch-active');
-                glitchTimeout = setTimeout(() => { portfolioGrid.classList.remove('glitch-active'); }, 250);
-
-                filterBtns.forEach(b => {
-                    b.classList.remove('active');
-                    b.setAttribute('aria-selected', 'false');
-                });
-                this.classList.add('active');
-                this.setAttribute('aria-selected', 'true');
-                positionFilterPill(this);
-
-                const filterValue = this.getAttribute('data-filter');
-
+                const fVal = this.getAttribute('data-filter');
                 filterTimeout = setTimeout(() => {
-                    const currentPortfolioItems = document.querySelectorAll('.portfolio-item');
-                    currentPortfolioItems.forEach(item => {
-                        const rawCategories = item.getAttribute('data-category');
-                        if (!rawCategories) return; 
-                        const itemCategoriesArray = rawCategories.split(',').map(cat => cat.trim());
-                        
-                        if (filterValue === 'all' || itemCategoriesArray.includes(filterValue)) {
-                            item.classList.remove('hide');
-                        } else {
-                            item.classList.add('hide');
-                        }
+                    document.querySelectorAll('.portfolio-item').forEach(item => {
+                        const raw = item.getAttribute('data-category'); if (!raw) return;
+                        (fVal === 'all' || raw.split(',').map(c => c.trim()).includes(fVal)) ? item.classList.remove('hide') : item.classList.add('hide');
                     });
                 }, 125); 
 
-                filterClickCount++;
-                clearTimeout(filterResetTimeout);
-                filterResetTimeout = setTimeout(() => { filterClickCount = 0; }, 400);
-
+                filterClickCount++; clearTimeout(filterResetTimeout); filterResetTimeout = setTimeout(() => filterClickCount = 0, 400);
                 if (filterClickCount > 3) {
                     clearTimeout(filterShakeTimeout);
-                    let intensity = Math.min(filterClickCount, 30);
-                    
+                    let int = Math.min(filterClickCount, 30);
                     shakeElements.forEach(el => {
                         el.classList.add('is-shaking');
-                        el.style.setProperty('--shake-x', `${Math.random() * (intensity * 0.3)}px`);
-                        el.style.setProperty('--shake-y', `${Math.random() * (intensity * 0.3)}px`);
-                        el.style.setProperty('--shake-r', `${(Math.random() - 0.5) * (intensity * 0.05)}deg`);
+                        el.style.setProperty('--shake-x', `${Math.random() * (int * 0.3)}px`); el.style.setProperty('--shake-y', `${Math.random() * (int * 0.3)}px`); el.style.setProperty('--shake-r', `${(Math.random() - 0.5) * (int * 0.05)}deg`);
                     });
-
-                    filterShakeTimeout = setTimeout(() => {
-                        shakeElements.forEach(el => el.classList.remove('is-shaking'));
-                    }, 150);
+                    filterShakeTimeout = setTimeout(() => shakeElements.forEach(el => el.classList.remove('is-shaking')), 150);
 
                     const toast = document.createElement('div');
-                    let msgIndex = Math.min(filterClickCount - 4, easterEggMessages.length - 1);
-                    toast.textContent = easterEggMessages[msgIndex];
-                    
+                    toast.textContent = easterEggMessages[Math.min(filterClickCount - 4, easterEggMessages.length - 1)];
                     toast.className = 'absolute text-[#ff0055] font-black text-base md:text-lg pointer-events-none z-[200] whitespace-nowrap drop-shadow-[0_0_12px_rgba(255,0,85,1)] select-none';
-                    toast.style.position = 'fixed';
-                    toast.style.left = `${e.clientX}px`;
-                    toast.style.top = `${e.clientY}px`;
-                    toast.style.transform = `translate(-50%, -50%) scale(0.5)`;
-                    toast.style.opacity = '1';
-                    toast.style.transition = 'all 3s cubic-bezier(0.16, 1, 0.3, 1)'; 
-                    
+                    toast.style.cssText = `position: fixed; left: ${e.clientX}px; top: ${e.clientY}px; transform: translate(-50%, -50%) scale(0.5); opacity: 1; transition: all 3s cubic-bezier(0.16, 1, 0.3, 1);`;
                     document.body.appendChild(toast);
-
-                    requestAnimationFrame(() => {
-                        requestAnimationFrame(() => {
-                            const randomX = (Math.random() - 0.5) * 120;
-                            const flyY = 60 + Math.random() * 40; 
-                            toast.style.transform = `translate(calc(-50% + ${randomX}px), calc(-50% - ${flyY}px)) scale(1.3)`;
-                            toast.style.opacity = '0';
-                        });
-                    });
+                    requestAnimationFrame(() => requestAnimationFrame(() => {
+                        toast.style.transform = `translate(calc(-50% + ${(Math.random() - 0.5) * 120}px), calc(-50% - ${60 + Math.random() * 40}px)) scale(1.3)`; toast.style.opacity = '0';
+                    }));
                     setTimeout(() => toast.remove(), 3000);
                 }
             });
         });
 
-        const profileImg = document.getElementById('avatar-img');
-        const profileVid = document.getElementById('avatar-video');
-        let mcClickCount = 0;
-        let mcClickTimer;
-        let mcEasterEggActive = false;
+        const profileImg = document.getElementById('avatar-img'), profileVid = document.getElementById('avatar-video');
+        let mcClickCount = 0, mcClickTimer, mcEasterEggActive = false;
 
         const avatarClickHandler = (e) => {
-            e.preventDefault();
-            mcClickCount++;
-            clearTimeout(mcClickTimer);
-            
+            e.preventDefault(); mcClickCount++; clearTimeout(mcClickTimer);
             if (mcClickCount === 3 && !mcEasterEggActive) {
-                mcEasterEggActive = true;
-                mcClickCount = 0;
-                
-                document.documentElement.style.setProperty('--color-accent', '#22c55e'); 
-                document.documentElement.style.setProperty('--color-accent-hover', '#16a34a');
-                document.documentElement.style.setProperty('--blob-1', '#22c55e'); 
-                document.documentElement.style.setProperty('--blob-3', '#4ade80');
-                
-                const creeperContainer = document.createElement('div');
-                creeperContainer.style.cssText = 'position:fixed; inset:0; pointer-events:none; z-index:2; overflow:hidden;';
-                document.body.appendChild(creeperContainer);
-                
-                let creeperInterval = setInterval(() => {
+                mcEasterEggActive = true; mcClickCount = 0;
+                document.documentElement.style.setProperty('--color-accent', '#22c55e'); document.documentElement.style.setProperty('--color-accent-hover', '#16a34a');
+                document.documentElement.style.setProperty('--blob-1', '#22c55e'); document.documentElement.style.setProperty('--blob-3', '#4ade80');
+                const crCont = document.createElement('div'); crCont.style.cssText = 'position:fixed; inset:0; pointer-events:none; z-index:2; overflow:hidden;'; document.body.appendChild(crCont);
+                let crInt = setInterval(() => {
                     if (document.hidden) return;
-                    
-                    const creeper = document.createElement('div');
-                    creeper.innerHTML = `<svg viewBox="0 0 8 8" width="40" height="40" xmlns="http://www.w3.org/2000/svg"><rect width="8" height="8" fill="#22c55e"/><rect x="1" y="2" width="2" height="2" fill="#111"/><rect x="5" y="2" width="2" height="2" fill="#111"/><rect x="3" y="4" width="2" height="3" fill="#111"/><rect x="2" y="5" width="1" height="2" fill="#111"/><rect x="5" y="5" width="1" height="2" fill="#111"/></svg>`;
-                    
-                    const startPos = Math.random() * 100; 
-                    creeper.style.cssText = `position:absolute; bottom:-50px; left:${startPos}vw; opacity: 0.6; transition: transform 6s linear, opacity 6s ease-in; filter: drop-shadow(0 0 10px #22c55e); will-change: transform, opacity;`;
-                    creeperContainer.appendChild(creeper);
-                    
-                    requestAnimationFrame(() => {
-                        requestAnimationFrame(() => {
-                            creeper.style.transform = `translate3d(0, -110vh, 0) rotate(${(Math.random() - 0.5) * 90}deg)`;
-                            creeper.style.opacity = '0';
-                        });
-                    });
-                    setTimeout(() => creeper.remove(), 6000);
+                    const cr = document.createElement('div');
+                    cr.innerHTML = `<svg viewBox="0 0 8 8" width="40" height="40" xmlns="http://www.w3.org/2000/svg"><rect width="8" height="8" fill="#22c55e"/><rect x="1" y="2" width="2" height="2" fill="#111"/><rect x="5" y="2" width="2" height="2" fill="#111"/><rect x="3" y="4" width="2" height="3" fill="#111"/><rect x="2" y="5" width="1" height="2" fill="#111"/><rect x="5" y="5" width="1" height="2" fill="#111"/></svg>`;
+                    cr.style.cssText = `position:absolute; bottom:-50px; left:${Math.random() * 100}vw; opacity: 0.6; transition: transform 6s linear, opacity 6s ease-in; filter: drop-shadow(0 0 10px #22c55e); will-change: transform, opacity;`;
+                    crCont.appendChild(cr);
+                    requestAnimationFrame(() => requestAnimationFrame(() => { cr.style.transform = `translate3d(0, -110vh, 0) rotate(${(Math.random() - 0.5) * 90}deg)`; cr.style.opacity = '0'; }));
+                    setTimeout(() => cr.remove(), 6000);
                 }, 600);
-                window.addEventListener('unload', () => clearInterval(creeperInterval));
-            } else {
-                mcClickTimer = setTimeout(() => { mcClickCount = 0; }, 400);
-            }
+                window.addEventListener('unload', () => clearInterval(crInt));
+            } else { mcClickTimer = setTimeout(() => mcClickCount = 0, 400); }
         };
-
         if (profileImg) profileImg.addEventListener('click', avatarClickHandler);
         if (profileVid) profileVid.addEventListener('click', avatarClickHandler);
 
-        const adjs = ['Redstone', 'Iron', 'Quantum', 'Blox', 'Epic', 'Brave', 'Gamer', 'Golden', 'Dark', 'Cosmic', 'Marvelous', 'Fabric', 'Spider', 'delmy', 'Rock', 'beautiful', 'BIG_', 'Gay', 'Фармацевт', 'Uzbek'];
-        const nouns = ['Creeper', 'Batman', 'Shinobi', 'Avenger', 'Jedi', 'Noob', 'Titan', 'Hokage', 'ChickenFarmer', 'Spider', 'Witcher', 'Miner', 'doggie', 'man', '_Chpoker', 'Operator', 'Vandal', 'Узбек'];
-
-        let localUsername = localStorage.getItem('delmyname_snakeUser');
-        if (!localUsername) {
-            localUsername = adjs[Math.floor(Math.random() * adjs.length)] + nouns[Math.floor(Math.random() * nouns.length)];
-            localStorage.setItem('delmyname_snakeUser', localUsername);
-        }
-        document.getElementById('snake-username-display').innerText = localUsername;
-
-        let localBestScore = parseInt(localStorage.getItem('delmyname_snakeBestScore')) || 0;
-        document.getElementById('snake-best-score').innerText = localBestScore;
-
-        const snakeOverlay = document.getElementById('snake-overlay');
-        const openSnakeBtn = document.getElementById('open-snake-btn');
-        const closeSnakeBtn = document.getElementById('close-snake-btn');
-        const wrapper = document.getElementById('snake-canvas-wrapper');
-        const canvas = document.getElementById('snake-canvas');
-        const ctx = canvas.getContext('2d');
-        const scoreEl = document.getElementById('snake-score');
-        const finalScoreEl = document.getElementById('snake-final-score');
-        
-        const startScreen = document.getElementById('snake-start-screen');
-        const startGameBtn = document.getElementById('start-snake-btn');
-        const pauseScreen = document.getElementById('snake-pause-screen');
-        const pauseBtn = document.getElementById('pause-snake-btn');
-        const gameOverScreen = document.getElementById('snake-game-over');
-        
-        const restartBtn = document.getElementById('restart-snake-btn');
-        const leaderboardBtn = document.getElementById('leaderboard-btn');
-        const closeLeaderboardBtn = document.getElementById('close-leaderboard-btn');
-        const leaderboardScreen = document.getElementById('snake-leaderboard');
-        const activeBuffUI = document.getElementById('active-buff-ui');
-        const buffTimerBar = document.getElementById('buff-timer-bar');
-
-        canvas.width = 400;
-        canvas.height = 400;
-        const gridSize = 20;
-        const tileCount = canvas.width / gridSize;
-
-        let snake = [];
-        let dx = 0, dy = 0;
-        let foodX, foodY;
-        let score = 0;
-        
-        let gameActive = false;
-        let isPaused = false;
-        let inputQueue = []; 
-        
-        let lastLogicUpdate = 0;
-        let currentSpeed = 150; 
-        let animationFrameId;
-
-        const BUFF_TYPES = [
-            { id: 'SLOW', color: '#a855f7', name: 'ЗАМЕДЛЕНИЕ', icon: 'fa-solid fa-stopwatch' },
-            { id: 'MAGNET', color: '#eab308', name: 'МАГНИТ', icon: 'fa-solid fa-magnet' },
-            { id: 'DOUBLE', color: '#3b82f6', name: 'X2 ОЧКИ', icon: 'fa-solid fa-gem' },
-            { id: 'GHOST', color: '#ffffff', name: 'ПРИЗРАК', icon: 'fa-solid fa-ghost' }
-        ];
-        
-        let buffItem = null;
-        let activeBuff = null;
-        let buffTimer = null;
-        let buffStartTime = 0;
-        const buffDuration = 8000;
-        let pauseStartTime = 0;
-
-        function resetGameData() {
-            snake = [
-                {x: 10, y: 10, oldX: 10, oldY: 10},
-                {x: 10, y: 11, oldX: 10, oldY: 11},
-                {x: 10, y: 12, oldX: 10, oldY: 12}
-            ];
-            dx = 0; dy = -1; 
-            inputQueue = [];
-            score = 0;
-            currentSpeed = 150;
-            scoreEl.innerText = score;
-            buffItem = null;
-            clearBuff();
-            
-            ctx.fillStyle = '#0a021c';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            placeFood();
-        }
-
-        function initGame() {
-            resetGameData();
-            startScreen.classList.add('hidden');
-            gameOverScreen.classList.add('hidden');
-            gameOverScreen.classList.remove('flex');
-            gameActive = true;
-            isPaused = false;
-            
-            cancelAnimationFrame(animationFrameId);
-            lastLogicUpdate = performance.now();
-            requestAnimationFrame(gameLoop);
-        }
-
-        function placeFood() {
-            foodX = Math.floor(Math.random() * tileCount);
-            foodY = Math.floor(Math.random() * tileCount);
-            for (let part of snake) {
-                if (part.x === foodX && part.y === foodY) return placeFood();
-            }
-            if (buffItem && buffItem.x === foodX && buffItem.y === foodY) return placeFood();
-
-            if (!buffItem && !activeBuff && Math.random() < 0.20) placeBuff();
-        }
-
-        function placeBuff() {
-            let bx = Math.floor(Math.random() * tileCount);
-            let by = Math.floor(Math.random() * tileCount);
-            for (let part of snake) {
-                if (part.x === bx && part.y === by) return placeBuff();
-            }
-            if (bx === foodX && by === foodY) return placeBuff();
-
-            const randomBuff = BUFF_TYPES[Math.floor(Math.random() * BUFF_TYPES.length)];
-            buffItem = { x: bx, y: by, type: randomBuff, spawnTime: performance.now() };
-        }
-
-        function activateBuff(buffType) {
-            activeBuff = buffType;
-            buffStartTime = performance.now();
-            
-            const iconEl = document.getElementById('buff-icon');
-            const nameEl = document.getElementById('buff-name');
-            nameEl.innerText = buffType.name;
-            iconEl.className = buffType.icon;
-            
-            activeBuffUI.style.backgroundColor = buffType.color + '30'; 
-            activeBuffUI.style.borderColor = buffType.color + '80';
-            activeBuffUI.style.color = buffType.color;
-            buffTimerBar.style.backgroundColor = buffType.color;
-            activeBuffUI.classList.remove('hidden');
-
-            if (buffTimer) clearTimeout(buffTimer);
-            buffTimer = setTimeout(clearBuff, buffDuration);
-        }
-
-        function clearBuff() {
-            activeBuff = null;
-            activeBuffUI.classList.add('hidden');
-            if (buffTimer) clearTimeout(buffTimer);
-        }
-
-        function togglePause() {
-            if (!gameActive) return;
-            isPaused = !isPaused;
-            if (isPaused) {
-                pauseScreen.classList.remove('hidden');
-                pauseScreen.classList.add('flex');
-                pauseBtn.innerHTML = '<i class="fa-solid fa-play text-xl"></i>';
-                pauseStartTime = performance.now();
-                if (buffTimer) clearTimeout(buffTimer);
-            } else {
-                pauseScreen.classList.add('hidden');
-                pauseScreen.classList.remove('flex');
-                pauseBtn.innerHTML = '<i class="fa-solid fa-pause text-xl"></i>';
-                
-                const pauseDuration = performance.now() - pauseStartTime;
-                lastLogicUpdate += pauseDuration;
-                if (buffItem) buffItem.spawnTime += pauseDuration;
-                
-                if (activeBuff) {
-                    buffStartTime += pauseDuration;
-                    const remainingTime = buffDuration - (performance.now() - buffStartTime);
-                    buffTimer = setTimeout(clearBuff, remainingTime);
+        const cardObserver = new IntersectionObserver((entries) => {
+            let delayCounter = 0;
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (entry.target.classList.contains('portfolio-item') || entry.target.classList.contains('review-card')) { 
+                        entry.target.style.transitionDelay = `${delayCounter * 0.15}s`; 
+                        delayCounter++; 
+                    }
+                    entry.target.classList.add('is-visible'); 
+                    cardObserver.unobserve(entry.target); 
+                    if (entry.target.classList.contains('portfolio-item') || entry.target.classList.contains('review-card')) {
+                        setTimeout(() => { entry.target.style.transitionDelay = '0s'; }, (delayCounter * 150) + 800);
+                    }
                 }
-                requestAnimationFrame(gameLoop);
-            }
-        }
-
-        function addInput(newDx, newDy) {
-            let lastDir = inputQueue.length > 0 ? inputQueue[inputQueue.length - 1] : {dx: dx, dy: dy};
-            if (newDx === -lastDir.dx && newDy === -lastDir.dy) return; 
-            if (newDx === lastDir.dx && newDy === lastDir.dy) return; 
-            if (inputQueue.length < 2) {
-                inputQueue.push({dx: newDx, dy: newDy});
-            }
-        }
-
-        function updateSnakeLogic() {
-            if (inputQueue.length > 0) {
-                const nextDir = inputQueue.shift();
-                dx = nextDir.dx; dy = nextDir.dy;
-            }
-
-            snake.forEach(part => { part.oldX = part.x; part.oldY = part.y; });
-
-            const nx = snake[0].x + dx;
-            const ny = snake[0].y + dy;
-
-            if (nx < 0 || nx >= tileCount || ny < 0 || ny >= tileCount) return gameOver();
-            for (let i = 0; i < snake.length; i++) {
-                if (nx === snake[i].x && ny === snake[i].y) {
-                    if (activeBuff && activeBuff.id === 'GHOST') continue;
-                    return gameOver();
-                }
-            }
-
-            if (buffItem && nx === buffItem.x && ny === buffItem.y) {
-                playUiSound('powerup');
-                activateBuff(buffItem.type);
-                buffItem = null;
-            } else if (buffItem && performance.now() - buffItem.spawnTime > 10000) {
-                buffItem = null;
-            }
-
-            let isEating = false;
-            if (nx === foodX && ny === foodY) {
-                isEating = true;
-            } else if (activeBuff && activeBuff.id === 'MAGNET') {
-                const dist = Math.abs(nx - foodX) + Math.abs(ny - foodY);
-                if (dist <= 2) isEating = true;
-            }
-
-            if (isEating) {
-                let scoreMultiplier = (activeBuff && activeBuff.id === 'DOUBLE') ? 20 : 10;
-                score += scoreMultiplier;
-                scoreEl.innerText = score;
-                playUiSound('eat'); 
-                placeFood();
-                snake.unshift({ x: nx, y: ny, oldX: snake[0].x, oldY: snake[0].y });
-            } else {
-                let tail = snake.pop();
-                tail.x = nx; tail.y = ny;
-                tail.oldX = snake[0].x; tail.oldY = snake[0].y;
-                snake.unshift(tail);
-            }
-
-            let baseSpeed = Math.max(60, 150 - (score * 0.4));
-            if (activeBuff && activeBuff.id === 'SLOW') baseSpeed *= 1.7;
-            currentSpeed = baseSpeed;
-        }
-
-        function drawSmoothSnake(progress) {
-            ctx.fillStyle = '#0a021c';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            if (buffItem) {
-                ctx.fillStyle = buffItem.type.color;
-                ctx.shadowBlur = 15;
-                ctx.shadowColor = buffItem.type.color;
-                
-                const scale = 1 + Math.sin(performance.now() / 150) * 0.15;
-                const size = (gridSize - 4) * scale;
-                const offset = (gridSize - size) / 2;
-                ctx.fillRect(buffItem.x * gridSize + offset, buffItem.y * gridSize + offset, size, size);
-                ctx.shadowBlur = 0;
-            }
-
-            ctx.fillStyle = '#22c55e';
-            ctx.shadowBlur = 15;
-            ctx.shadowColor = '#22c55e';
-            ctx.fillRect(foodX * gridSize + 2, foodY * gridSize + 2, gridSize - 4, gridSize - 4);
-            ctx.shadowBlur = 0;
-            
-            const isGhost = (activeBuff && activeBuff.id === 'GHOST');
-            if (isGhost) ctx.globalAlpha = 0.5;
-
-            snake.forEach((part, index) => {
-                if (isGhost) {
-                    ctx.fillStyle = index === 0 ? '#ffffff' : '#cbd5e1';
-                } else {
-                    ctx.fillStyle = index === 0 ? '#a78bfa' : '#8b5cf6'; 
-                }
-                
-                if(index === 0) {
-                    ctx.shadowBlur = 15;
-                    ctx.shadowColor = isGhost ? '#ffffff' : '#8b5cf6';
-                } else {
-                    ctx.shadowBlur = 0;
-                }
-                
-                let renderX = part.oldX + (part.x - part.oldX) * progress;
-                let renderY = part.oldY + (part.y - part.oldY) * progress;
-                
-                ctx.fillRect(renderX * gridSize + 1, renderY * gridSize + 1, gridSize - 2, gridSize - 2);
             });
-            ctx.shadowBlur = 0;
-            ctx.globalAlpha = 1.0;
+        }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+
+        const sectionHeadingObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); sectionHeadingObserver.unobserve(entry.target); } });
+        }, { threshold: 0.3, rootMargin: '0px 0px -30px 0px' });
+        document.querySelectorAll('.section-heading').forEach(el => sectionHeadingObserver.observe(el));
+
+        window.openReviewModal = function(btn) {
+            const card = btn.closest('.review-card');
+            document.getElementById('crm-name').textContent = card.querySelector('.review-name').textContent;
+            document.getElementById('crm-sub').textContent = card.querySelector('.review-subtitle').textContent;
+            document.getElementById('crm-text').textContent = card.querySelector('.review-text').textContent;
+            const crmAva = document.getElementById('crm-avatar-container'); crmAva.innerHTML = ''; crmAva.appendChild(card.querySelector('.review-ava-wrap').cloneNode(true));
+            document.getElementById('crm-stars').innerHTML = card.querySelector('.review-stars-wrap').innerHTML;
+            const modal = document.getElementById('client-review-modal'); modal.style.display = 'flex'; void modal.offsetWidth; modal.classList.add('active');
+        };
+
+        const track = document.getElementById('reviews-track'), viewport = document.getElementById('reviews-grid');
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (track && viewport && track.children.length > 0 && !reduceMotion) {
+            const allCards = Array.from(track.children), halfCount = allCards.length / 2, gap = parseFloat(getComputedStyle(track).gap) || 0;
+            const cycleWidth = allCards.slice(0, halfCount).reduce((sum, el) => sum + el.getBoundingClientRect().width, 0) + gap * Math.max(0, halfCount - 1) + gap;
+            let pos = 0, speed = 0.42, targetSpeed = speed, lastTime = performance.now(), rafId = null;
+            const tick = (now) => {
+                if (document.hidden) { rafId = null; return; }
+                const dt = Math.min(32, now - lastTime); lastTime = now; speed += (targetSpeed - speed) * 0.045; pos += speed * (dt / 16.67);
+                if (pos >= cycleWidth) pos -= cycleWidth; track.style.transform = `translate3d(${-pos}px, 0, 0)`; rafId = requestAnimationFrame(tick);
+            };
+            const resumeAnim = () => { if (!document.hidden && rafId === null) { lastTime = performance.now(); rafId = requestAnimationFrame(tick); } };
+            document.addEventListener('visibilitychange', resumeAnim, { passive: true });
+            viewport.addEventListener('mouseenter', () => targetSpeed = 0.055); viewport.addEventListener('mouseleave', () => targetSpeed = 0.42);
+            viewport.addEventListener('touchstart', () => targetSpeed = 0.06, { passive: true }); viewport.addEventListener('touchend', () => targetSpeed = 0.42, { passive: true });
+            resumeAnim();
         }
 
-        function updateUI(time) {
-            if (activeBuff && !isPaused) {
-                const elapsed = time - buffStartTime;
-                const remaining = Math.max(0, 1 - (elapsed / buffDuration));
-                buffTimerBar.style.width = (remaining * 100) + '%';
-            }
-        }
-
-        function gameLoop(time) {
-            if (!gameActive || isPaused) return;
-            updateUI(time);
-
-            let elapsed = time - lastLogicUpdate;
-            if (elapsed >= currentSpeed) {
-                updateSnakeLogic();
-                lastLogicUpdate = time;
-                elapsed = 0;
-            }
-
-            if (gameActive && !isPaused) {
-                let progress = Math.min(elapsed / currentSpeed, 1);
-                drawSmoothSnake(progress);
-                animationFrameId = requestAnimationFrame(gameLoop);
-            }
-        }
-
-        function gameOver() {
-            gameActive = false;
-            finalScoreEl.innerText = score;
-            gameOverScreen.classList.remove('hidden');
-            gameOverScreen.classList.add('flex');
-            clearBuff();
-            
-            wrapper.classList.add('is-shaking');
-            wrapper.style.borderColor = '#ef4444';
-            wrapper.style.boxShadow = '0 0 40px rgba(239, 68, 68, 0.4)';
-            setTimeout(() => {
-                wrapper.classList.remove('is-shaking');
-                wrapper.style.borderColor = 'rgba(255, 255, 255, 0.1)';
-                wrapper.style.boxShadow = '0 0 30px rgba(34,197,94,0.15)';
-            }, 400);
-            
-            if (score > localBestScore && score > 0) {
-                playUiSound('record');
-                localBestScore = score;
-                localStorage.setItem('delmyname_snakeBestScore', localBestScore);
-                document.getElementById('snake-best-score').innerText = localBestScore;
-                
-                if (window.firebaseDB && window.firebaseSetDoc && window.firebaseDoc) {
-                    window.firebaseSetDoc(window.firebaseDoc(window.firebaseDB, "leaderboard", localUsername), {
-                        name: localUsername,
-                        score: localBestScore,
-                        timestamp: Date.now()
-                    }).then(() => updateLeaderboardUI()).catch(err => console.error(err));
-                } else {
-                    updateLeaderboardUI();
-                }
-            } else {
-                playUiSound('die');
-                updateLeaderboardUI();
-            }
-        }
-
-        document.addEventListener('keydown', (e) => {
-            if (gameActive && (e.code === 'Space' || e.code === 'Escape')) {
-                e.preventDefault();
-                togglePause();
-                return;
-            }
-            if (!gameActive || isPaused) return;
-            
-            if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight","w","a","s","d"].includes(e.key)) {
-                e.preventDefault();
-            }
-            
-            if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') addInput(0, -1);
-            if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') addInput(0, 1);
-            if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') addInput(-1, 0);
-            if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') addInput(1, 0);
-        }, {passive: false});
-
-        let touchStartX = 0, touchStartY = 0, lastSwipeTime = 0;
-        snakeOverlay.addEventListener('touchstart', (e) => {
-            if (!gameActive || isPaused) return;
-            if (e.target.closest('button')) return;
-            
-            touchStartX = e.changedTouches[0].screenX;
-            touchStartY = e.changedTouches[0].screenY;
-        }, {passive: false});
-
-        snakeOverlay.addEventListener('touchmove', (e) => {
-            if (!gameActive || isPaused) return;
-            if (e.target.closest('button')) return;
-            
-            e.preventDefault(); 
-
-            let touchX = e.changedTouches[0].screenX;
-            let touchY = e.changedTouches[0].screenY;
-            let deltaX = touchX - touchStartX;
-            let deltaY = touchY - touchStartY;
-
-            if (Math.abs(deltaX) > 15 || Math.abs(deltaY) > 15) {
-                const now = performance.now();
-                if (now - lastSwipeTime < 50) return;
-                lastSwipeTime = now;
-
-                if (Math.abs(deltaX) > Math.abs(deltaY)) {
-                    if (deltaX > 0) addInput(1, 0); else addInput(-1, 0);
-                } else {
-                    if (deltaY > 0) addInput(0, 1); else addInput(0, -1);
-                }
-                
-                touchStartX = touchX; touchStartY = touchY;
-            }
-        }, {passive: false});
-
-        openSnakeBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            snakeOverlay.classList.remove('hidden');
-            snakeOverlay.classList.add('flex');
-            
-            document.body.style.overflow = 'hidden';
-            
-            requestAnimationFrame(() => {
-                snakeOverlay.style.opacity = '1';
-            });
-            resetGameData();
-            startScreen.classList.remove('hidden');
+        const gridItems = Array.from(document.querySelectorAll('.portfolio-item'));
+        gridItems.forEach(card => {
+            const img = card.querySelector('.portfolio-poster'), video = card.querySelector('.portfolio-hover-video'), overlay = card.querySelector('.portfolio-media-overlay');
+            let hoverTimer = null, touchPreviewTriggered = false;
+            const startHoverVideo = () => {
+                if (!video || reduceMotion) return;
+                video.load(); const p = video.play(); if (p) p.catch(() => {}); video.classList.add('is-visible');
+                if (img) img.style.transform = 'scale(1)'; if (overlay) overlay.style.backgroundColor = 'var(--dynamic-overlay-hover)';
+            };
+            const stopHoverVideo = () => {
+                if (video) { video.pause(); try { video.currentTime = 0; } catch (_) {} video.classList.remove('is-visible'); }
+                if (img) img.style.transform = 'scale(1)'; if (overlay) overlay.style.backgroundColor = 'var(--dynamic-overlay-base)';
+            };
+            const scheduleHoverVideo = (isTouch = false) => {
+                if (!video || reduceMotion) return;
+                clearTimeout(hoverTimer); hoverTimer = setTimeout(() => { if (isTouch) touchPreviewTriggered = true; startHoverVideo(); }, isTouch ? 700 : 120);
+            };
+            const cancelHoverVideo = () => { clearTimeout(hoverTimer); hoverTimer = null; stopHoverVideo(); touchPreviewTriggered = false; };
+            card.addEventListener('mouseenter', () => { if (video) scheduleHoverVideo(false); else { if (img) img.style.transform = 'scale(var(--dynamic-scale-hover, 1.05))'; if (overlay) overlay.style.backgroundColor = 'var(--dynamic-overlay-hover)'; } });
+            card.addEventListener('mouseleave', cancelHoverVideo);
+            card.addEventListener('touchstart', () => scheduleHoverVideo(true), { passive: true });
+            card.addEventListener('touchend', () => { clearTimeout(hoverTimer); hoverTimer = null; if (!touchPreviewTriggered) stopHoverVideo(); }, { passive: true });
+            card.addEventListener('touchcancel', cancelHoverVideo, { passive: true });
+            card.addEventListener('click', (e) => { if (touchPreviewTriggered) { e.preventDefault(); touchPreviewTriggered = false; } });
+            cardObserver.observe(card);
         });
 
-        closeSnakeBtn.addEventListener('click', () => {
-            gameActive = false;
-            cancelAnimationFrame(animationFrameId);
-            snakeOverlay.style.opacity = '0';
-            
-            document.body.style.overflow = '';
+        // Наблюдаем за отзывами
+        document.querySelectorAll('.review-card').forEach(card => cardObserver.observe(card));
 
-            setTimeout(() => {
-                snakeOverlay.classList.remove('flex');
-                snakeOverlay.classList.add('hidden');
-            }, 300);
-        });
+        const portSec = document.getElementById('portfolio'), revSec = document.getElementById('reviews');
+        if (portSec) { portSec.style.transitionDelay = '0s'; cardObserver.observe(portSec); }
+        if (revSec) { revSec.style.transitionDelay = '0s'; cardObserver.observe(revSec); }
 
-        startGameBtn.addEventListener('click', initGame);
-        restartBtn.addEventListener('click', initGame);
-        pauseBtn.addEventListener('click', togglePause);
-        
-        async function updateLeaderboardUI() {
-            const listEl = document.getElementById('leaderboard-list');
-            if (!listEl) return;
-            
-            if (!window.firebaseDB) {
-                listEl.innerHTML = '<div class="text-center text-red-400 mt-10">БД недоступна (возможно, блокировщик трекинга рубит скрипты)</div>';
-                return;
-            }
-
-            listEl.innerHTML = '<div class="text-center text-gray-400 mt-10">Загрузка данных...</div>';
-
-            try {
-                const leaders = [];
-                const q = window.firebaseQuery(window.firebaseCollection(window.firebaseDB, "leaderboard"), window.firebaseOrderBy("score", "desc"), window.firebaseLimit(10));
-                const querySnapshot = await window.firebaseGetDocs(q);
-                
-                querySnapshot.forEach((doc) => leaders.push(doc.data()));
-                listEl.innerHTML = ''; 
-                
-                if (leaders.length === 0) {
-                    listEl.innerHTML = '<div class="text-center text-gray-400 mt-10">Пока никого нет. Стань первым!</div>';
-                    return;
-                }
-
-                leaders.forEach((player, index) => {
-                    const row = document.createElement('div');
-                    row.className = 'leaderboard-row';
-                    const isMe = player.name === localUsername;
-                    if (isMe) row.style.backgroundColor = 'rgba(139, 92, 246, 0.1)'; 
-                    
-                    let rankClass = index === 0 ? 'leaderboard-rank-1' : index === 1 ? 'leaderboard-rank-2' : index === 2 ? 'leaderboard-rank-3' : '';
-                    
-                    row.innerHTML = `
-                        <div class="flex items-center gap-3">
-                            <span class="w-4 text-left ${rankClass}">${index + 1}</span>
-                            <span class="${isMe ? 'text-[var(--color-accent)] font-bold' : 'text-gray-300'}">${player.name}</span>
-                        </div>
-                        <span class="${isMe ? 'text-[#22c55e] font-bold' : 'text-white font-bold'}">${player.score}</span>
-                    `;
-                    listEl.appendChild(row);
-                });
-            } catch (err) {
-                listEl.innerHTML = '<div class="text-center text-red-400 mt-10">Ошибка загрузки таблицы</div>';
-            }
+        if ('IntersectionObserver' in window) {
+            const videoVisibilityObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => { if (!entry.isIntersecting) { const v = entry.target.querySelector('.portfolio-hover-video'); if (v) { v.pause(); try { v.currentTime = 0; } catch (_) {} v.classList.remove('is-visible'); } } });
+            }, { threshold: 0.05, rootMargin: '120px' });
+            gridItems.forEach(c => { if (c.querySelector('.portfolio-hover-video')) videoVisibilityObserver.observe(c); });
         }
+    };
 
-        leaderboardBtn.addEventListener('click', () => {
-            updateLeaderboardUI();
-            leaderboardScreen.classList.remove('hidden');
-            leaderboardScreen.classList.add('flex');
-        });
-
-        closeLeaderboardBtn.addEventListener('click', () => {
-            leaderboardScreen.classList.add('hidden');
-            leaderboardScreen.classList.remove('flex');
-        });
-
-        (async function initFirebase() {
-            try {
-                const firebaseApp = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js");
-                const firestore = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
-                
-                const app = firebaseApp.initializeApp(firebaseConfig);
-                window.firebaseDB = firestore.getFirestore(app);
-                
-                window.firebaseCollection = firestore.collection;
-                window.firebaseDoc = firestore.doc;
-                window.firebaseSetDoc = firestore.setDoc;
-                window.firebaseGetDocs = firestore.getDocs;
-                window.firebaseQuery = firestore.query;
-                window.firebaseOrderBy = firestore.orderBy;
-                window.firebaseLimit = firestore.limit;
-                
-                updateLeaderboardUI();
-            } catch (err) {
-                console.warn("Firebase заблокирован расширением. Лидерборд отключен, но сайт работает.", err);
-                updateLeaderboardUI(); 
-            }
-        })();
-
-        // --- ДИНАМИЧЕСКИЙ РЕНДЕР ИЗ JSON ---
-        (async function loadDynamicContent() {
-            function hexToHSL(H) {
-                let r = parseInt(H.slice(1, 3), 16) / 255; let g = parseInt(H.slice(3, 5), 16) / 255; let b = parseInt(H.slice(5, 7), 16) / 255;
-                let cmin = Math.min(r,g,b), cmax = Math.max(r,g,b), delta = cmax - cmin, h = 0, s = 0, l = 0;
-                if (delta == 0) h = 0; else if (cmax == r) h = ((g - b) / delta) % 6; else if (cmax == g) h = (b - r) / delta + 2; else h = (r - g) / delta + 4;
-                h = Math.round(h * 60); if (h < 0) h += 360; l = (cmax + cmin) / 2;
-                s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1)); s = +(s * 100).toFixed(1); l = +(l * 100).toFixed(1);
-                return {h, s, l};
-            }
-
-            const cardObserver = new IntersectionObserver((entries) => {
-                let delayCounter = 0;
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        if (entry.target.classList.contains('portfolio-item')) {
-                            entry.target.style.transitionDelay = `${delayCounter * 0.15}s`;
-                            delayCounter++;
-                        }
-                        
-                        entry.target.classList.add('is-visible');
-                        cardObserver.unobserve(entry.target); 
-                        
-                        if (entry.target.classList.contains('portfolio-item')) {
-                            setTimeout(() => {
-                                entry.target.style.transitionDelay = '0s';
-                            }, (delayCounter * 150) + 800);
-                        }
-                    }
-                });
-            }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
-
-            const sectionHeadingObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        sectionHeadingObserver.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.3, rootMargin: '0px 0px -30px 0px' });
-
-            document.querySelectorAll('.section-heading').forEach(el => sectionHeadingObserver.observe(el));
-
-            function initParticles() {
-                const container = document.getElementById('particles-bg');
-                if (!container) return;
-                container.innerHTML = ''; 
-                
-                if(!document.getElementById('particle-styles')) {
-                    let s = document.createElement('style');
-                    s.id = 'particle-styles';
-                    s.innerHTML = `
-                        @keyframes float-particle { 0% { transform: translateY(0) scale(1); } 100% { transform: translateY(-100vh) scale(0); } }
-                        @keyframes fade-particle { 0% { opacity: 0; } 50% { opacity: 0.6; } 100% { opacity: 0; } }
-                    `;
-                    document.head.appendChild(s);
-                }
-
-                for (let i = 0; i < 18; i++) {
-                    let p = document.createElement('div');
-                    p.className = 'absolute rounded-full opacity-0 pointer-events-none';
-                    let size = Math.random() * 4 + 2; 
-                    p.style.width = size + 'px';
-                    p.style.height = size + 'px';
-                    p.style.background = 'var(--color-accent)';
-                    p.style.boxShadow = '0 0 10px var(--color-accent)';
-                    p.style.left = Math.random() * 100 + 'vw';
-                    p.style.top = Math.random() * 100 + 'vh';
-                    p.style.animation = `float-particle ${Math.random() * 15 + 10}s linear infinite, fade-particle ${Math.random() * 5 + 3}s ease-in-out infinite alternate`;
-                    p.style.animationDelay = `-${Math.random() * 10}s`;
-                    container.appendChild(p);
-                }
-            }
-
-            try {
-                const configRes = await fetch('config.json');
-                if (configRes.ok) {
-                    const config = await configRes.json();
-                    
-                    if (document.getElementById('site-title')) document.getElementById('site-title').textContent = config.title_name;
-                    if (document.getElementById('site-subtitle')) document.getElementById('site-subtitle').textContent = config.subtitle;
-                    if (document.getElementById('site-bio')) document.getElementById('site-bio').textContent = config.bio_text;
-                    if (document.getElementById('avatar-img')) {
-                        const imgEl = document.getElementById('avatar-img');
-                        const vidEl = document.getElementById('avatar-video');
-                        const objPos = config.avatar_pos || '50% 50%';
-                        const objScale = config.avatar_scale || '1';
-                        
-                        if (config.avatar && config.avatar.match(/\.(mp4|webm|mov)$/i)) {
-                            imgEl.classList.add('hidden');
-                            vidEl.classList.remove('hidden');
-                            vidEl.src = config.avatar;
-                            vidEl.style.objectPosition = objPos;
-                            vidEl.style.transform = `scale(${objScale})`;
-                        } else if (config.avatar) {
-                            vidEl.classList.add('hidden');
-                            imgEl.classList.remove('hidden');
-                            imgEl.src = config.avatar;
-                            imgEl.style.objectPosition = objPos;
-                            imgEl.style.transform = `scale(${objScale})`;
-                        }
-                    }
-                    
-                    let link = document.querySelector("link[rel~='icon']");
-                    if (!link) { link = document.createElement('link'); link.rel = 'icon'; document.head.appendChild(link); }
-                    link.href = config.favicon;
-
-                    if (config.visuals) {
-                        const root = document.documentElement;
-                        root.style.setProperty('--dynamic-radius', config.visuals.card_radius || '1rem');
-                        root.style.setProperty('--dynamic-title-color', config.visuals.title_color || '#ffffff');
-                        root.style.setProperty('--dynamic-transition', '0.2s');
-                        
-                        const hex = config.visuals.base_color || '#8b5cf6';
-                        const targetColor = hexToHSL(hex);
-                        const opBase = config.visuals.overlay_base_op || 0.3;
-                        const opHover = config.visuals.overlay_hover_op || 0.7;
-
-                        function renderColors(h, s, l) {
-                            root.style.setProperty('--color-accent', `hsl(${h}, ${s}%, ${l}%)`);
-                            root.style.setProperty('--color-accent-hover', `hsl(${h}, ${s}%, ${Math.max(10, l - 10)}%)`);
-                            root.style.setProperty('--blob-1', `hsl(${h}, ${s}%, ${l}%)`);
-                            root.style.setProperty('--blob-2', `hsl(${(h + 20) % 360}, ${Math.max(0, s - 10)}%, ${l}%)`);
-                            root.style.setProperty('--blob-3', `hsl(${(h - 30 + 360) % 360}, ${s}%, ${l}%)`);
-                            root.style.setProperty('--color-card-border', `hsla(${h}, ${s}%, ${l}%, 0.2)`);
-                            
-                            root.style.setProperty('--color-bg', `hsl(${h}, ${Math.max(10, s * 0.4)}%, 8%)`);
-                            root.style.setProperty('--dynamic-overlay-base', `hsla(${h}, ${s}%, 15%, ${opBase})`);
-                            root.style.setProperty('--dynamic-overlay-hover', `hsla(${h}, ${s}%, 15%, ${opHover})`);
-
-                            let dynamicStyle = document.getElementById('frontend-dynamic-overrides');
-                            if (!dynamicStyle) {
-                                dynamicStyle = document.createElement('style');
-                                dynamicStyle.id = 'frontend-dynamic-overrides';
-                                document.head.appendChild(dynamicStyle);
-                            }
-                            dynamicStyle.innerHTML = `
-                                .btn-primary { box-shadow: 0 8px 25px hsla(${h}, ${s}%, ${l}%, 0.5) !important; }
-                                .skill-badge:hover {
-                                    background-color: hsla(${h}, ${s}%, ${l}%, 0.2) !important;
-                                    border-color: #ffffff !important;
-                                    color: #fff !important;
-                                    box-shadow: 0 0 10px hsla(${h}, ${s}%, ${l}%, 0.3) !important;
-                                }
-                                .glass-btn { position: relative; }
-                                .glass-btn::after { content: ''; position: absolute; inset: 0; bottom: -15px; z-index: -1; }
-                            `;
-                        }
-
-                        renderColors(targetColor.h, targetColor.s, targetColor.l);
-
-                        setTimeout(() => {
-                            const ANIM = {
-                                duration: 2500,      
-                                scale: 1.05,         
-                                maxL: 80,            
-                                pulse: 6,           
-                                phaseIn: 0.3,       
-                                phaseOut: 0.3       
-                            };
-
-                            let startTime = null;
-                            const mainCard = document.getElementById('main-card');
-                            const blobs = document.querySelectorAll('.blob');
-                            
-                            if (mainCard) mainCard.style.transition = 'none';
-                            blobs.forEach(b => b.style.transition = 'none'); 
-
-                            function animateBreath(time) {
-                                if (!startTime) startTime = time;
-                                let elapsed = time - startTime;
-                                let progress = Math.min(elapsed / ANIM.duration, 1);
-                                
-                                let breath = 0;
-                                const holdStart = ANIM.phaseIn;
-                                const holdEnd = 1 - ANIM.phaseOut;
-
-                                if (progress < holdStart) {
-                                    breath = 0.5 - Math.cos((progress / holdStart) * Math.PI) / 2;
-                                } else if (progress < holdEnd) {
-                                    breath = 1;
-                                } else {
-                                    breath = 0.5 - Math.cos(((1 - progress) / ANIM.phaseOut) * Math.PI) / 2;
-                                }
-
-                                if (mainCard) {
-                                    let currentScale = 1 + ((ANIM.scale - 1) * breath);
-                                    mainCard.style.transform = `perspective(1000px) scale(${currentScale})`;
-                                }
-
-                                let currentL = targetColor.l;
-                                let targetBrightL = targetColor.l + (ANIM.maxL - targetColor.l) * breath;
-                                
-                                if (progress >= holdStart && progress < holdEnd) {
-                                    let pulseProgress = (progress - holdStart) / (holdEnd - holdStart);
-                                    let pulseDip = ANIM.pulse * Math.sin(pulseProgress * Math.PI); 
-                                    targetBrightL -= pulseDip;
-                                }
-                                
-                                let currentS = targetColor.s;
-                                if (targetBrightL > 80) currentS = Math.max(10, currentS - (targetBrightL - 80));
-
-                                renderColors(targetColor.h, currentS, targetBrightL);
-
-                                if (progress < 1) {
-                                    requestAnimationFrame(animateBreath);
-                                } else {
-                                    renderColors(targetColor.h, targetColor.s, targetColor.l);
-                                    if (mainCard) {
-                                        mainCard.style.transition = 'transform 0.2s ease-out';
-                                        mainCard.style.transform = ''; 
-                                    }
-                                    blobs.forEach(b => b.style.transition = ''); 
-                                    initParticles();
-                                }
-                            }
-                            requestAnimationFrame(animateBreath);
-                        }, 750); 
-                    }
-                }
-            } catch (e) { console.error("Config load error:", e); }
-
-            async function renderReviews() {
-                const viewport = document.getElementById('reviews-grid');
-                const track = document.getElementById('reviews-track');
-                if (!viewport || !track) return;
-
-                try {
-                    const res = await fetch('reviews.json', { cache: 'no-store' });
-                    if (!res.ok) throw new Error('reviews.json not available');
-                    const reviews = await res.json();
-                    const visibleReviews = Array.isArray(reviews) ? reviews.filter(r => r && r.published === true) : [];
-
-                    track.innerHTML = '';
-                    if (!visibleReviews.length) {
-                        viewport.innerHTML = `
-                            <div class="reviews-empty">
-                                <i class="fa-regular fa-comments text-xl mb-2 block text-[var(--color-accent)]/50"></i>
-                                Отзывы появятся здесь
-                            </div>
-                        `;
-                        return;
-                    }
-
-                    const escapeText = (value) => String(value ?? '').trim();
-                    const getInitial = (name) => {
-                        const clean = escapeText(name);
-                        return clean ? clean.charAt(0).toUpperCase() : '?';
-                    };
-                    const clampStars = (value) => Math.max(1, Math.min(5, Number(value) || 5));
-
-                    const buildCard = (review) => {
-                        const card = document.createElement('article');
-                        card.className = 'review-card spotlight-border';
-
-                        const quote = document.createElement('div');
-                        quote.className = 'review-quote';
-                        quote.innerHTML = '<i class="fa-solid fa-quote-right"></i>';
-
-                        const top = document.createElement('div');
-                        top.className = 'flex items-start justify-between gap-4 relative z-10';
-
-                        const person = document.createElement('div');
-                        person.className = 'flex items-start gap-3 min-w-0 flex-1';
-
-                        const avatarWrap = document.createElement('div');
-                        avatarWrap.className = 'relative flex-shrink-0';
-
-                        if (escapeText(review.avatar)) {
-                            const img = document.createElement('img');
-                            img.className = 'review-avatar';
-                            img.alt = `Аватар ${escapeText(review.name)}`;
-                            img.src = escapeText(review.avatar);
-                            img.loading = 'lazy';
-                            img.onerror = () => {
-                                avatarWrap.innerHTML = '';
-                                const fallback = document.createElement('div');
-                                fallback.className = 'review-avatar review-avatar-fallback';
-                                fallback.textContent = getInitial(review.name);
-                                avatarWrap.appendChild(fallback);
-                            };
-                            avatarWrap.appendChild(img);
-                        } else {
-                            const fallback = document.createElement('div');
-                            fallback.className = 'review-avatar review-avatar-fallback';
-                            fallback.textContent = getInitial(review.name);
-                            avatarWrap.appendChild(fallback);
-                        }
-
-                        const identity = document.createElement('div');
-                        identity.className = 'review-identity';
-                        const name = document.createElement('div');
-                        name.className = 'review-name';
-                        name.textContent = escapeText(review.name) || 'Клиент';
-                        identity.appendChild(name);
-
-                        if (escapeText(review.subtitle)) {
-                            const subtitle = document.createElement('div');
-                            subtitle.className = 'review-subtitle';
-                            subtitle.textContent = escapeText(review.subtitle);
-                            identity.appendChild(subtitle);
-                        }
-
-                        person.appendChild(avatarWrap);
-                        person.appendChild(identity);
-
-                        const stars = document.createElement('div');
-                        stars.className = 'review-stars flex-shrink-0 pt-1';
-                        const score = clampStars(review.stars);
-                        for (let starIndex = 1; starIndex <= 5; starIndex++) {
-                            const star = document.createElement('span');
-                            star.className = 'review-star';
-                            const fill = Math.max(0, Math.min(1, score - (starIndex - 1))) * 100;
-                            star.style.setProperty('--star-fill', `${fill}%`);
-                            star.innerHTML = `<i class="fa-regular fa-star" aria-hidden="true"></i><span class="review-star-fill"><i class="fa-solid fa-star" aria-hidden="true"></i></span>`;
-                            stars.appendChild(star);
-                        }
-
-                        top.appendChild(person);
-                        top.appendChild(stars);
-
-                        const body = document.createElement('div');
-                        body.className = 'relative z-10 mt-5 flex-1 flex flex-col justify-between';
-                        
-                        const textEl = document.createElement('p');
-                        textEl.className = 'review-text';
-                        textEl.textContent = escapeText(review.text);
-                        body.appendChild(textEl);
-
-                        // Если текст длинный (больше 100 символов), добавляем кнопку вызова модалки
-                        if (review.text && review.text.length > 100) {
-                            const moreBtn = document.createElement('div');
-                            moreBtn.className = 'review-read-more';
-                            moreBtn.innerHTML = 'Читать полностью <i class="fa-solid fa-arrow-right ml-1"></i>';
-                            body.appendChild(moreBtn);
-
-                            card.addEventListener('click', (e) => {
-                                if (typeof playUiSound === 'function') playUiSound('click');
-                                document.getElementById('crm-name').textContent = escapeText(review.name) || 'Клиент';
-                                document.getElementById('crm-sub').textContent = escapeText(review.subtitle);
-                                document.getElementById('crm-text').textContent = escapeText(review.text);
-                                
-                                const crmAva = document.getElementById('crm-avatar-container');
-                                crmAva.innerHTML = '';
-                                crmAva.appendChild(avatarWrap.cloneNode(true));
-                                
-                                document.getElementById('crm-stars').innerHTML = stars.innerHTML;
-                                
-                                const modal = document.getElementById('client-review-modal');
-                                modal.style.display = 'flex';
-                                void modal.offsetWidth; 
-                                modal.classList.add('active');
-                            });
-                        }
-
-                        card.appendChild(quote);
-                        card.appendChild(top);
-                        card.appendChild(body);
-
-                        if (typeof handlePointerMove === 'function') {
-                            card.addEventListener('mousemove', (e) => handlePointerMove(e, card));
-                            card.addEventListener('mouseleave', () => handlePointerLeave(card));
-                        }
-                        return card;
-                    };
-
-                    const fragmentA = document.createDocumentFragment();
-                    const fragmentB = document.createDocumentFragment();
-                    visibleReviews.forEach(review => fragmentA.appendChild(buildCard(review)));
-                    visibleReviews.forEach(review => fragmentB.appendChild(buildCard(review)));
-                    track.appendChild(fragmentA);
-                    track.appendChild(fragmentB);
-
-                    await new Promise(requestAnimationFrame);
-                    await new Promise(requestAnimationFrame);
-
-                    const allCards = Array.from(track.children);
-                    const firstSet = allCards.slice(0, visibleReviews.length);
-
-                    const gap = parseFloat(getComputedStyle(track).gap) || 0;
-                    const firstSetWidth = firstSet.reduce((sum, el) => sum + el.getBoundingClientRect().width, 0) + gap * Math.max(0, visibleReviews.length - 1);
-                    const cycleWidth = firstSetWidth + gap;
-
-                    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-                    if (reduceMotion) return;
-
-                    let position = 0;
-                    let speed = 0.42;
-                    let targetSpeed = speed;
-                    let lastTime = performance.now();
-                    let rafId = null;
-
-                    const tick = (now) => {
-                        const dt = Math.min(32, now - lastTime);
-                        lastTime = now;
-                        speed += (targetSpeed - speed) * 0.045;
-                        position += speed * (dt / 16.67);
-                        if (position >= cycleWidth) position -= cycleWidth;
-                        track.style.transform = `translate3d(${-position}px, 0, 0)`;
-                        rafId = requestAnimationFrame(tick);
-                    };
-
-                    viewport.addEventListener('mouseenter', () => { targetSpeed = 0.055; });
-                    viewport.addEventListener('mouseleave', () => { targetSpeed = 0.42; });
-                    viewport.addEventListener('touchstart', () => { targetSpeed = 0.06; }, { passive: true });
-                    viewport.addEventListener('touchend', () => { targetSpeed = 0.42; }, { passive: true });
-
-                    if (rafId) cancelAnimationFrame(rafId);
-                    rafId = requestAnimationFrame(tick);
-                } catch (error) {
-                    console.error('Reviews load error:', error);
-                    viewport.innerHTML = '';
-                }
-            }
-
-            renderReviews();
-
-            try {
-                const portRes = await fetch('portfolio.json');
-                if (portRes.ok) {
-                    const items = await portRes.json();
-                    const grid = document.getElementById('portfolio-grid');
-                    grid.innerHTML = ''; 
-                    
-                    const gridItems = []; 
-                    
-                    items.forEach((item, index) => {
-                        const card = document.createElement('a');
-                        card.href = item.link;
-                        card.target = '_blank';
-                        
-                        card.className = `portfolio-item scroll-reveal glass-card spotlight-border overflow-hidden group flex flex-col hover:-translate-y-2 w-full max-w-md md:max-w-none md:col-span-${item.cols} md:row-span-${item.rows}`;
-                        card.setAttribute('data-category', item.category);
-                        card.draggable = false;
-                        card.style.borderRadius = 'var(--dynamic-radius)';
-                        card.style.transition = 'transform var(--dynamic-transition) ease-out, opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-                        
-                        let badgeHTML = '';
-                        const currentBadge = item.badge || (item.pinned ? 'pin' : 'none'); 
-
-                        if (currentBadge === 'pin') {
-                            badgeHTML = `<div class="absolute top-3 left-3 z-20 bg-black/40 backdrop-blur-md w-6 h-6 flex items-center justify-center rounded-md border border-[var(--color-accent)] text-xs text-white/70" title="Закреплено"><i class="fa-solid fa-thumbtack no-jello" style="transform: rotate(45deg);"></i></div>`;
-                        } else if (currentBadge === 'fire') {
-                            badgeHTML = `<div class="absolute top-3 left-3 z-20 bg-black/40 backdrop-blur-md w-6 h-6 flex items-center justify-center rounded-md border border-orange-500 text-xs text-orange-500" title="Топ"><i class="fa-solid fa-fire no-jello"></i></div>`;
-                        } else if (currentBadge === 'new') {
-                            badgeHTML = `<div class="absolute top-3 left-3 z-20 bg-black/40 backdrop-blur-md px-2 h-6 flex items-center justify-center rounded-md border border-yellow-400 text-[10px] font-bold text-yellow-400 uppercase tracking-wider" title="Новое">New</div>`;
-                        }
-
-                        const hoverVideoHTML = item.hover_video ? `
-                            <video class="portfolio-hover-video absolute inset-0 w-full h-full object-cover opacity-0 pointer-events-none"
-                                   muted playsinline loop preload="none"
-                                   aria-hidden="true">
-                                <source src="${item.hover_video}" type="video/webm">
-                            </video>
-                        ` : '';
-
-                        card.innerHTML = `
-                            <div class="relative flex-1 flex items-center justify-center overflow-hidden skeleton bg-white/5">
-                                ${badgeHTML}
-                                <div class="absolute top-3 right-3 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] text-white/70 font-medium">${item.date}</div>
-                                
-                                <img alt="${item.title}" class="portfolio-poster absolute inset-0 w-full h-full object-cover opacity-0" 
-                                     style="transition: transform var(--dynamic-transition), opacity 0.45s;" 
-                                     onload="this.classList.remove('opacity-0'); this.parentElement.classList.remove('skeleton', 'bg-white/5');" 
-                                     draggable="false" loading="lazy" src="${item.image}"/>
-                                ${hoverVideoHTML}
-                                
-                                <div class="absolute inset-0 z-0 portfolio-media-overlay" 
-                                     style="background-color: var(--dynamic-overlay-base); transition: background-color var(--dynamic-transition);"></div>
-                                
-                                <div class="absolute bottom-4 left-4 group-hover:bottom-1/2 group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:translate-y-1/2 z-10 flex items-center justify-center"
-                                     style="transition: all var(--dynamic-transition);">
-                                    <i class="${item.icon_class} text-4xl text-white/80 group-hover:${item.icon_color} drop-shadow-lg"
-                                       style="transition: color var(--dynamic-transition);"></i>
-                                </div>
-                            </div>
-                            <div class="p-5 border-t border-white/5 relative z-10 bg-[var(--color-card-bg)] shrink-0 text-left w-full">
-                                <h3 class="font-bold mb-1" style="color: var(--dynamic-title-color);">${item.title}</h3>
-                                <p class="text-sm line-clamp-1" style="color: var(--dynamic-desc-color);">${item.desc}</p>
-                            </div>
-                        `;
-
-                        const img = card.querySelector('.portfolio-poster');
-                        const video = card.querySelector('.portfolio-hover-video');
-                        const overlay = card.querySelector('.portfolio-media-overlay');
-                        let hoverTimer = null;
-                        let touchPreviewTriggered = false;
-
-                        const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-                        const startHoverVideo = () => {
-                            if (!video || reduceMotion) return;
-                            video.load();
-                            const playPromise = video.play();
-                            if (playPromise && typeof playPromise.catch === 'function') playPromise.catch(() => {});
-                            video.classList.add('is-visible');
-                            if (img) img.style.transform = 'scale(1)';
-                            if (overlay) overlay.style.backgroundColor = 'var(--dynamic-overlay-hover)';
-                        };
-
-                        const stopHoverVideo = () => {
-                            if (video) {
-                                video.pause();
-                                try { video.currentTime = 0; } catch (_) {}
-                                video.classList.remove('is-visible');
-                            }
-                            if (img) img.style.transform = 'scale(1)';
-                            if (overlay) overlay.style.backgroundColor = 'var(--dynamic-overlay-base)';
-                        };
-
-                        const scheduleHoverVideo = (isTouch = false) => {
-                            if (!video || reduceMotion) return;
-                            clearTimeout(hoverTimer);
-                            hoverTimer = setTimeout(() => {
-                                if (isTouch) touchPreviewTriggered = true;
-                                startHoverVideo();
-                            }, isTouch ? 700 : 120);
-                        };
-
-                        const cancelHoverVideo = () => {
-                            clearTimeout(hoverTimer);
-                            hoverTimer = null;
-                            stopHoverVideo();
-                            touchPreviewTriggered = false;
-                        };
-
-                        card.addEventListener('mouseenter', () => {
-                            if (video) {
-                                scheduleHoverVideo(false);
-                            } else {
-                                if (img) img.style.transform = 'scale(var(--dynamic-scale-hover))';
-                                if (overlay) overlay.style.backgroundColor = 'var(--dynamic-overlay-hover)';
-                            }
-                            if (typeof playUiSound === 'function') playUiSound('hover');
-                        });
-
-                        card.addEventListener('mouseleave', () => {
-                            cancelHoverVideo();
-                        });
-
-                        // Touch / mobile: YouTube-like dwell preview. A quick tap still opens the project;
-                        // holding on the card for ~0.7s starts the muted preview.
-                        card.addEventListener('touchstart', () => {
-                            scheduleHoverVideo(true);
-                        }, { passive: true });
-
-                        card.addEventListener('touchend', () => {
-                            clearTimeout(hoverTimer);
-                            hoverTimer = null;
-                            if (!touchPreviewTriggered) stopHoverVideo();
-                        }, { passive: true });
-
-                        card.addEventListener('touchcancel', cancelHoverVideo, { passive: true });
-
-                        card.addEventListener('click', (e) => {
-                            if (touchPreviewTriggered) {
-                                e.preventDefault();
-                                touchPreviewTriggered = false;
-                                return;
-                            }
-                            if (typeof playUiSound === 'function') playUiSound('click');
-                        });
-
-                        grid.appendChild(card);
-                        gridItems.push(card); 
-                    });
-
-                    let observerActivated = false;
-                    function activateOnScroll() {
-                        if (!observerActivated) {
-                            observerActivated = true;
-                            const portfolioSection = document.getElementById('portfolio');
-                            if (portfolioSection) {
-                                portfolioSection.style.transitionDelay = '0s';
-                                cardObserver.observe(portfolioSection);
-                            }
-                            gridItems.forEach(c => cardObserver.observe(c));
-                            if ('IntersectionObserver' in window) {
-                                const videoVisibilityObserver = new IntersectionObserver((entries) => {
-                                    entries.forEach(entry => {
-                                        if (!entry.isIntersecting) {
-                                            const v = entry.target.querySelector('.portfolio-hover-video');
-                                            if (v) { v.pause(); try { v.currentTime = 0; } catch (_) {} v.classList.remove('is-visible'); }
-                                        }
-                                    });
-                                }, { threshold: 0.05, rootMargin: '120px' });
-                                gridItems.forEach(c => { if (c.querySelector('.portfolio-hover-video')) videoVisibilityObserver.observe(c); });
-                            }
-                            window.removeEventListener('scroll', handleScroll);
-                        }
-                    }
-                    function handleScroll() {
-                        if (window.scrollY > 30) activateOnScroll();
-                    }
-                    window.addEventListener('scroll', handleScroll, { passive: true });
-                    handleScroll(); 
-                    
-                    setTimeout(activateOnScroll, 3000); 
-
-                }
-            } catch (e) { console.error("Portfolio load error:", e); }
-        })();
-        // --- КОНЕЦ ДИНАМИЧЕСКОГО РЕНДЕРА ---
-    }); 
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initFrontend);
+    else initFrontend();
 </script>
 </body>
 </html>
